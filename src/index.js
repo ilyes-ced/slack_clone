@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { createElement } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+
+
+
+
+
+
+
+
+let vv = createElement('div', {id:'funny', className: 'ho gi'}, "hi niiga")
+console.log(vv)
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

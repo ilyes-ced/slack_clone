@@ -1,11 +1,12 @@
 import Comp from './Comp'
 
+const list = ['hhhh','hig_ogb_èh','uibhb']
 
 function App(){
     return(
-        <div className='first'>
+        <div>
             hi dude
-            <Comp title='titl name prop'/>
+            <Comp title='titl name prop' list={list}/>
         </div>
     );
 }

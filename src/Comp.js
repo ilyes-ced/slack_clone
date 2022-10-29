@@ -1,12 +1,9 @@
 function Comp(props) {
+    let items = props.list.map(ele => <li className="first">{ele}</li>)
     return(
         <div className='hi'>
             <ul>
-                <li>{props.title}</li>
-                <li></li>
-                <li></li>
-                <li></li>
-                <li></li>
+                {items}
             </ul>
         </div>
     )

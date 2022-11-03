@@ -1,12 +1,16 @@
-import Comp from './Comp'
+import App_bar from './components/App_bar'
+import Side_bar from './components/Side_bar'
+import Main_container from './components/Main_container'
 
-const list = ['hhhh','hig_ogb_èh','uibhb']
 
 function App(){
     return(
         <div>
-            hi dude
-            <Comp title='titl name prop' list={list}/>
+            <App_bar/>
+            <div id="main_window">
+                <Side_bar/>
+                <Main_container/>
+            </div>
         </div>
     );
 }

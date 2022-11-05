@@ -24,10 +24,17 @@ app.use((req, res, next) => {
 
 //app.use('/',pages_route)
 app.get('/', (req, res) => {
-    var obj = {
-        name: 'bruh',
-        age : 50
-    }
+    var obj =[
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+        {name: 'bruh', age : 50},
+    ]
     res.status(200).send(obj)
 })
 

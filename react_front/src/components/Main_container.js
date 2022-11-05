@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
+import Item from './Item'
+
+
+
+
+
 function Main_container() {
 
     
     const [data, set_data] = useState([]);
+    const [items, set_items] = useState(['ff', 'fffghhh', 'frehre']);
     const fetchData =  () => {
-        return fetch("http://localhost:5000")
+        return fetch("https://jsonplaceholder.typicode.com/users")
             .then((response) => response.json())
-            .then((data) => {set_data(data)
-            console.log(data)});
+            .then((data) => set_data(data));
     }
     fetchData()
     const keykey = (e)=>{
         if (e.key === 'Enter') {
-            console.log('do validate');
+            items.push(e.target.value)
+            e.target.value = ""
+            console.log(items)
         }
     }
     const changed = () => {
-        console.log('changed')
     }
     const submit_clicked = (e) => {
         e.preventDefault()
-        console.log('submit_clicked')
     }
     return(
         <div id='main_container'>
@@ -30,7 +36,14 @@ function Main_container() {
                     submit
                 </button>
             </form>
-            {data.forEach(element => <li>data.name</li>)}
+            <ul>
+                {items.map((element, index) => (<li>{items[index]}</li>))}
+                ____________________________________________________
+
+                {data && data.length > 0 && data.map((element, index) => (
+                    <Item option={element.name} />
+                ))}
+            </ul>
         </div>
     )
 }

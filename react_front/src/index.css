@@ -1,4 +1,7 @@
-
+#item{
+    background-color: green;
+    border: 10px solid blue;
+}
 
 body {
     margin: 0;

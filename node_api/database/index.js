@@ -14,6 +14,7 @@ module.exports = (query, callback) =>{
     connection.connect((err) => {
         if(err) return err
         connection.query(query, callback)
+        console.log('jj')
         connection.end()
     })
 }

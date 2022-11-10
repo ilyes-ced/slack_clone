@@ -2,7 +2,6 @@ const express = require('express')
 const app = express()
 require('dotenv').config()
 
-
 app.use(express.json())
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -11,20 +10,33 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     next();
 });
-var mysql = require('mysql')
-var connection = mysql.createConnection({
-  host     : process.env.DB_HOST,
-  user     : process.env.DB_USER,
-  password : process.env.DB_PASSWORD,
-  database : process.env.DB_NAME
-})
-const query = (query,) => {
 
+
+const query = require('./database/index.js')
+
+
+
+
+const ll = async () => {
+  try {
+    console.log('1')
+    /*query(`insert into users(username, email, password) values('198198','trth','ily')`, (err, result) => {
+      if (err) return err
+      console.log(result)
+  })*/
+
+    const rows = await query('select * as count from users');
+    console.log(rows)
+    console.log('kk')
+  }catch(e){
+    console.log(e)
+  }
 }
+ll()
 
-console.log('1')
-console.log(kk)
-console.log('2')
+
+
+
 
 
 /*

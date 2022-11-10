@@ -1,7 +1,7 @@
 function Rich_text_input() {
     return(
         <div id='rich_text_input'>
-            <div>
+            <div id='rich_text_input_content'>
                 k
             </div>
         </div>

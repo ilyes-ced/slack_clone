@@ -3,7 +3,7 @@ function Login() {
         <div>
             <input type="text" />
             <input type="text" />
-            <checkbox>dzd</checkbox>
+            <input type="checkbox" name="" id="" />
             <button>login</button>
         </div>
     )

@@ -1,4 +1,5 @@
 var mysql = require('mysql')
+const util = require('util');
 
 
 var connection = mysql.createConnection({
@@ -10,11 +11,13 @@ var connection = mysql.createConnection({
 
 
 
-module.exports = (query, callback) =>{
+
+module.exports = util.promisify(connection.query).bind(connection);
+ /*(query, callback) =>{
     connection.connect((err) => {
+      console.log('connected')
         if(err) return err
         connection.query(query, callback)
-        console.log('jj')
         connection.end()
     })
-}
+}*/

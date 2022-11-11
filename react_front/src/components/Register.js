@@ -3,6 +3,7 @@ function Register() {
         <div>
             <input type="text" />
             <input type="text" />
+            <input type="text" />
             <button>Register</button>
         </div>
     )

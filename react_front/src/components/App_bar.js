@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 function App_bar() {
     return(
         <nav id="nav_bar">
@@ -7,6 +9,9 @@ function App_bar() {
             <div id="app_bar_div2">
                 cs
                 <img src="" alt="" />
+
+                <Link to="/Login">login</Link>
+                <Link to="/Register">register</Link>
             </div>
         </nav>
     )

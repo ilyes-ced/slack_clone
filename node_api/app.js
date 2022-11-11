@@ -12,6 +12,7 @@ app.use((req, res, next) => {
 });
 
 
+const query = require('./database/index')
 
 
 
@@ -19,10 +20,22 @@ app.use((req, res, next) => {
 
 
 
-const users_router = require('./routers/users')
+const q = async() => {
+    await query('select 1+1')
+}
 
-app.use('/users', users_router)
+q()
 
+
+
+
+
+
+const users_route = require('./routes/users')
+const workspaces_route = require('./routes/workspaces')
+
+app.use('/users', users_route)
+app.use('/workspaces', workspaces_route)
 
 
 

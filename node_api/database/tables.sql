@@ -17,8 +17,8 @@ CREATE TABLE verifications(
     email_verified Boolean,
     email_verification_code VARCHAR(255),
     is_active Boolean,
-    FOREIGN KEY (user) REFERENCES users(id),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (user) REFERENCES users(id)
 );
 
 CREATE TABLE notifications(
@@ -36,7 +36,8 @@ CREATE TABLE tokens(
     user int NOT NULL,
     token VARCHAR(255),
     expires_at DATETIME,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (user) REFERENCES users(id)
 );
 
 

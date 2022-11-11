@@ -6,18 +6,12 @@ const router = express.Router()
 
 
 
-router.post('/login', (req, res) => {
+router.post('/', (req, res) => {
     console.log(req.body)
+    res.status(200).send(req.body)
 })
 
 
-
-
-
-
-router.post('/register', (req, res) => {
-    console.log(req.body)
-})
 
 
 

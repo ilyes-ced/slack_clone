@@ -12,12 +12,8 @@ var connection = mysql.createConnection({
 
 
 
-module.exports = util.promisify(connection.query).bind(connection);
- /*(query, callback) =>{
-    connection.connect((err) => {
-      console.log('connected')
-        if(err) return err
-        connection.query(query, callback)
-        connection.end()
-    })
-}*/
+module.exports = async (sql, params, callback) => {
+  await util.promisify(connection.query).bind(connection)(sql, params, callback)
+}
+
+ 

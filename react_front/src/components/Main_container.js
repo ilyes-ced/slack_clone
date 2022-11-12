@@ -29,7 +29,9 @@ function Main_container() {
                             <p className="message_content">message bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage big</p>
                         </div>
                     </div>
-
+                    <div className='message_same_user'>
+                        <p className="message_content">e  e bigege bigessage bigessage </p>
+                    </div>
                 
 
                 </div>

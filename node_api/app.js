@@ -20,13 +20,8 @@ const query = require('./database/index')
 
 
 
-const q = async() => {
-    await query('select 1+1')
-}
 
-q()
-
-
+  
 
 
 

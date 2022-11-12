@@ -115,8 +115,4 @@ CREATE TABLE messages(
 
 
 
-
-
-
-
 /*CREATE INDEX NAME_OF_INDEX ON table_name(cols)*/

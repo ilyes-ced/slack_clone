@@ -13,6 +13,7 @@ function App_bar() {
 
             <div id="app_bar_div2">
                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                {/*<Link to='/login'>login</Link>*/}
             </div>
         
         

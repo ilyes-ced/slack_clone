@@ -1,53 +1,26 @@
 const query = require('./index')
 
 const users = [
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
-    ["ilyes", "ilyes@gmail.com", "11062001", ],
+    ["ilyes", "ilyes@gmail.com", "password", ],
+    ["ali", "ali@gmail.com", "password", ],
+    ["ahmed", "ahmed@gmail.com", "password", ],
+    ["jamel", "jamel@gmail.com", "password", ],
+    ["kamel", "kamel@gmail.com", "password", ],
+    ["mohamed", "mohamed@gmail.com", "password", ],
+    ["oussama", "oussama@gmail.com", "password", ],
 ]
 
 
 
 
 
-const q = async(sql) => {
-    await query(sql)
-}
 
 
-/*
 users.forEach(user => {
-    q("insert into users(username, email, password) values("+user[0]+","+user[1]+","+user[2]+")")
+    query("insert into users(username, email, password) values(?, ?, ?)", [user[0], user[1], user[2]], (err, result) => {
+        if(err) return err
+        console.log(result)
+    })
 })
-*/
-q("insert into users(username, email, password) values(?, ?, ?)", ['ali', 'email de ali', 'passapss'], (err, result) => {
-    if(err) return err
-    console.log(result)
 
-})
+

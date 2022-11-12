@@ -116,3 +116,51 @@ CREATE TABLE messages(
 
 
 /*CREATE INDEX NAME_OF_INDEX ON table_name(cols)*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+delimiter #
+create trigger add_channels_to_new_workspace after insert on workspaces
+for each row
+begin
+  insert into channels(name, type, workspace, public) values ('general', 'room' ,new.id, true);
+  insert into channels(name, type, workspace, public) values ('random', 'room' ,new.id, true);
+end#
+delimiter ;

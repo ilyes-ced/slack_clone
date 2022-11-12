@@ -4,11 +4,17 @@ import Main_container from './components/Main_container'
 import Login from './components/Login'
 import Register from './components/Register'
 import { BrowserRouter as Router,Routes, Route, Link } from 'react-router-dom';
-
+import { useEffect, useState } from 'react'
 
 
 
 function App(){
+    useEffect(() => {
+        localStorage.setItem("user_data", JSON.stringify({username: 'ilyes', email: 'ilyes@gmail.com', token:'aeiyfbqeoryfhnersoiugbeosiugbqreg'}))
+    }, [])
+    const [data, set_data] = useState(JSON.parse(localStorage.getItem('user_data')))
+    console.log(data)
+    
     return(
         <Router>
             {/*login and register routes maybe temporary*/}

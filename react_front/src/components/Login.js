@@ -8,16 +8,17 @@ function Login() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email: 'zfzef', password: 'oizfuzgzuo5454'})
-        };
-        fetch('http://localhost:5000/workspaces', requestOptions)
+        }
+
+		console.log(process.env.REACT_APP_API_URL)
+        fetch(process.env.REACT_APP_API_URL+"/users/login", requestOptions)
             .then(response => response.json())
-            .then(data => set_data(data.email));
+            .then(data => set_data(data.email))
     }
     return(
         <div class="container">
 	<div class="screen">
 		<div class="screen__content">
-			<form class="login">
 				<div class="login__field">
 					<i class="login__icon fas fa-user"></i>
 					<input type="text" class="login__input" placeholder="User name / Email"/>
@@ -26,11 +27,10 @@ function Login() {
 					<i class="login__icon fas fa-lock"></i>
 					<input type="password" class="login__input" placeholder="Password"/>
 				</div>
-				<button class="button login__submit">
+				<button onClick={clicked} class="button login__submit">
 					<span class="button__text">Log In Now</span>
 					<i class="button__icon fas fa-chevron-right"></i>
-				</button>				
-			</form>
+				</button>		
 			<div class="social-login">
 				<h3>log in via</h3>
 				<div class="social-icons">

@@ -9,12 +9,24 @@ import { useEffect, useState } from 'react'
 
 
 function App(){
+    const [is_auth, set_is_auth] = useState(null)
     useEffect(() => {
-        localStorage.setItem("user_data", JSON.stringify({username: 'ilyes', email: 'ilyes@gmail.com', token:'aeiyfbqeoryfhnersoiugbeosiugbqreg'}))
+        console.log(localStorage.getItem("user_data"))
+        fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: localStorage.getItem('user_data')
+        }).then((response) => response.json())
+        .then(data => {
+            console.log(data)
+            if(data.result == 'failed'){
+                set_is_auth(false)
+                console.log(data)
+            }
+        })
     }, [])
-    const [data, set_data] = useState(JSON.parse(localStorage.getItem('user_data')))
-    console.log(data)
-    
+    //const [data, set_data] = useState(JSON.parse(localStorage.getItem('user_data')))
+    //console.log(data)
     return(
         <Router>
             {/*login and register routes maybe temporary*/}

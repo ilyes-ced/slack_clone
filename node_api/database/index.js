@@ -10,9 +10,16 @@ var connection = mysql.createConnection({
 })
 
 
+const default_callback = (err, result) => {
+  if(err) {
+    console.log(err)
+    return err
+  }
+  console.log(result)
+  return result
+}
 
-
-module.exports = async (sql, params, callback) => {
+module.exports = async (sql, params, callback = default_callback) => {
   await util.promisify(connection.query).bind(connection)(sql, params, callback)
 }
 

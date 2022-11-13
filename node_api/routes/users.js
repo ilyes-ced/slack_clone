@@ -22,11 +22,8 @@ router.post('/login', (req, res) => {
             res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
             return
         }
-
-        console.log(bcrypt.compareSync(req.body.password, result[0].id))
         
-        if(bcrypt.compareSync(req.body.password, result[0].id)){ 
-            console.log('hash corent')
+        if(bcrypt.compareSync(req.body.password, result[0].password)){
             if(result[0].token){
                 if(result[0].expires_at < new Date().toISOString().slice(0, 19).replace('T', " ")){
                     query('update tokens set token=?, expires_at=? where user=? ',  [Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2), result[0].id, new Date(new Date().getTime() + 5259600000).toISOString().slice(0, 19).replace('T', " ")])
@@ -38,7 +35,6 @@ router.post('/login', (req, res) => {
                 query('insert into tokens(user, token, expires_at) values(?, ?, ?)',  [result[0].id, Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2)+Math.random().toString(36).substring(2), new Date(new Date().getTime() + 5259600000).toISOString().slice(0, 19).replace('T', " ")])
             }
         }else{
-            console.log('no hash bad')
             res.status(401).send({result: 'failed', message: 'password wrong'})
         }
         

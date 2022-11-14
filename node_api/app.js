@@ -20,6 +20,15 @@ const query = require('./database/index')
 
 
 
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+io.on("connection", (socket) => {
+  console.log('connected')
+});
 
 
   
@@ -38,4 +47,6 @@ app.use('/workspaces', workspaces_route)
 
 
 
-app.listen(5000);
+
+httpServer.listen(5000);
+//app.listen(5000);

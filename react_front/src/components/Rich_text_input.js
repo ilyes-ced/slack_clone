@@ -1,4 +1,6 @@
 import { useState, useRef, createElement } from 'react'
+import { Fragment } from 'react' // react version > 16.0
+
 
 
 function Rich_text_input() {
@@ -6,9 +8,11 @@ function Rich_text_input() {
     const [is_disabled, change_ability] = useState(false)
     const text_value = [{type: 'strong',content:'hello boldy'}, {type: 'i',content:'italia'}]
     var vv =    ''
-    for(let i=0; i< text_value.length; i++){
-        vv = vv + '<'+text_value[i].type+'>'+text_value[i].content+'</'+text_value[i].type+'>'
-    }
+    var thisIsMyCopy = (
+        <Fragment> 
+            {text_value.map(element => <div className={element.type}> {element.content} </div>)}
+        </Fragment>
+      )
     console.log(vv)
 
 
@@ -32,7 +36,9 @@ function Rich_text_input() {
                     <button disabled={is_disabled} onClick={clicked} className='text_icons'>code</button>
                     <button disabled={is_disabled} onClick={clicked} className='text_icons'>code block</button>
                 </div>
-                <div contenteditable="true" id='rich_text_field' dangerouslySetInnerHTML={{ __html: vv }}></div>
+                <div contenteditable="true" id='rich_text_field' >
+                    {thisIsMyCopy}
+                </div>
                 {/* {onBlur={() => {change_ability(true)} 
                 <textarea  ref={text_input} onKeyUp={textarea_size} onFocus={() => {change_ability(false)}}  name="" ></textarea>
                 */}

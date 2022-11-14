@@ -12,31 +12,32 @@ CREATE TABLE users (
 );
 
 CREATE TABLE verifications(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,*/
     user int NOT NULL,
     email_verified Boolean,
     email_verification_code VARCHAR(255),
     is_active Boolean,
-    PRIMARY KEY (id),
+    PRIMARY KEY (user),
     FOREIGN KEY (user) REFERENCES users(id)
 );
 
 CREATE TABLE notifications(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,*/
     user int NOT NULL,
     sender int NOT NULL,
 
+    PRIMARY KEY (sender, user)
     FOREIGN KEY (sender) REFERENCES users(id),
     FOREIGN KEY (user) REFERENCES users(id),
-    PRIMARY KEY (id)
 );
 
 CREATE TABLE tokens(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id),*/
     user int NOT NULL UNIQUE,
     token VARCHAR(255),
     expires_at DATETIME,
-    PRIMARY KEY (id),
+    PRIMARY KEY (user),
     FOREIGN KEY (user) REFERENCES users(id)
 );
 
@@ -68,27 +69,27 @@ CREATE TABLE channels(
 );
 
 CREATE TABLE channels_members(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,*/
     channel int NOT NULL,
     member int NOT NULL,
     joined_at DATETIME,
-    PRIMARY KEY (id),
+    PRIMARY KEY (channel, member),
     FOREIGN KEY (channel) REFERENCES channels(id),
     FOREIGN KEY (member) REFERENCES users(id)
 );
 
 CREATE TABLE users_users(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,*/
     sender int NOT NULL,
     reciever int NOT NULL,
     first_contact_at DATETIME,
-    PRIMARY KEY (id),
+    PRIMARY KEY (sender, reciever),
     FOREIGN KEY (sender) REFERENCES users(id),
     FOREIGN KEY (reciever) REFERENCES users(id)
 );
 
 CREATE TABLE workspaces_colors(
-    id int NOT NULL AUTO_INCREMENT,
+    /*id int NOT NULL AUTO_INCREMENT,*/
     workspace int NOT NULL,
     color1 VARCHAR(255),
     color2 VARCHAR(255),
@@ -96,7 +97,7 @@ CREATE TABLE workspaces_colors(
     color4 VARCHAR(255),
     color5 VARCHAR(255),
     color6 VARCHAR(255),
-    PRIMARY KEY (id),
+    PRIMARY KEY (workspace),
     FOREIGN KEY (workspace) REFERENCES workspaces(id)
 );
 

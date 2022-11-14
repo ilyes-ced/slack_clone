@@ -15,14 +15,15 @@ function Login() {
             body: JSON.stringify({email: email.current.value, password: password.current.value})
         }).then((response) => {
 				if(response.status == 200){
-					nav('/')
 					return response.json()
 				}else if(response.status == 401){
 					return response.json()
 				}
 			}).then(data => {
+				console.log(data.result)
 				if(data.result == 'success'){
 					localStorage.setItem('user_data', JSON.stringify(data.message))
+					nav('/')
 				}
 			})
     }

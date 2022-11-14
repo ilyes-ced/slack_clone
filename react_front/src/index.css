@@ -98,7 +98,6 @@ body {
 
 
 #rich_text_input{
-    height: 150px;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -107,8 +106,21 @@ body {
     border: white solid 1px;
     border-radius: 10px;
     background-color: var(--color5);
+	padding: 5px;
 }
-
+#rich_text_field{
+	resize: none;
+	height: 33.33%;
+	width: 100%;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	color: var(--color_text)
+}
+#rich_text_bottom_icon_bar, #rich_text_top_icon_bar{
+	height: 33.33%;
+	width: 100%;
+}
 
 #messages_cntainer{
     height: calc(100% - 200px);

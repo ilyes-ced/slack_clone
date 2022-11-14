@@ -4,6 +4,7 @@ require('dotenv').config()
 
 app.use(express.json())
 app.use((req, res, next) => {
+    /* process.env.REACT_APP_URL */
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");

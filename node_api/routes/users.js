@@ -16,17 +16,15 @@ const generate_expiration_date = () => {
 
 
 router.post('/login', (req, res) => {
-    console.log('request start')
     if(!(req.body.email && req.body.password)){
         res.status(401).send({result: 'failed', message: 'username and password required'})
         return
     }
-    query('select *, users.id from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
+    query('select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at  from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
         if(err){
             console.log(err)
             return
         }
-        console.log(result)
 
         if(result.length == 0){
             res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
@@ -61,8 +59,7 @@ router.post('/login', (req, res) => {
 
 
 router.post('/verify_user', (req, res) => {
-    console.log(req.body)
-    query(`select users.id, users.email, users.profile_image, users.created_at,tokens.token, tokens.expires_at 
+    query(`select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at 
         from users left join tokens on users.id = tokens.user where users.email=?`, [req.body.email], (err, result) => {
         if(err){
             console.log(err)
@@ -71,16 +68,7 @@ router.post('/verify_user', (req, res) => {
         
         if(result.length > 0){
             if(result[0].token){
-                console.log(result[0].expires_at)
-                console.log(new Date())
-
                 if(result[0].expires_at > new Date()){
-                    console.log('true')
-                }else{
-                    console.log('false')
-                }
-                if(result[0].expires_at > new Date()){
-                    console.log('token not expired')
                     res.status(200).send(JSON.stringify({result: 'success', message: result[0]}))
                     return
                 }else{
@@ -109,11 +97,21 @@ router.post('/register', (req, res) => {
         res.status(401).send({result: 'failed', message: 'username and email and password required'})
         return
     }
-    console.log(req.body)
-    query('insert into users(username, email, password) values(?, ?, ?)', [req.body.username, req.body.email, bcrypt.hashSync(req.body.password, 10)], (err, result) => {
-        if(err) return err
+    query('select * from users where email=?', [req.body.email], (err, result) => {
+        if(err){
+            console.log(err)
+        }
         console.log(result)
+        if(result.length == 0){
+            query('insert into users(username, email, password) values(?, ?, ?)', [req.body.username, req.body.email, bcrypt.hashSync(req.body.password, 10)], (err, result) => {
+                if(err) return err
+            })
+        }else{
+            console.log('replicated')
+            res.status(401).send({result: 'failed', message: 'email already taken'})
+        }
     })
+
 })
 
 

@@ -1,10 +1,11 @@
-function Side_bar() {
+function Side_bar(props) {
+    console.log(props.channels)
     return(
         <div id='side_bar'>
 
 
             <div className='side_bar_elements'  id='workspace_div'>
-                worrkspace name
+                {props.workspace.name}
             </div>
 
 
@@ -16,11 +17,8 @@ function Side_bar() {
 
 
             <div id='side_bar_channels' className='side_bar_elements' >
-                <div className='channels_elements side_bar_sub_elements'>channnels here</div>
-                <div className='channels_elements side_bar_sub_elements'>channnels here</div>
-                <div className='channels_elements side_bar_sub_elements'>channnels here</div>
-                <div className='channels_elements side_bar_sub_elements'>channnels here</div>
-                <div className='channels_elements side_bar_sub_elements'>channnels here</div>
+                <div className='channels_elements side_bar_sub_elements'>add channel here</div>
+                {props.channels.map(element => <div key={element.id } className='channels_elements side_bar_sub_elements'>{element.name}</div> )}
             </div>
 
 

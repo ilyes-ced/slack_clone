@@ -1,16 +1,27 @@
 import Rich_text_input from "./Rich_text_input";
 
+
+
+
 function Main_container() {
+
+
+
+
+
+
+
+
+
     return(
         <div id='main_container'>
-
             <div id='main_container_title_bar'>
                 <div id='main_container_title'>title</div>
-                <div id='main_container_options'>icons here</div>
+                <div id='main_container_options'>number of members active members ans show all members</div>
             </div>
 
             
-
+            
             <div id='messages_cntainer'>
 
 

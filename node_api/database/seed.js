@@ -10,6 +10,9 @@ const users = [
     ["oussama", "oussama@gmail.com", "password", ],
 ]
 
+const workspaces = [
+    ["52", 'my first workspace',]
+]
 
 
 

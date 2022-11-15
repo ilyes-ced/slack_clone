@@ -5,28 +5,61 @@ import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 
 
+
+
+
+/*
+import io from 'socket.io-client';
+const socket = io('http://localhost:5000'); 
+*/
+
+
+
+
+
 function Home_page() {
 
+ // change to none for real authentication
 
+    const [workspace, set_workspace] = useState({})
+    const [channels, set_channels] = useState([])
     const [is_auth, set_is_auth] = useState("none")
-    useEffect(() => {
-        console.log(localStorage.getItem("user_data"))
-        fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
+    useEffect(async () => {
+        await fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: localStorage.getItem('user_data')
         }).then((response) => response.json())
         .then(data => {
-            console.log(data)
             if(data.result == 'failed'){
                 set_is_auth('redirect')
-                console.log(is_auth)
-                console.log(data)
             }else if(data.result == 'success'){
                 set_is_auth('auth')
-                console.log(is_auth)
             }
         })
+        /*
+        socket.emit('join_room')
+        socket.on('connection', () => {
+            alert(true);
+        })
+        */
+
+        
+        await fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json())
+            .then(data => {
+                if(data.result == 'failed'){
+                    
+                }else if(data.result == 'success'){
+                    set_workspace(data.message.workspace)
+                    set_channels(data.message.channels)
+                }
+            })
+    
+
+
     }, [])
 
 
@@ -39,11 +72,12 @@ function Home_page() {
         <>
             <App_bar/>
             <div id="main_window">
-                <Side_bar/>
-                <Main_container/>
+                <Side_bar workspace={workspace} channels={channels} />
+                <Main_container workspace={workspace} channels={channels} />
             </div>
         </>
     )
+    return <div id='loader_parent'><div class="loader"></div> </div>
 }
 
 

@@ -1,50 +1,76 @@
-import { useState, useRef, createElement } from 'react'
-import { Fragment } from 'react' // react version > 16.0
+import { useEffect, useState, useRef, createElement } from 'react'
+import { socket } from '../events/socket'
 
 
 
 function Rich_text_input() {
     const text_input = useRef(null)
-    const [is_disabled, change_ability] = useState(false)
-    const text_value = [{type: 'strong',content:'hello boldy'}, {type: 'i',content:'italia'}]
-    var vv =    ''
-    var thisIsMyCopy = (
-        <Fragment> 
-            {text_value.map(element => <div className={element.type}> {element.content} </div>)}
-        </Fragment>
-      )
-    console.log(vv)
+    const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
+    const [text_value, change_text_value] = useState([{classes: '', content: ''}]/*[{classes: 'strong',content:'hello boldy'}, {classes: 'i',content:'italia'}]*/)
+    var text_value_tempo
+    //change_text_value([...text_value, {classes: 'test class', content: 'rugerughzpurq'}])
 
 
-    const clicked = (e) => {
-        if(e.target.innerText == 'bold'){
-            e.target.style.backgroundColor = 'green' === 'green' ? '' : 'green'
+
+    useEffect(() => {
+
+        socket.emit('rich_text', {value: 'azadazda'})
+        function handleClickOutside(event) {
+          if (text_input.current && !text_input.current.contains(event.target)) {
+            //alert("You clicked outside of me!")
+          }
         }
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside)
+        }
+      }, [text_input])
+    const icon_click = (e) => {
+        if(e.target.classList.contains('text_icons')){
+            //change_ability([true,true,true,true,true,true,true,true,true])
+            text_input.current.focus()
+        }
+
+        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
+        change_text_value([...text_value, {classes : e.target.id, content:''}])
+        
+    }
+    const submit_text = () => {
+        socket.emit('sent_message', {value: text_value})
+    }
+    const input_change = (e) => {
+        text_value_tempo = text_value
+        text_value_tempo[text_value_tempo.length-1].content = text_value_tempo[text_value_tempo.length-1].content+text_input.current.innerText
+        text_input.current.innerText = ''
+        change_text_value(text_value_tempo)
+        console.log(text_value)
     }
 
     return(
         <div id='rich_text_input'>
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>bold</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>italic</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>line over</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>link</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>list</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>numbered list</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>quote</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>code</button>
-                    <button disabled={is_disabled} onClick={clicked} className='text_icons'>code block</button>
+                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >bold</button>
+                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' >italic</button>
+                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' >line over</button>
+                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' >link</button>
+                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' >list</button>
+                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' >numbered list</button>
+                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' >quote</button>
+                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' >code</button>
+                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' >code block</button>
                 </div>
-                <div contenteditable="true" id='rich_text_field' >
-                    {thisIsMyCopy}
+
+                
+                <div ref={text_input} contenteditable="true" id='rich_text_field' onInput={input_change} onFocus={() => {change_ability(false)}} >
+                    {text_value.map((element) => <div className={element.classes}> {element.content} </div>)}
                 </div>
                 {/* {onBlur={() => {change_ability(true)} 
                 <textarea  ref={text_input} onKeyUp={textarea_size} onFocus={() => {change_ability(false)}}  name="" ></textarea>
                 */}
                 <div id='rich_text_bottom_icon_bar'>
                     icons here
-                    <div id='submit_text'>
+                    <div id='submit_text' onClick={submit_text}>
                         send_icon
                     </div>
                 </div>

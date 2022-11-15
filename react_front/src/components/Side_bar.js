@@ -1,5 +1,17 @@
+import { useEffect } from "react";
+import event_bus from "../events/event_bus";
+
 function Side_bar(props) {
-    console.log(props.channels)
+    
+
+    const change_chat = (e) => {
+        if(e.target.classList.contains('channels_elements')){
+            event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id });
+        }else{
+            event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id });
+        }
+    }
+
     return(
         <div id='side_bar'>
 
@@ -18,16 +30,16 @@ function Side_bar(props) {
 
             <div id='side_bar_channels' className='side_bar_elements' >
                 <div className='channels_elements side_bar_sub_elements'>add channel here</div>
-                {props.channels.map(element => <div key={element.id } className='channels_elements side_bar_sub_elements'>{element.name}</div> )}
+                {props.channels.map(element => <div key={element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={element.id} >{element.name}</div> )}
             </div>
 
 
             <div id='side_bar_chats' className='side_bar_elements' >
-                <div className='chats_elements side_bar_sub_elements'>to</div>
-                <div className='chats_elements side_bar_sub_elements'>to</div>
-                <div className='chats_elements side_bar_sub_elements'>to</div>
-                <div className='chats_elements side_bar_sub_elements'>to</div>
-                <div className='chats_elements side_bar_sub_elements'>to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
             </div>
         
         

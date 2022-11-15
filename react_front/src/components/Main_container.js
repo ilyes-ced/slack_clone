@@ -1,13 +1,19 @@
 import Rich_text_input from "./Rich_text_input";
+import event_bus from "../events/event_bus";
+import { useEffect, useState } from "react";
 
 
 
 
-function Main_container() {
+function Main_container(props) {
 
-
-
-
+    const [current_channel, set_current_channel] = useState(props.channels[0])
+    useEffect(() => {
+        event_bus.on("select_chat", (data) =>{
+            alert('data is here dispatched')
+            props.channels.find(ele => console.log(ele.id=4))
+        })
+    }, [])
 
 
 
@@ -15,99 +21,43 @@ function Main_container() {
 
     return(
         <div id='main_container'>
-            <div id='main_container_title_bar'>
-                <div id='main_container_title'>title</div>
-                <div id='main_container_options'>number of members active members ans show all members</div>
-            </div>
-
-            
-            
-            <div id='messages_cntainer'>
 
 
-                <div className='period_of_messages'>
-                    <div className="period_of_messages_button_div">
-                        <button className="period_of_messages_button">date here</button>
+
+
+
+                <div>
+                    <div id='main_container_title_bar'>
+                        <div id='main_container_title'>{current_channel}</div>
+                        <div id='main_container_options'>number of members active members ans show all members</div>
                     </div>
-                
-                    <div className="message">
-                        <img className='sener_pfp' src="/img.png" alt="unavailable" />
-                        <div className='message_data'>
-                            <div className='sender_data'>
-                                <p className='message_user'>username</p>
-                                <p className='message_time'>time</p>
+
+                    <div id='messages_cntainer'>
+                        <div className='period_of_messages'>
+                            <div className="period_of_messages_button_div">
+                                <button className="period_of_messages_button">date here</button>
                             </div>
-                            <p className="message_content">message bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage bigessage big</p>
+                            <div className="message">
+                                <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                                <div className='message_data'>
+                                    <div className='sender_data'>
+                                        <p className='message_user'>username</p>
+                                        <p className='message_time'>time</p>
+                                    </div>
+                                    <p className="message_content">message big</p>
+                                </div>
+                            </div>
+                            <div className='message_same_user'>
+                                <p className="message_content">e  e bigege bigessage bigessage </p>
+                            </div> 
                         </div>
                     </div>
-                    <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div> <div className='message_same_user'>
-                        <p className="message_content">e  e bigege bigessage bigessage </p>
-                    </div>
-                
-
                 </div>
+            
 
 
 
-            </div>
+
 
 
             <Rich_text_input/>

@@ -24,8 +24,8 @@ function Home_page() {
     const [workspace, set_workspace] = useState({})
     const [channels, set_channels] = useState([])
     const [is_auth, set_is_auth] = useState("none")
-    useEffect(async () => {
-        await fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
+    useEffect(() => {
+        fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: localStorage.getItem('user_data')
@@ -45,7 +45,7 @@ function Home_page() {
         */
 
         
-        await fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {
+        fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
             }).then((response) => response.json())

@@ -20,7 +20,7 @@ router.post('/login', (req, res) => {
         res.status(401).send({result: 'failed', message: 'username and password required'})
         return
     }
-    query('select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at  from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
+    query('select users.id, users.email, users.password, users.profile_image ,tokens.token, tokens.expires_at  from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
         if(err){
             console.log(err)
             return
@@ -30,8 +30,8 @@ router.post('/login', (req, res) => {
             res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
             return
         }
-        
         if(bcrypt.compareSync(req.body.password, result[0].password)){
+            delete result[0].password
             if(result[0].token){
                 if(result[0].expires_at < new Date().toISOString().slice(0, 19).replace('T', " ")){
                     query('update tokens set token=?, expires_at=? where user=? ',  [generate_token(), result[0].id, generate_expiration_date()])

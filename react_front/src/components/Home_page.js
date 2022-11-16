@@ -21,6 +21,8 @@ function Home_page() {
 
  // change to none for real authentication
 
+    const [show_page, set_show_page] = useState(false)
+    const [show_page2, set_show_page2] = useState(false)
     const [workspace, set_workspace] = useState({})
     const [channels, set_channels] = useState([])
     const [is_auth, set_is_auth] = useState("none")
@@ -35,6 +37,7 @@ function Home_page() {
                 set_is_auth('redirect')
             }else if(data.result == 'success'){
                 set_is_auth('auth')
+                set_show_page(true)
             }
         })
         /*
@@ -55,6 +58,7 @@ function Home_page() {
                 }else if(data.result == 'success'){
                     set_workspace(data.message.workspace)
                     set_channels(data.message.channels)
+                    set_show_page2(true)
                 }
             })
     
@@ -68,7 +72,7 @@ function Home_page() {
     if(is_auth == 'redirect'){
         return <Navigate replace to="/login" />
     }
-    if(is_auth == 'auth') return(
+    if(is_auth == 'auth' && show_page && show_page2) return(
         <>
             <App_bar/>
             <div id="main_window">

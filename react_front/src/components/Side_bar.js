@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import event_bus from "../events/event_bus";
 
 function Side_bar(props) {

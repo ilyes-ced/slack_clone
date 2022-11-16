@@ -68,8 +68,17 @@ CREATE TABLE channels(
     FOREIGN KEY (workspace) REFERENCES workspaces(id)
 );
 
-CREATE TABLE channels_members(
+CREATE TABLE workspaces_members(
     /*id int NOT NULL AUTO_INCREMENT,*/
+    workspace int NOT NULL,
+    member int NOT NULL,
+    joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (workspace, member),
+    FOREIGN KEY (workspace) REFERENCES workspaces(id),
+    FOREIGN KEY (member) REFERENCES users(id)
+);
+/*
+CREATE TABLE channels_members(
     channel int NOT NULL,
     member int NOT NULL,
     joined_at DATETIME,
@@ -77,7 +86,7 @@ CREATE TABLE channels_members(
     FOREIGN KEY (channel) REFERENCES channels(id),
     FOREIGN KEY (member) REFERENCES users(id)
 );
-
+*/
 CREATE TABLE users_users(
     /*id int NOT NULL AUTO_INCREMENT,*/
     sender int NOT NULL,

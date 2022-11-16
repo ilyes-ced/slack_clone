@@ -14,11 +14,9 @@ function Main_container(props) {
             headers: { 'Content-Type': 'application/json' }
         }).then((response) => response.json())
         .then(data => {
-            console.log(data)
             if(data.result == 'failed'){
                 
             }else if(data.result == 'success'){
-                console.log(data.message)
                 return data.message
             }
         })
@@ -75,34 +73,27 @@ function Main_container(props) {
                 <div id='messages_cntainer'>
 
          
-                    {current_message_array.map(ele => 
-                        <div key={ele.id} className='period_of_messages'>
+                    {current_message_array.map((ele, index, arr) => 
+                    <div key={ele.id} className=''>
+                        {(arr[index].message )}
                         <div className="period_of_messages_button_div">
-                            <button className="period_of_messages_button">date here</button>
+                            <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
                         </div>
                         <div className="message">
                             <img className='sener_pfp' src="/img.png" alt="unavailable" />
                             <div className='message_data'>
                                 <div className='sender_data'>
-                                    <p className='message_user'>username</p>
-                                    <p className='message_time'>time</p>
+                                    <p className='message_user'> {ele.sender_username} </p>
+                                    <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                 </div>
                                 <p className="message_content"> {ele.message} </p>
                             </div>
                         </div>
-                        <div className='message_same_user'>
+                        {/*<div className='message_same_user'>
                             <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                        </div> 
+                        </div> */}
+                        <p className="message_same_user message_content">e  e bigege bigessage bigessage </p>
+
                     </div>
                     )}
 

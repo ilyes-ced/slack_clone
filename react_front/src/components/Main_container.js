@@ -72,27 +72,55 @@ function Main_container(props) {
                 </div>
                 <div id='messages_cntainer'>
 
-         
+                    {/*<div className="period_of_messages_button_div">
+                        <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
+                    </div>*/}
                     {current_message_array.map((ele, index, arr) => 
                     <div key={ele.id} className=''>
-                        {(arr[index].message )}
+                        {/*  */}
+                        {arr[index-1] ? (new Date(ele.created_at).getDay() == new Date(arr[index-1].created_at).getDay() ? 
+                                console.log('rgrg')
+                            : 
+                            <div className="period_of_messages_button_div">
+                                <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
+                            </div>
+                        ) : 
                         <div className="period_of_messages_button_div">
                             <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
                         </div>
-                        <div className="message">
-                            <img className='sener_pfp' src="/img.png" alt="unavailable" />
-                            <div className='message_data'>
-                                <div className='sender_data'>
-                                    <p className='message_user'> {ele.sender_username} </p>
-                                    <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
+                        }
+
+
+                        {arr[index-1] ? (ele.sender == arr[index-1].sender ? 
+                            <p className="message_same_user message_content">e  e bigege bigessage bigessage </p> :
+                            <div className="message">
+                                <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                                <div className='message_data'>
+                                    <div className='sender_data'>
+                                        <p className='message_user'> {ele.sender_username} </p>
+                                        <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
+                                    </div>
+                                    <p className="message_content"> {ele.message} </p>
                                 </div>
-                                <p className="message_content"> {ele.message} </p>
                             </div>
-                        </div>
+                            ) : 
+                            <div className="message">
+                                <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                                <div className='message_data'>
+                                    <div className='sender_data'>
+                                        <p className='message_user'> {ele.sender_username} </p>
+                                        <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
+                                    </div>
+                                    <p className="message_content"> {ele.message} </p>
+                                </div>
+                            </div>
+                        }
+
+
                         {/*<div className='message_same_user'>
                             <p className="message_content">e  e bigege bigessage bigessage </p>
                         </div> */}
-                        <p className="message_same_user message_content">e  e bigege bigessage bigessage </p>
+                        
 
                     </div>
                     )}

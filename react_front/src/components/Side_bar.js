@@ -29,7 +29,7 @@ function Side_bar(props) {
 
             <div id='side_bar_channels' className='side_bar_elements' >
                 <div className='channels_elements side_bar_sub_elements'>add channel here</div>
-                {props.channels.map(element => <div key={element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={element.id} >{element.name}</div> )}
+                {props.channels.map(element => <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={element.id} >{element.name}</div> )}
             </div>
 
 

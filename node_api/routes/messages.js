@@ -44,7 +44,7 @@ router.get('/', auth,(req, res) => {
             return err
         }
         if(result.length > 0){
-            query(`select *,(select username from users where id = sender) as sender_username from messages where channel = ? limit 10`, [req.query.channel_id], (err, result) => {
+            query(`select *,(select username from users where id = sender) as sender_username from messages where channel = ? `, [req.query.channel_id], (err, result) => {
                 if(err){
                     console.log(err)
                     return err

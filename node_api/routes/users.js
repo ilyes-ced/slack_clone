@@ -101,13 +101,11 @@ router.post('/register', (req, res) => {
         if(err){
             console.log(err)
         }
-        console.log(result)
         if(result.length == 0){
             query('insert into users(username, email, password) values(?, ?, ?)', [req.body.username, req.body.email, bcrypt.hashSync(req.body.password, 10)], (err, result) => {
                 if(err) return err
             })
         }else{
-            console.log('replicated')
             res.status(401).send({result: 'failed', message: 'email already taken'})
         }
     })

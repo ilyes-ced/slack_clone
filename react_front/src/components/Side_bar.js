@@ -1,7 +1,13 @@
+import { useState } from "react";
 import event_bus from "../events/event_bus";
 
 function Side_bar(props) {
-    
+
+    const [show_add_channel, set_show_add_channel] = useState(false)
+    const hide_show_modal = (e) => {
+        if(e.currentTarget == e.target)
+        set_show_add_channel(!show_add_channel)
+    }
 
     const change_chat = (e) => {
         if(e.target.classList.contains('channels_elements')){
@@ -28,9 +34,18 @@ function Side_bar(props) {
 
 
             <div id='side_bar_channels' className='side_bar_elements' >
-                <div className='channels_elements side_bar_sub_elements'>add channel here</div>
+                <div onClick={() => {set_show_add_channel(!show_add_channel)}} className='channels_elements side_bar_sub_elements'>add channel here</div>
                 {props.channels.map(element => <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={element.id} >{element.name}</div> )}
             </div>
+
+
+            { show_add_channel ? 
+                <div className='modal' onClick={hide_show_modal} > 
+                    <div className='modal_content'> hello </div>
+                </div>
+            : console.log('gg') }
+            
+            
 
 
             <div id='side_bar_chats' className='side_bar_elements' >

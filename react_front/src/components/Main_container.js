@@ -71,13 +71,11 @@ function Main_container(props) {
                     <div id='main_container_options'>{current_channel.members_count} active memebers later V </div>
                 </div>
                 <div id='messages_cntainer'>
-
-                    {/*<div className="period_of_messages_button_div">
-                        <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
-                    </div>*/}
                     {current_message_array.map((ele, index, arr) => 
                     <div key={ele.id} className=''>
-                        {/*  */}
+
+
+                        {/* display the date div */}
                         {arr[index-1] ? (new Date(ele.created_at).getDay() == new Date(arr[index-1].created_at).getDay() ? 
                                 console.log('rgrg')
                             : 
@@ -91,6 +89,7 @@ function Main_container(props) {
                         }
 
 
+                        {/* display the message div */}
                         {arr[index-1] ? (ele.sender == arr[index-1].sender ? 
                             <p className="message_same_user message_content">e  e bigege bigessage bigessage </p> :
                             <div className="message">
@@ -115,13 +114,7 @@ function Main_container(props) {
                                 </div>
                             </div>
                         }
-
-
-                        {/*<div className='message_same_user'>
-                            <p className="message_content">e  e bigege bigessage bigessage </p>
-                        </div> */}
                         
-
                     </div>
                     )}
 

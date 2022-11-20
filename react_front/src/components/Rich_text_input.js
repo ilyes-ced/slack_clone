@@ -39,11 +39,17 @@ function Rich_text_input() {
         socket.emit('sent_message', {value: text_value})
     }
     const input_change = (e) => {
+        //alert(text_input.current.textContent)
         text_value_tempo = text_value
-        text_value_tempo[text_value_tempo.length-1].content = text_value_tempo[text_value_tempo.length-1].content+text_input.current.innerText
-        text_input.current.innerText = ''
+        text_value_tempo[text_value_tempo.length-1].content = text_value_tempo[text_value_tempo.length-1].content+text_input.current.textContent
+        //text_input.current.innerText = ''
         change_text_value(text_value_tempo)
         console.log(text_value)
+
+
+        if(text_value[text_value.length-1].content == ""){
+            change_text_value(text_input.pop())
+        }
     }
 
     return(

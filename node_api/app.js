@@ -38,14 +38,17 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   console.log('connected')
-  
+  socket.join('test_room')
+
   socket.on('rich_text', (data) => {
     console.log('rich rich')
-    console.log(data)
+    console.log(data+"*********************")
+    socket.to('test_room').emit('hello there')
   })
   socket.on('sent_message', (data) => {
-    console.log(data)
+    console.log((data))
   })
+  //socket.emit('test_room', 'some data')
 })
 
 

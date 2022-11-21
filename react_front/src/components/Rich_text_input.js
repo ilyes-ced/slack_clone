@@ -7,13 +7,12 @@ function Rich_text_input() {
     const text_input = useRef(null)
     const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
     const [text_value, change_text_value] = useState([{classes: 'bold',content:'hello boldy'}, {classes: 'italic',content:'italia'}])
-    var text_value_tempo
+    var text_value_tempo = []
     //change_text_value([...text_value, {classes: 'test class', content: 'rugerughzpurq'}])
 
 
 
     useEffect(() => {
-
         socket.emit('rich_text', {value: 'azadazda'})
         function handleClickOutside(event) {
           if (text_input.current && !text_input.current.contains(event.target)) {
@@ -24,7 +23,9 @@ function Rich_text_input() {
         return () => {
           document.removeEventListener("mousedown", handleClickOutside)
         }
-      }, [text_input])
+      }, [/*text_input*/])
+
+      
     const icon_click = (e) => {
         if(e.target.classList.contains('text_icons')){
             //change_ability([true,true,true,true,true,true,true,true,true])
@@ -36,15 +37,17 @@ function Rich_text_input() {
         
     }
     const submit_text = () => {
-        socket.emit('sent_message', {value: text_value})
-    }
-    const input_change = (e) => {
-        text_value_tempo = text_value
+
+        //text_value_tempo = text_value
         for(let i = 0; i < text_input.current.children.length; i++){
             console.log(text_input.current.children[i].innerText)
-            text_value_tempo.push({classes : text_input.current.children[i].classList ,content : text_input.current.children[i].innerText})
+            text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
         }
         console.log(text_value_tempo)
+        socket.emit('sent_message', {value: text_value_tempo    })
+    }
+    const input_change = (e) => {
+        
 
         /*
         //alert(text_input.current.textContent)

@@ -7,13 +7,7 @@ import { useEffect, useState } from 'react'
 
 
 
-
-
-import io from 'socket.io-client';
-const socket = io('http://localhost:5000'); 
-
-
-
+import { socket } from '../events/socket'
 
 
 
@@ -40,12 +34,12 @@ function Home_page() {
                 set_show_page(true)
             }
         })
-        /*
+        
         socket.emit('join_room')
-        socket.on('connection', () => {
-            alert(true);
+        
+        socket.on('test_room', (data) => {
+            alert(data);
         })
-        */
 
         
         fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {

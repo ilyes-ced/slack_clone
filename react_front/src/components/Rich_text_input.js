@@ -13,7 +13,6 @@ function Rich_text_input() {
 
 
     useEffect(() => {
-        socket.emit('rich_text', {value: 'azadazda'})
         function handleClickOutside(event) {
           if (text_input.current && !text_input.current.contains(event.target)) {
             //alert("You clicked outside of me!")
@@ -44,7 +43,7 @@ function Rich_text_input() {
             text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
         }
         console.log(text_value_tempo)
-        socket.emit('sent_message', {value: text_value_tempo    })
+        socket.emit('sent_message', {value: text_value_tempo })
     }
     const input_change = (e) => {
         

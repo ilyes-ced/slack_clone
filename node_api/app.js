@@ -39,16 +39,16 @@ const io = new Server(httpServer, {
 io.on("connection", (socket) => {
   console.log('connected')
   socket.join('test_room')
+  console.log(socket.rooms)
+  
 
-  socket.on('rich_text', (data) => {
-    console.log('rich rich')
-    console.log(data+"*********************")
-    socket.to('test_room').emit('hello there')
-  })
+
   socket.on('sent_message', (data) => {
     console.log((data))
+    io.in('test_room').emit('datdatdatdat')
+    socket.to('test_room').emit('datdatdatdat')
   })
-  //socket.emit('test_room', 'some data')
+  //
 })
 
 

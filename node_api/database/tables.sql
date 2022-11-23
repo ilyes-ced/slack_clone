@@ -124,6 +124,21 @@ CREATE TABLE messages(
 );
 
 
+CREATE TABLE blocks(
+    blocker int NOT NULL,
+    blocked int NOT NULL,
+
+    FOREIGN KEY (blocker) REFERENCES users(id),
+    FOREIGN KEY (blocked) REFERENCES users(id)
+);
+
+CREATE TABLE workspaces_config(
+
+)
+
+CREATE TABLE channels_config(
+    
+)
 
 /*CREATE INDEX NAME_OF_INDEX ON table_name(cols)*/
 

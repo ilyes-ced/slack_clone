@@ -35,7 +35,6 @@ function Home_page() {
             }
         })
         
-        socket.emit('join_room')
         
         socket.on('test_room', (data) => {
             alert(data);

@@ -4,12 +4,12 @@ require('dotenv').config()
 
 app.use(express.json())
 app.use((req, res, next) => {
-    /* process.env.REACT_APP_URL */
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000")
-    res.header("Access-Control-Allow-Credentials", "true")
-    res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With")
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-    next()
+		/* process.env.REACT_APP_URL */
+		res.header("Access-Control-Allow-Origin", "http://localhost:3000")
+		res.header("Access-Control-Allow-Credentials", "true")
+		res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With")
+		res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		next()
 })
 
 
@@ -25,34 +25,65 @@ const { Server } = require("socket.io")
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
-    cors: {
-        origin:"http://localhost:3000",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["my-custom-header"],
-        credentials: true
-    }
+		cors: {
+				origin:"http://localhost:3000",
+				methods: ["GET", "POST"],
+				allowedHeaders: ["my-custom-header"],
+				credentials: true
+		}
 })
 
 
 
+app.post('/users/verify_user', (req, res) => {
+    query(`select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at 
+        from users left join tokens on users.id = tokens.user where users.email=?`, [req.body.email], (err, result) => {
+        if(err){
+            console.log(err)
+            return
+        }
+        
+        if(result.length > 0){
+            if(result[0].token){
+                if(result[0].expires_at > new Date()){
+                    res.status(200).send(JSON.stringify({result: 'success', message: result[0]}))
+                    return
+                }else{
+                    res.status(401).send({result: 'failed', message: 'token expired'})
+                    return
+                }
+            }else{
+                res.status(401).send({result: 'failed', message: 'token expired'})
+                return
+            }
+        }else{
+            res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
+            return
+		}
+    })
+})
 
-io.on("connection", (socket) => {
-  console.log('connected')
-  socket.join('test_room')
-  console.log(socket.rooms)
-  
+io.use((socket, next) => {
+
+	next()
+}).on("connection", (socket) => {
+	console.log('connected')
+	console.log(socket.rooms)
+	
+	query('select * from workspaces_members where member=?', [], (err, result) => {
+		socket.join('test_room')
+	})
 
 
-  socket.on('sent_message', (data) => {
-    console.log((data))
-    io.in('test_room').emit('datdatdatdat')
-    socket.to('test_room').emit('datdatdatdat')
-  })
-  //
+	socket.on('sent_message', (data) => {
+		console.log((data))
+		io.in('test_room').emit('room_message', 'datdatdatdat')
+		socket.to('test_room').emit('room_message', 'datdatdatdat')
+	})
 })
 
 
-  
+	
 
 
 

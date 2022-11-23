@@ -3,7 +3,7 @@ import { socket } from '../events/socket'
 
 
 
-function Rich_text_input() {
+function Rich_text_input(props) {
     const text_input = useRef(null)
     const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
     const [text_value, change_text_value] = useState([{classes: 'bold',content:'hello boldy'}, {classes: 'italic',content:'italia'}])
@@ -43,7 +43,7 @@ function Rich_text_input() {
             text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
         }
         console.log(text_value_tempo)
-        socket.emit('sent_message', {value: text_value_tempo })
+        socket.emit('sent_message', {value: text_value_tempo, channel: props.current_channel })
     }
     const input_change = (e) => {
         
@@ -64,6 +64,7 @@ function Rich_text_input() {
 
     return(
         <div id='rich_text_input'>
+            
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
                     <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >bold</button>

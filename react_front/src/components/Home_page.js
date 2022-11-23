@@ -36,7 +36,7 @@ function Home_page() {
         })
         
         
-        socket.on('test_room', (data) => {
+        socket.on('room_message', (data) => {
             alert(data);
         })
 
@@ -49,6 +49,7 @@ function Home_page() {
                 if(data.result == 'failed'){
                     
                 }else if(data.result == 'success'){
+                    console.log(data.message.channels)
                     set_workspace(data.message.workspace)
                     set_channels(data.message.channels)
                     set_show_page2(true)

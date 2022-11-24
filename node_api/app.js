@@ -35,6 +35,22 @@ const io = new Server(httpServer, {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var kk
 app.post('/users/verify_user', (req, res) => {
     query(`select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at 
         from users left join tokens on users.id = tokens.user where users.email=?`, [req.body.email], (err, result) => {
@@ -47,6 +63,9 @@ app.post('/users/verify_user', (req, res) => {
             if(result[0].token){
                 if(result[0].expires_at > new Date()){
                     res.status(200).send(JSON.stringify({result: 'success', message: result[0]}))
+					kk = result[0]
+					console.log(kk)
+					sock(kk)
                     return
                 }else{
                     res.status(401).send({result: 'failed', message: 'token expired'})
@@ -63,24 +82,8 @@ app.post('/users/verify_user', (req, res) => {
     })
 })
 
-io.use((socket, next) => {
-
-	next()
-}).on("connection", (socket) => {
-	console.log('connected')
-	console.log(socket.rooms)
-	
-	query('select * from workspaces_members where member=?', [], (err, result) => {
-		socket.join('test_room')
-	})
 
 
-	socket.on('sent_message', (data) => {
-		console.log((data))
-		io.in('test_room').emit('room_message', 'datdatdatdat')
-		socket.to('test_room').emit('room_message', 'datdatdatdat')
-	})
-})
 
 
 	

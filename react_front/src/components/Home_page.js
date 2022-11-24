@@ -36,9 +36,7 @@ function Home_page() {
         })
         
         
-        socket.on('room_message', (data) => {
-            alert(data);
-        })
+
 
         
         fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {
@@ -60,7 +58,11 @@ function Home_page() {
 
     }, [])
 
-
+    socket.on('room_message', (data) => {
+        console.log(data)
+        alert(data)
+        console.log(channels);
+    })
 
 
     if(is_auth == 'redirect'){

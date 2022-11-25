@@ -50,41 +50,25 @@ const io = new Server(httpServer, {
 
 
 
-var kk
-app.post('/users/verify_user', (req, res) => {
-    query(`select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at 
-        from users left join tokens on users.id = tokens.user where users.email=?`, [req.body.email], (err, result) => {
-        if(err){
-            console.log(err)
-            return
-        }
-        
-        if(result.length > 0){
-            if(result[0].token){
-                if(result[0].expires_at > new Date()){
-                    res.status(200).send(JSON.stringify({result: 'success', message: result[0]}))
-					kk = result[0]
-					console.log(kk)
-					sock(kk)
-                    return
-                }else{
-                    res.status(401).send({result: 'failed', message: 'token expired'})
-                    return
-                }
-            }else{
-                res.status(401).send({result: 'failed', message: 'token expired'})
-                return
-            }
-        }else{
-            res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
-            return
-		}
-    })
+io.on("connection", (socket) => {
+	console.log((socket.handshake.query.user_data))
+	socket.join('test_room')
+	//query('select * from workspaces_members where member=?', [the_user.id], (err, result) => {
+	//	for(let i = 0; i < result.length; i++){
+	//		socket.join('channel_'+result[i].id)
+	//		console.log('roooooooooooooooooooooooooooooooooooooooooms')
+	//	}
+	//	console.log(socket.rooms)
+	//})
+
+
+
+	socket.on('sent_message', (data) => {
+		console.log((data))
+		io.in('test_room').emit('room_message', 'datdatdatdat')
+		socket.to('test_room').emit('room_message', 'datdatdatdat')
+	})
 })
-
-
-
-
 
 	
 

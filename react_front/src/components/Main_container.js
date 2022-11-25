@@ -37,7 +37,6 @@ function Main_container(props) {
 
 
 
-
     //fetch_messages(data)
     useEffect(() => {   
         //sets current channel messages
@@ -127,7 +126,7 @@ function Main_container(props) {
 
 
 
-            <Rich_text_input current_channel={ current_channel.id } />
+            <Rich_text_input socket={props.socket} current_channel={ current_channel.id } />
 
 
 

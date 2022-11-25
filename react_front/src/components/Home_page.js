@@ -7,11 +7,10 @@ import { useEffect, useState } from 'react'
 
 
 
-import { socket } from '../events/socket'
 
 
 
-function Home_page() {
+function Home_page(props) {
 
  // change to none for real authentication
 
@@ -54,15 +53,14 @@ function Home_page() {
                 }
             })
     
-
-
+            props.socket.on('room_message', (data) => {
+                console.log(data)
+                alert(data)
+                console.log(channels);
+            })
     }, [])
 
-    socket.on('room_message', (data) => {
-        console.log(data)
-        alert(data)
-        console.log(channels);
-    })
+
 
 
     if(is_auth == 'redirect'){
@@ -73,7 +71,7 @@ function Home_page() {
             <App_bar/>
             <div id="main_window">
                 <Side_bar workspace={workspace} channels={channels} />
-                <Main_container workspace={workspace} channels={channels} />
+                <Main_container socket={props.socket} workspace={workspace} channels={channels} />
             </div>
         </>
     )

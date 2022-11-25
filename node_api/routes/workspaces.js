@@ -7,13 +7,15 @@ const router = express.Router()
 
 
 router.get('/' ,auth,  (req, res) => {
-    //check is member not onwer
-    query('select *,(select count(*) from workspaces_members where workspace= ?) as members_count from workspaces where owner = ?', [req.query.id, req.query.id], (err,result) => {
+    //TODO: check is member not onwer
+    console.log(req.query)
+    query('select *,(select count(*) from workspaces_members where workspace = id) as members_count from workspaces where owner = ?', [req.query.id, req.query.id], (err,result) => {
         if(err){
             console.log(err)
             return err
         }
         const workspace = result[0]
+        console.log(workspace)
         if(result.length > 0){
             query(`select *,(select count(*) from channels_members where channel= ?) as members_count from channels where workspace = ?`, [result[0].id, result[0].id], (err, result) => {
                 if(err){

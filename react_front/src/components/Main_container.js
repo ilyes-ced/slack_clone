@@ -61,9 +61,8 @@ function Main_container(props) {
     }, [])
 
     useEffect(() => {
+        //TODO: needs fixing probably fires several times
         props.socket.on('room_message', (data) => {
-            //alert('rgrg')
-            //set_current_message_array([...current_message_array, data.data])
             if(current_channel.id == data.data.channel){
                 set_current_message_array([...current_message_array, data.data])
             }else{
@@ -82,7 +81,7 @@ function Main_container(props) {
 
                 <div id='main_container_title_bar'>
                     <div id='main_container_title'>{current_channel.name}</div>
-                    <div id='main_container_options'>{current_channel.members_count} active memebers later V </div>
+                    <div id='main_container_options'>{props.workspace.members_count} later add active memebers later V </div>
                 </div>
                 <div id='messages_cntainer'>
                     {current_message_array.map((ele, index, arr) => 

@@ -43,30 +43,35 @@ const io = new Server(httpServer, {
 
 
 
-
-
+//confirm user and join channels as rooms
+io.use((socket, next) => {
+	const user_data = JSON.parse(socket.handshake.query.user_data)
+	query(`select *, users.id from users left join tokens on users.id = tokens.user where
+	users.email =? and tokens.token =? and tokens.expires_at >? `, [user_data.email, user_data.token, new Date()], (err, result) => {
+		if(err){
+			console.log(err)
+			return
+		}
+		query(`select * from channels where workspace in (select workspace from workspaces_members where member =?)`, [user_data.id], (err, result) => {
+			if(err){
+				console.log(err)
+				return
+			}
+			for(let i = 0; i < result.length; i++){
+				socket.join('channel_'+result[i].id)
+			}
+			next()
+		})
+	})
+})
 
 
 
 
 
 io.on("connection", (socket) => {
-	console.log((socket.handshake.query.user_data))
-	socket.join('test_room')
-	//query('select * from workspaces_members where member=?', [the_user.id], (err, result) => {
-	//	for(let i = 0; i < result.length; i++){
-	//		socket.join('channel_'+result[i].id)
-	//		console.log('roooooooooooooooooooooooooooooooooooooooooms')
-	//	}
-	//	console.log(socket.rooms)
-	//})
-
-
-
 	socket.on('sent_message', (data) => {
-		console.log((data))
-		io.in('test_room').emit('room_message', 'datdatdatdat')
-		socket.to('test_room').emit('room_message', 'datdatdatdat')
+		io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
 	})
 })
 

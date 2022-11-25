@@ -8,6 +8,10 @@ import { socket } from './events/socket'
 
 function App(){
 
+    //socket.on('room_message', (data) => {
+    //    alert(JSON.stringify(data))
+    //})
+
     return(
         <Router>
             {/*login and register routes maybe temporary*/}

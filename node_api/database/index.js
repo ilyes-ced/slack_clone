@@ -15,7 +15,7 @@ const default_callback = (err, result) => {
     console.log(err)
     return err
   }
-  console.log(result)
+  //console.log(result)
   return result
 }
 

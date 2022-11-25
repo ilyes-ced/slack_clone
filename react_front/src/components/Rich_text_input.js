@@ -41,7 +41,7 @@ function Rich_text_input(props) {
             console.log(text_input.current.children[i].innerText)
             text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
         }
-        console.log(text_value_tempo)
+        //console.log(text_value_tempo)
         props.socket.emit('sent_message', {value: text_value_tempo, channel: props.current_channel })
     }
     const input_change = (e) => {

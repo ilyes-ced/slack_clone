@@ -17,6 +17,7 @@ function Main_container(props) {
             if(data.result == 'failed'){
                 
             }else if(data.result == 'success'){
+                console.log(data.message)
                 return data.message
             }
         })
@@ -24,7 +25,7 @@ function Main_container(props) {
 
     var info
     const [current_channel, set_current_channel] = useState(props.channels[0])
-    const [current_message_array, set_current_message_array] = useState()
+    const [current_message_array, set_current_message_array] = useState([])
 
 
 
@@ -54,16 +55,24 @@ function Main_container(props) {
                 }
             })
         })
+
+        props.socket.on('room_message', (data) => {
+            console.log(current_message_array)
+            data.data.message = JSON.parse(data.data.message)
+            alert(typeof(data.data.message))
+            console.log(data.data)
+            set_current_message_array([...current_message_array, JSON.parse(data.data)])
+        })
     }, [])
 
 
 
 
-    if(current_message_array) return(
-        <div id='main_container'>
+    if(current_message_array) {
+        return(
+            <div id='main_container'>
 
-        
-        
+
 
                 <div id='main_container_title_bar'>
                     <div id='main_container_title'>{current_channel.name}</div>
@@ -73,10 +82,9 @@ function Main_container(props) {
                     {current_message_array.map((ele, index, arr) => 
                     <div key={ele.id} className=''>
 
-
                         {/* display the date div */}
                         {arr[index-1] ? (new Date(ele.created_at).getDay() == new Date(arr[index-1].created_at).getDay() ? 
-                                console.log('rgrg')
+                                console.log()
                             : 
                             <div className="period_of_messages_button_div">
                                 <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
@@ -90,7 +98,7 @@ function Main_container(props) {
 
                         {/* display the message div */}
                         {arr[index-1] ? (ele.sender == arr[index-1].sender ? 
-                            <p className="message_same_user message_content">e  e bigege bigessage bigessage </p> :
+                            <p className="message_same_user message_content"> {(ele.message)} </p> :
                             <div className="message">
                                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                                 <div className='message_data'>
@@ -113,26 +121,17 @@ function Main_container(props) {
                                 </div>
                             </div>
                         }
-                        
+
                     </div>
                     )}
-
-
                 </div>
-            
 
+                <Rich_text_input socket={props.socket} current_channel={ current_channel.id } />
 
-
-
-
-
-            <Rich_text_input socket={props.socket} current_channel={ current_channel.id } />
-
-
-
-
-        </div>
-    )
+            </div>
+        )}else{
+        return(' eytrfedzxerctvbhui,;lnhbgvfcdsxdcfgbhjlmyou')
+    }
 }
 
 

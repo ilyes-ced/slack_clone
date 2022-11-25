@@ -45,14 +45,14 @@ const io = new Server(httpServer, {
 
 //confirm user and join channels as rooms
 io.use((socket, next) => {
-	const user_data = JSON.parse(socket.handshake.query.user_data)
+	socket.user_data = JSON.parse(socket.handshake.query.user_data)
 	query(`select *, users.id from users left join tokens on users.id = tokens.user where
-	users.email =? and tokens.token =? and tokens.expires_at >? `, [user_data.email, user_data.token, new Date()], (err, result) => {
+	users.email =? and tokens.token =? and tokens.expires_at >? `, [socket.user_data.email, socket.user_data.token, new Date()], (err, result) => {
 		if(err){
 			console.log(err)
 			return
 		}
-		query(`select * from channels where workspace in (select workspace from workspaces_members where member =?)`, [user_data.id], (err, result) => {
+		query(`select * from channels where workspace in (select workspace from workspaces_members where member =?)`, [socket.user_data.id], (err, result) => {
 			if(err){
 				console.log(err)
 				return
@@ -71,8 +71,25 @@ io.use((socket, next) => {
 
 io.on("connection", (socket) => {
 	socket.on('sent_message', (data) => {
-		io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
+		query(`insert into messages(sender, channel, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
+			if(err){
+				console.log(err)
+				return
+			}	
+			console.log(result)
+			console.log(result.insertId);
+			query('select * from messages where id=?', [result.insertId], (err, result) => {
+				if(err){
+					console.log(err)
+					return
+				}
+				console.log('emitting noe')
+				io.in('channel_'+result[0].channel).emit('room_message', {data: result[0]})
+			})
+			//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
+		})
 	})
+
 })
 
 	

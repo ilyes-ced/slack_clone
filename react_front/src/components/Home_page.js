@@ -53,10 +53,7 @@ function Home_page(props) {
                 }
             })
     
-            props.socket.on('room_message', (data) => {
-                alert(JSON.stringify(data))
-                console.log(channels)
-            })
+
     }, [])
 
 

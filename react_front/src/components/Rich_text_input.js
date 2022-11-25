@@ -35,7 +35,7 @@ function Rich_text_input(props) {
         
     }
     const submit_text = () => {
-
+        console.log('clickeddddddddddddddd')
         //text_value_tempo = text_value
         for(let i = 0; i < text_input.current.children.length; i++){
             console.log(text_input.current.children[i].innerText)

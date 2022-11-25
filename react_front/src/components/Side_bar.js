@@ -11,9 +11,9 @@ function Side_bar(props) {
 
     const change_chat = (e) => {
         if(e.target.classList.contains('channels_elements')){
-            event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id });
+            event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id.split('_')[1] });
         }else{
-            event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id });
+            event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id.split('_')[1] });
         }
     }
 
@@ -35,7 +35,7 @@ function Side_bar(props) {
 
             <div id='side_bar_channels' className='side_bar_elements' >
                 <div onClick={() => {set_show_add_channel(!show_add_channel)}} className='channels_elements side_bar_sub_elements'>add channel here</div>
-                {props.channels.map(element => <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={element.id} >{element.name}</div> )}
+                {props.channels.map(element => <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >{element.name}</div> )}
             </div>
 
 

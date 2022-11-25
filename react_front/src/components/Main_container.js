@@ -1,6 +1,6 @@
 import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 
 
@@ -26,7 +26,7 @@ function Main_container(props) {
     var info
     const [current_channel, set_current_channel] = useState(props.channels[0])
     const [current_message_array, set_current_message_array] = useState([])
-
+    const div_bottom = useRef(null);
 
 
 
@@ -40,6 +40,7 @@ function Main_container(props) {
 
     //fetch_messages(data)
     useEffect(() => {   
+        
         //sets current channel messages
         info = JSON.parse(localStorage.getItem('user_data'))
         info.channel_id = props.channels[0].id
@@ -56,16 +57,21 @@ function Main_container(props) {
             })
         })
 
-        props.socket.on('room_message', (data) => {
-            console.log(current_message_array)
-            data.data.message = JSON.parse(data.data.message)
-            alert(typeof(data.data.message))
-            console.log(data.data)
-            set_current_message_array([...current_message_array, JSON.parse(data.data)])
-        })
+
     }, [])
 
-
+    useEffect(() => {
+        props.socket.on('room_message', (data) => {
+            //alert('rgrg')
+            //set_current_message_array([...current_message_array, data.data])
+            if(current_channel.id == data.data.channel){
+                set_current_message_array([...current_message_array, data.data])
+            }else{
+                document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
+            }
+        })
+        div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+     }, [current_message_array])
 
 
     if(current_message_array) {
@@ -84,7 +90,7 @@ function Main_container(props) {
 
                         {/* display the date div */}
                         {arr[index-1] ? (new Date(ele.created_at).getDay() == new Date(arr[index-1].created_at).getDay() ? 
-                                console.log()
+                                ''
                             : 
                             <div className="period_of_messages_button_div">
                                 <button className="period_of_messages_button">{ele.created_at.substring(0, 10)}</button>
@@ -97,8 +103,11 @@ function Main_container(props) {
 
 
                         {/* display the message div */}
-                        {arr[index-1] ? (ele.sender == arr[index-1].sender ? 
-                            <p className="message_same_user message_content"> {(ele.message)} </p> :
+                        {arr[index-1] ? ( ele.sender == arr[index-1].sender ? 
+                            <div className="message_same_user message_content">
+                                {JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> )}
+                            </div> 
+                            :
                             <div className="message">
                                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                                 <div className='message_data'>
@@ -106,10 +115,12 @@ function Main_container(props) {
                                         <p className='message_user'> {ele.sender_username} </p>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
-                                    <p className="message_content"> {ele.message} </p>
+                                    <div className="message_content">
+                                        {JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> )}
+                                    </div>
                                 </div>
-                            </div>
-                            ) : 
+                            </div> )
+                            : 
                             <div className="message">
                                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                                 <div className='message_data'>
@@ -117,13 +128,16 @@ function Main_container(props) {
                                         <p className='message_user'> {ele.sender_username} </p>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
-                                    <p className="message_content"> {ele.message} </p>
+                                    <div className="message_content">
+                                        { JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> ) }
+                                    </div>
                                 </div>
                             </div>
                         }
 
                     </div>
                     )}
+                     <div ref={div_bottom} />
                 </div>
 
                 <Rich_text_input socket={props.socket} current_channel={ current_channel.id } />

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, createElement } from 'react'
+import { useEffect, useState, useRef, createElement, useInsertionEffect } from 'react'
 
 
 
@@ -25,14 +25,16 @@ function Rich_text_input(props) {
       }, [/*text_input*/])
 
       useEffect(() => {
-        var tag = document.getElementById("rich_text_field")
-        var setpos = document.createRange()
-        var set = window.getSelection()
-        setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
-        setpos.collapse(true)
-        set.removeAllRanges()
-        set.addRange(setpos)
-        tag.focus()
+        if(!first_focus){
+            var tag = document.getElementById("rich_text_field")
+            var setpos = document.createRange()
+            var set = window.getSelection()
+            setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
+            setpos.collapse(true)
+            set.removeAllRanges()
+            set.addRange(setpos)
+            tag.focus()
+        }
       }, [text_value])
       
     const icon_click = (e) => {
@@ -85,8 +87,10 @@ function Rich_text_input(props) {
                 </div>
 
                 
-                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={input_focus}  >
-                    {text_value.map((element) => <div className={element.classes}> {element.content} </div>)}
+                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus }  >
+                    {text_value.map((element, index, arr) =>
+                        <div className={element.classes}> {element.content} </div>
+                    )}
                 </div>
                 {/* {onBlur={() => {change_ability(true)} 
                 <textarea  ref={text_input} onKeyUp={textarea_size} onFocus={() => {change_ability(false)}}  name="" ></textarea>

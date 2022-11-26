@@ -1,18 +1,15 @@
 .bold{
 	color: red;
 	font-weight: bold;
-	display:inline-block;
 	width: fit-content;
 }
 .italic{
 	font-style: italic;
-	display:inline-block;
 	width: fit-content;
 }
 .line_over{
 	background-color: red;
 	text-decoration: line-through;
-	display:inline-block;
 	width: fit-content;
 }
 .quote{

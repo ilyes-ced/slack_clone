@@ -34,10 +34,6 @@ function Home_page(props) {
             }
         })
         
-        
-
-
-        
         fetch(process.env.REACT_APP_API_URL+"/workspace?data="+localStorage.getItem('user_data'), {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -51,7 +47,7 @@ function Home_page(props) {
                     set_channels(data.message.channels)
                     set_show_page2(true)
                 }
-            })
+        })
     
 
     }, [])

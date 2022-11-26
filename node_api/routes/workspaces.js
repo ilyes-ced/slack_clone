@@ -17,7 +17,7 @@ router.get('/' ,auth,  (req, res) => {
         const workspace = result[0]
         console.log(workspace)
         if(result.length > 0){
-            query(`select *,(select count(*) from channels_members where channel= ?) as members_count from channels where workspace = ?`, [result[0].id, result[0].id], (err, result) => {
+            query(`select * from channels where workspace = ?`, [result[0].id, result[0].id], (err, result) => {
                 if(err){
                     console.log(err)
                     return err

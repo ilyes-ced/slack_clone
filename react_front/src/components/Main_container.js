@@ -35,12 +35,14 @@ function Main_container(props) {
 
 
 
-
+ 
 
 
     //fetch_messages(data)
     useEffect(() => {   
-        
+        setInterval(() => {
+            console.log(current_channel.id +'7777777'+ current_channel_type )
+        }, 1000);
         //sets current channel messages
         info = JSON.parse(localStorage.getItem('user_data'))
         info.channel_id = props.channels[0].id
@@ -60,7 +62,6 @@ function Main_container(props) {
             }else{
                 props.users_channels.find((ele, index) => {
                     if(ele.id == data.id){
-                        alert('rgr')
                         set_current_channel(props.users_channels[index])
                         set_current_channel_type('chat')
                         info = JSON.parse(localStorage.getItem('user_data'))
@@ -71,25 +72,35 @@ function Main_container(props) {
             }
             
         })
-        props.socket.on('room_message', (data) => {
+
+
+
+        const send_new_channel_message = (data) => {
             console.log(current_channel.id+'///////////////')
             console.log(current_channel_type+"/////////////")
             if(current_channel.id == data.data.channel && current_channel_type == 'channel'){
-                set_current_message_array([...current_message_array, data.data])
+                set_current_message_array(prev => [...prev, data.data])
             }else{
                 document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
             }
-        })
-
-        props.socket.on('chat_message', (data) => {
+        }
+        const send_new_chat_message = (data) => {
+            console.log('______________________________________')
+            console.log(data.data.conversation)
             console.log(current_channel.id)
             console.log(current_channel_type)
+            console.log('______________________________________')
+
             if(current_channel.id == data.data.conversation && current_channel_type == 'chat'){
-                set_current_message_array([...current_message_array, data.data])
+                set_current_message_array(prev => [...prev, data.data])
             }else{
-                document.getElementById('chat-element_'+data.data.channel).style.color = 'red'
+                document.getElementById('chat-element_'+data.data.conversation).style.color = 'red'
             }
-        })
+        }
+        props.socket.on('room_message', send_new_channel_message)
+
+        props.socket.on('chat_message', send_new_chat_message)  
+
 
     }, [])
 

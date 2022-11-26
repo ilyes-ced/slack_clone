@@ -20,7 +20,6 @@ router.get('/users_channels', auth,(req, res) => {
                     console.log(err)
                     return err
                 }
-                console.log(result)
                 res.status(200).send({ result: 'success', message: result })
             })
         }

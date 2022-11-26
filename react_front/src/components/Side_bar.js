@@ -49,11 +49,9 @@ function Side_bar(props) {
 
 
             <div id='side_bar_chats' className='side_bar_elements' >
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >to</div>
+                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >options here</div>
+                {props.users_channels.map(element => <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements' id={"chat-element_"+element.id} >{element.sender}</div> )}
+                
             </div>
         
         

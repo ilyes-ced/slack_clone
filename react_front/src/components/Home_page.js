@@ -16,8 +16,10 @@ function Home_page(props) {
 
     const [show_page, set_show_page] = useState(false)
     const [show_page2, set_show_page2] = useState(false)
+    const [show_page3, set_show_page3] = useState(false)
     const [workspace, set_workspace] = useState({})
     const [channels, set_channels] = useState([])
+    const [users_channels, set_users_channels] = useState([])
     const [is_auth, set_is_auth] = useState("none")
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
@@ -50,6 +52,22 @@ function Home_page(props) {
         })
     
 
+                
+        fetch(process.env.REACT_APP_API_URL+"/channel/users_channels?data="+localStorage.getItem('user_data'), {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json())
+            .then(data => {
+                if(data.result == 'failed'){
+
+                }else if(data.result == 'success'){
+                    console.log(data.message)
+                    set_users_channels(data.message)
+                    set_show_page3(true)
+                }
+        })
+
+
     }, [])
 
 
@@ -58,12 +76,12 @@ function Home_page(props) {
     if(is_auth == 'redirect'){
         return <Navigate replace to="/login" />
     }
-    if(is_auth == 'auth' && show_page && show_page2) return(
+    if(is_auth == 'auth' && show_page && show_page2 && show_page3) return(
         <>
             <App_bar/>
             <div id="main_window">
-                <Side_bar workspace={workspace} channels={channels} />
-                <Main_container socket={props.socket} workspace={workspace} channels={channels} />
+                <Side_bar workspace={workspace} channels={channels} users_channels={users_channels} />
+                <Main_container socket={props.socket} workspace={workspace} channels={channels} users_channels={users_channels} />
             </div>
         </>
     )

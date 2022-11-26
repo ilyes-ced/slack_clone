@@ -91,7 +91,7 @@ CREATE TABLE users_users(
     /*id int NOT NULL AUTO_INCREMENT,*/
     sender int NOT NULL,
     reciever int NOT NULL,
-    first_contact_at DATETIME,
+    first_contact_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (sender, reciever),
     FOREIGN KEY (sender) REFERENCES users(id),
     FOREIGN KEY (reciever) REFERENCES users(id)
@@ -121,6 +121,19 @@ CREATE TABLE messages(
     PRIMARY KEY (id),
     FOREIGN KEY (sender) REFERENCES users(id),
     FOREIGN KEY (channel) REFERENCES channels(id)
+);
+
+CREATE TABLE private_messages(
+    id int NOT NULL AUTO_INCREMENT,
+    sender int NOT NULL,
+    conversation int NOT NULL,
+    message VARCHAR(255),
+    seen Boolean,    
+    seen_at DATETIME,    
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (sender) REFERENCES users(id),
+    FOREIGN KEY (conversation) REFERENCES users_users(id)
 );
 
 

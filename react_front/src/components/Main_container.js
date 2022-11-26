@@ -8,8 +8,8 @@ import { useEffect, useState, useRef } from "react";
 function Main_container(props) {
 
 
-    const fetch_messages = (info) => {
-        return fetch(process.env.REACT_APP_API_URL+"/message?data="+JSON.stringify(info), {
+    const fetch_messages = (info, channel_type = 'channel') => {
+        return fetch(process.env.REACT_APP_API_URL+"/message/"+channel_type+"?data="+JSON.stringify(info), {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then((response) => response.json())
@@ -25,9 +25,9 @@ function Main_container(props) {
 
     var info
     const [current_channel, set_current_channel] = useState(props.channels[0])
+    const [current_channel_type, set_current_channel_type] = useState('channel')
     const [current_message_array, set_current_message_array] = useState([])
     const div_bottom = useRef(null);
-
 
 
 
@@ -47,29 +47,59 @@ function Main_container(props) {
         fetch_messages(info).then(ele => set_current_message_array(ele))
 
         event_bus.on("select_chat", (data) =>{
-            props.channels.find((ele, index) => {
-                if(ele.id == data.id){
-                    set_current_channel(props.channels[index])
-                    info = JSON.parse(localStorage.getItem('user_data'))
-                    info.channel_id = data.id
-                    fetch_messages(info).then(ele => set_current_message_array(ele))
-                }
-            })
+            if(data.type == 'channel'){
+                props.channels.find((ele, index) => {
+                    if(ele.id == data.id){
+                        set_current_channel(props.channels[index])
+                        set_current_channel_type('channel')
+                        info = JSON.parse(localStorage.getItem('user_data'))
+                        info.channel_id = data.id
+                        fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                    }
+                })
+            }else{
+                props.users_channels.find((ele, index) => {
+                    if(ele.id == data.id){
+                        alert('rgr')
+                        set_current_channel(props.users_channels[index])
+                        set_current_channel_type('chat')
+                        info = JSON.parse(localStorage.getItem('user_data'))
+                        info.channel_id = data.id
+                        fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                    }
+                })
+            }
+            
         })
-
-
-    }, [])
-
-    useEffect(() => {
-        //TODO: needs fixing probably fires several times
         props.socket.on('room_message', (data) => {
-            if(current_channel.id == data.data.channel){
+            console.log(current_channel.id+'///////////////')
+            console.log(current_channel_type+"/////////////")
+            if(current_channel.id == data.data.channel && current_channel_type == 'channel'){
                 set_current_message_array([...current_message_array, data.data])
             }else{
                 document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
             }
         })
+
+        props.socket.on('chat_message', (data) => {
+            console.log(current_channel.id)
+            console.log(current_channel_type)
+            if(current_channel.id == data.data.conversation && current_channel_type == 'chat'){
+                set_current_message_array([...current_message_array, data.data])
+            }else{
+                document.getElementById('chat-element_'+data.data.channel).style.color = 'red'
+            }
+        })
+
+    }, [])
+
+    useEffect(() => {
+        
+        //TODO: needs fixing probably fires several times
+
         div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+        console.log(current_channel.id+'                       '+current_channel_type)
+
      }, [current_message_array])
 
 
@@ -83,6 +113,7 @@ function Main_container(props) {
                     <div id='main_container_title'>{current_channel.name}</div>
                     <div id='main_container_options'>{props.workspace.members_count} later add active memebers later V </div>
                 </div>
+
                 <div id='messages_cntainer'>
                     {current_message_array.map((ele, index, arr) => 
                     <div key={ele.id} className=''>
@@ -139,7 +170,7 @@ function Main_container(props) {
                      <div ref={div_bottom} />
                 </div>
 
-                <Rich_text_input socket={props.socket} current_channel={ current_channel.id } />
+                <Rich_text_input socket={props.socket} current_channel={ current_channel.id } current_channel_type={ current_channel_type } />
 
             </div>
         )}else{

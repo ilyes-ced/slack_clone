@@ -15,7 +15,59 @@ app.use((req, res, next) => {
 
 const query = require('./database/index')
 
+const send_channel_message = (socket, data) => {
+	query(`insert into messages(sender, channel, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
+		if(err){
+			console.log(err)
+			return
+		}	
+		console.log(result)
+		console.log(result.insertId);
+		query('select * from messages where id=?', [result.insertId], (err, result) => {
+			if(err){
+				console.log(err)
+				return
+			}
+			console.log('emitting noe')
+			io.in('channel_'+result[0].channel).emit('room_message', {data: result[0]})
+		})
+		//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
+	})
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+const send_private_message = (socket, data) => {
+	query(`insert into private_messages(sender, conversation, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
+		if(err){
+			console.log(err)
+			return
+		}	
+		console.log(result)
+		console.log(result.insertId);
+		query('select * from private_messages where id=?', [result.insertId], (err, result) => {
+			if(err){
+				console.log(err)
+				return
+			}
+			console.log('result')
+			console.log(result)
+			io.in('chat_'+result[0].conversation).emit('chat_message', {data: result[0]})
+		})
+		//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
+	})
+}
 
 
 
@@ -60,6 +112,15 @@ io.use((socket, next) => {
 			for(let i = 0; i < result.length; i++){
 				socket.join('channel_'+result[i].id)
 			}
+		})
+		query(`select * from users_users where sender=? or reciever=?`, [socket.user_data.id, socket.user_data.id], (err, result) => {
+			if(err){
+				console.log(err)
+				return
+			}
+			for(let i = 0; i < result.length; i++){
+				socket.join('chat_'+result[i].id)
+			}
 			next()
 		})
 	})
@@ -70,24 +131,13 @@ io.use((socket, next) => {
 
 
 io.on("connection", (socket) => {
+	console.log(socket.rooms)
 	socket.on('sent_message', (data) => {
-		query(`insert into messages(sender, channel, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
-			if(err){
-				console.log(err)
-				return
-			}	
-			console.log(result)
-			console.log(result.insertId);
-			query('select * from messages where id=?', [result.insertId], (err, result) => {
-				if(err){
-					console.log(err)
-					return
-				}
-				console.log('emitting noe')
-				io.in('channel_'+result[0].channel).emit('room_message', {data: result[0]})
-			})
-			//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
-		})
+		if(data.channel_type == 'channel'){
+			send_channel_message(socket, data)
+		}else if(data.channel_type == 'chat'){
+			send_private_message(socket, data)
+		}
 	})
 
 })
@@ -100,10 +150,12 @@ io.on("connection", (socket) => {
 const users_route = require('./routes/users')
 const workspaces_route = require('./routes/workspaces')
 const messages_route = require('./routes/messages')
+const channels_route = require('./routes/channels')
 
 app.use('/users', users_route)
 app.use('/workspace', workspaces_route)
 app.use('/message', messages_route)
+app.use('/channel', channels_route)
 
 
 

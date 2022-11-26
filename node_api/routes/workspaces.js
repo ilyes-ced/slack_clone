@@ -15,7 +15,6 @@ router.get('/' ,auth,  (req, res) => {
             return err
         }
         const workspace = result[0]
-        console.log(workspace)
         if(result.length > 0){
             query(`select * from channels where workspace = ?`, [result[0].id, result[0].id], (err, result) => {
                 if(err){

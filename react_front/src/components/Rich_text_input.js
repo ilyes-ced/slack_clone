@@ -5,13 +5,14 @@ import { useEffect, useState, useRef, createElement } from 'react'
 function Rich_text_input(props) {
     const text_input = useRef(null)
     const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
-    const [text_value, change_text_value] = useState([{classes: 'bold',content:'hello boldy'}, {classes: 'italic',content:'italia'}])
+    const [first_focus, set_first_focus] = useState(true)
+    const [text_value, change_text_value] = useState([{classes: '',content:''}])
     var text_value_tempo = []
     //change_text_value([...text_value, {classes: 'test class', content: 'rugerughzpurq'}])
 
 
 
-    useEffect(() => {
+    useEffect(() => {        
         function handleClickOutside(event) {
           if (text_input.current && !text_input.current.contains(event.target)) {
             //alert("You clicked outside of me!")
@@ -23,15 +24,24 @@ function Rich_text_input(props) {
         }
       }, [/*text_input*/])
 
+      useEffect(() => {
+        var tag = document.getElementById("rich_text_field")
+        var setpos = document.createRange()
+        var set = window.getSelection()
+        setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
+        setpos.collapse(true)
+        set.removeAllRanges()
+        set.addRange(setpos)
+        tag.focus()
+      }, [text_value])
       
     const icon_click = (e) => {
-        if(e.target.classList.contains('text_icons')){
-            //change_ability([true,true,true,true,true,true,true,true,true])
-            text_input.current.focus()
-        }
-
+        //text_input.current.focus()
+        
         e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
         change_text_value([...text_value, {classes : e.target.id, content:''}])
+        
+
         
     }
     const submit_text = () => {
@@ -44,23 +54,20 @@ function Rich_text_input(props) {
         //console.log(text_value_tempo)
         props.socket.emit('sent_message', {value: text_value_tempo, channel: props.current_channel })
     }
-    const input_change = (e) => {
-        
-
-        /*
-        //alert(text_input.current.textContent)
-        text_value_tempo = text_value
-        text_value_tempo[text_value_tempo.length-1].content = text_value_tempo[text_value_tempo.length-1].content+text_input.current.textContent
-        //text_input.current.innerText = ''
-        change_text_value(text_value_tempo)
-        console.log(text_value)
-
-
-        if(text_value[text_value.length-1].content == ""){
-            change_text_value(text_input.pop())
-        }*/
+    const input_focus = () => {
+        change_ability(false)
+        if(first_focus){
+            var tag = document.getElementById("rich_text_field")
+            var setpos = document.createRange()
+            var set = window.getSelection()
+            setpos.setStart(tag.childNodes[0], 0)
+            setpos.collapse(true)
+            set.removeAllRanges()
+            set.addRange(setpos)
+            tag.focus()
+            set_first_focus(false)
+        }
     }
-
     return(
         <div id='rich_text_input'>
             
@@ -78,7 +85,7 @@ function Rich_text_input(props) {
                 </div>
 
                 
-                <div ref={text_input} contenteditable="true" id='rich_text_field' onInput={input_change} onFocus={() => {change_ability(false)}} >
+                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={input_focus}  >
                     {text_value.map((element) => <div className={element.classes}> {element.content} </div>)}
                 </div>
                 {/* {onBlur={() => {change_ability(true)} 

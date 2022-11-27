@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import event_bus from "../events/event_bus";
 
 function Side_bar(props) {
 
     const [show_add_channel, set_show_add_channel] = useState(false)
+    const new_channel = useRef(null)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target)
         set_show_add_channel(!show_add_channel)
@@ -15,6 +16,17 @@ function Side_bar(props) {
         }else{
             event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id.split('_')[1] });
         }
+    }
+    const add_channel = () => {
+        console.log(JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value}))
+        fetch(process.env.REACT_APP_API_URL+"/channel/create", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value})
+        }).then((response) => response.json())
+        .then(data => {
+            alert(JSON.stringify(data))
+        })
     }
 
     return(
@@ -39,9 +51,17 @@ function Side_bar(props) {
             </div>
 
 
+
+            {/* created channel modal */}
             { show_add_channel ? 
                 <div className='modal' onClick={hide_show_modal} > 
-                    <div className='modal_content'> hello </div>
+                    <div className='modal_content'> 
+                        <input ref={new_channel}  type="text" />
+                        <button onClick={add_channel}>
+                            submit
+                        </button>
+                    </div>
+                    
                 </div>
             : console.log('gg') }
             

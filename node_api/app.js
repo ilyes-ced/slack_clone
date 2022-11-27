@@ -21,14 +21,11 @@ const send_channel_message = (socket, data) => {
 			console.log(err)
 			return
 		}	
-		console.log(result)
-		console.log(result.insertId);
 		query('select * from messages where id=?', [result.insertId], (err, result) => {
 			if(err){
 				console.log(err)
 				return
 			}
-			console.log('emitting noe')
 			io.in('channel_'+result[0].channel).emit('room_message', {data: result[0]})
 		})
 		//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
@@ -54,15 +51,11 @@ const send_private_message = (socket, data) => {
 			console.log(err)
 			return
 		}	
-		console.log(result)
-		console.log(result.insertId);
 		query('select * from private_messages where id=?', [result.insertId], (err, result) => {
 			if(err){
 				console.log(err)
 				return
 			}
-			console.log('result')
-			console.log(result)
 			io.in('chat_'+result[0].conversation).emit('chat_message', {data: result[0]})
 		})
 		//io.in('channel_'+data.channel).emit('room_message', {channel: data.channel,value: data.value})
@@ -131,7 +124,7 @@ io.use((socket, next) => {
 
 
 io.on("connection", (socket) => {
-	console.log(socket.rooms)
+	//console.log(socket.rooms)
 	socket.on('sent_message', (data) => {
 		if(data.channel_type == 'channel'){
 			send_channel_message(socket, data)

@@ -195,10 +195,16 @@ CREATE TABLE channels_config(
 
 
 delimiter #
-create trigger add_channels_to_new_workspace after insert on workspaces
-for each row
+create trigger add_channels_to_new_workspace after insert on workspaces for each row
 begin
   insert into channels(name, type, workspace, public) values ('general', 'room' ,new.id, true);
   insert into channels(name, type, workspace, public) values ('random', 'room' ,new.id, true);
+end#
+delimiter ;
+
+delimiter #
+create trigger add_self_chat after insert on users for each row
+begin
+  insert into users_users(sender, reciever) values (new.id, ne.id);
 end#
 delimiter ;

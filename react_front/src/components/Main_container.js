@@ -122,7 +122,7 @@ function Main_container(props) {
 
                 <div id='main_container_title_bar'>
                     <div id='main_container_title'>{current_channel.name}</div>
-                    <div id='main_container_options'>{props.workspace.members_count} later add active memebers later V </div>
+                    <div id='main_container_options'>{props.workspace.members_count} {current_channel.id} {current_channel_type}  //active ms later V </div>
                 </div>
 
                 <div id='messages_cntainer'>

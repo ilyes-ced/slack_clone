@@ -54,7 +54,6 @@ function Rich_text_input(props) {
             text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
         }
         //console.log(text_value_tempo)
-        alert(props.current_channel + props.current_channel_type )
         props.socket.emit('sent_message', {value: text_value_tempo, channel: props.current_channel, channel_type: props.current_channel_type })
     }
     const input_focus = () => {

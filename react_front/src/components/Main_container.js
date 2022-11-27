@@ -28,8 +28,8 @@ function Main_container(props) {
     const [current_channel_type, set_current_channel_type] = useState('channel')
     const [current_message_array, set_current_message_array] = useState([])
     const div_bottom = useRef(null);
-
-
+    const channel_id = useRef(current_channel.id);
+    const channel_type = useRef(current_channel_type);
 
 
 
@@ -40,9 +40,6 @@ function Main_container(props) {
 
     //fetch_messages(data)
     useEffect(() => {   
-        setInterval(() => {
-            console.log(current_channel.id +'7777777'+ current_channel_type )
-        }, 1000);
         //sets current channel messages
         info = JSON.parse(localStorage.getItem('user_data'))
         info.channel_id = props.channels[0].id
@@ -76,22 +73,14 @@ function Main_container(props) {
 
 
         const send_new_channel_message = (data) => {
-            console.log(current_channel.id+'///////////////')
-            console.log(current_channel_type+"/////////////")
-            if(current_channel.id == data.data.channel && current_channel_type == 'channel'){
+            if(channel_id.current == data.data.channel && channel_type.current == 'channel'){
                 set_current_message_array(prev => [...prev, data.data])
             }else{
                 document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
             }
         }
         const send_new_chat_message = (data) => {
-            console.log('______________________________________')
-            console.log(data.data.conversation)
-            console.log(current_channel.id)
-            console.log(current_channel_type)
-            console.log('______________________________________')
-
-            if(current_channel.id == data.data.conversation && current_channel_type == 'chat'){
+            if(channel_id.current == data.data.conversation && channel_type.current == 'chat'){
                 set_current_message_array(prev => [...prev, data.data])
             }else{
                 document.getElementById('chat-element_'+data.data.conversation).style.color = 'red'
@@ -105,12 +94,11 @@ function Main_container(props) {
     }, [])
 
     useEffect(() => {
-        
-        //TODO: needs fixing probably fires several times
-
+        channel_id.current = current_channel.id
+        channel_type.current = current_channel_type
+    }, [current_channel])
+    useEffect(() => {        
         div_bottom.current?.scrollIntoView({behavior: 'smooth'})
-        console.log(current_channel.id+'                       '+current_channel_type)
-
      }, [current_message_array])
 
 

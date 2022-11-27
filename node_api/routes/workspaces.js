@@ -9,7 +9,8 @@ const router = express.Router()
 router.get('/' ,auth,  (req, res) => {
     //TODO: check is member not onwer
     console.log(req.query)
-    query('select *,(select count(*) from workspaces_members where workspace = id) as members_count from workspaces where owner = ?', [req.query.id, req.query.id], (err,result) => {
+    query(`select *,(select count(*) from workspaces_members where workspace = id) as members_count from workspaces
+    where id in (select workspace from workspaces_members where member=?)`, [req.query.id], (err,result) => {
         if(err){
             console.log(err)
             return err

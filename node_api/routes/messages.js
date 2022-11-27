@@ -7,22 +7,13 @@ const router = express.Router()
 
 
 router.get('/channel', auth,(req, res) => {
-    //console.log(req.query)
-    //check is member
-    query(`select 1`, [req.query.channel_id] , (err,result) => {
+    //maybe make it check if he is a memeber in the workspace of these channels but that is already done when fetching the workspaces
+    query(`select * from (select *,(select username from users where id = sender) as sender_username from messages where channel = ? order by id desc limit 20) as sub order by id asc`, [req.query.channel_id], (err, result) => {
         if(err){
             console.log(err)
             return err
         }
-        if(result.length > 0){
-            query(`select * from (select *,(select username from users where id = sender) as sender_username from messages where channel = ? order by id desc limit 20) as sub order by id asc`, [req.query.channel_id], (err, result) => {
-                if(err){
-                    console.log(err)
-                    return err
-                }
-                res.status(200).send({ result: 'success', message: result })
-            })
-        }
+        res.status(200).send({ result: 'success', message: result })
     })
 })
 
@@ -30,22 +21,12 @@ router.get('/channel', auth,(req, res) => {
 
 
 router.get('/chat', auth,(req, res) => {
-    //console.log(req.query)
-    //check is member
-    query(`select 1`, [req.query.channel_id] , (err,result) => {
+    query(`select * from (select *,(select username from users where id = sender) as sender_username from private_messages where conversation = ? order by id desc limit 20) as sub order by id asc`, [req.query.channel_id], (err, result) => {
         if(err){
             console.log(err)
             return err
         }
-        if(result.length > 0){
-            query(`select * from (select *,(select username from users where id = sender) as sender_username from private_messages where conversation = ? order by id desc limit 20) as sub order by id asc`, [req.query.channel_id], (err, result) => {
-                if(err){
-                    console.log(err)
-                    return err
-                }
-                res.status(200).send({ result: 'success', message: result })
-            })
-        }
+        res.status(200).send({ result: 'success', message: result })
     })
 })
 

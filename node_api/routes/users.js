@@ -1,6 +1,5 @@
 const express = require('express')
 const query = require('../database/index')
-const auth = require('../middleware/auth')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 

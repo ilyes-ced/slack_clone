@@ -54,6 +54,7 @@ function Main_container(props) {
                         info = JSON.parse(localStorage.getItem('user_data'))
                         info.channel_id = data.id
                         fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                        return
                     }
                 })
             }else{
@@ -64,6 +65,7 @@ function Main_container(props) {
                         info = JSON.parse(localStorage.getItem('user_data'))
                         info.channel_id = data.id
                         fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                        return
                     }
                 })
             }

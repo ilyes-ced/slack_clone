@@ -24,37 +24,26 @@ function Rich_text_input(props) {
         }
       }, [/*text_input*/])
 
-      //useEffect(() => {
-      //  if(!first_focus){
-      //      var tag = document.getElementById("rich_text_field")
-      //      var setpos = document.createRange()
-      //      var set = window.getSelection()
-      //      tag.innerHTML = tag.innerHTML+'<div class="bold"></div>'
-
-      //      setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
-      //      setpos.collapse(true)
-      //      set.removeAllRanges()
-      //      set.addRange(setpos)
-      //      tag.focus()
-      //  }
-      //}, [text_value])
+      useEffect(() => {
+        if(!first_focus){
+            var tag = document.getElementById("rich_text_field")
+            var setpos = document.createRange()
+            var set = window.getSelection()
+            setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
+            setpos.collapse(true)
+            set.removeAllRanges()
+            set.addRange(setpos)
+            tag.focus()
+        }
+      }, [text_value])
       
     const icon_click = (e) => {
         //text_input.current.focus()
-        alert(e.target.id)
-        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
-        //change_text_value([...text_value, {classes : e.target.id, content:''}])
         
-        var tag = document.getElementById("rich_text_field")
-        var setpos = document.createRange()
-        var set = window.getSelection()
-        tag.innerHTML = '<div class="'+e.target.id+'"></div>'
+        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
+        change_text_value([...text_value, {classes : e.target.id, content:''}])
+        
 
-        setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
-        setpos.collapse(true)
-        set.removeAllRanges()
-        set.addRange(setpos)
-        tag.focus()
         
     }
     const submit_text = () => {

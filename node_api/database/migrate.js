@@ -158,7 +158,8 @@ const tables = [
 	begin
 		insert into workspaces_members(workspace, member) values (new.id, new.owner);
 	end#
-	`
+	`,
+
 ]
 
 

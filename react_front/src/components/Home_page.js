@@ -85,7 +85,11 @@ function Home_page(props) {
             </div>
         </>
     )
-    return <div id='loader_parent'><div class="loader"></div> </div>
+    return <div id='loader_parent'><div className="loader"></div>
+        {show_page ? 'yser' : 'no'}
+        {show_page2 ? 'yser' : 'no'}
+        {show_page3 ? 'yser' : 'no'}
+    </div>
 }
 
 

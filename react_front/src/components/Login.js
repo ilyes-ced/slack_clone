@@ -20,7 +20,7 @@ function Login() {
 					return response.json()
 				}
 			}).then(data => {
-				console.log(data.result)
+				console.log(data)
 				if(data.result == 'success'){
 					localStorage.setItem('user_data', JSON.stringify(data.message))
 					nav('/')

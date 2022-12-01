@@ -26,9 +26,9 @@ CREATE TABLE notifications(
     user int NOT NULL,
     sender int NOT NULL,
 
-    PRIMARY KEY (sender, user)
+    PRIMARY KEY (sender, user),
     FOREIGN KEY (sender) REFERENCES users(id),
-    FOREIGN KEY (user) REFERENCES users(id),
+    FOREIGN KEY (user) REFERENCES users(id)
 );
 
 CREATE TABLE tokens(
@@ -88,11 +88,11 @@ CREATE TABLE channels_members(
 );
 */
 CREATE TABLE users_users(
-    /*id int NOT NULL AUTO_INCREMENT,*/
+    id int NOT NULL AUTO_INCREMENT,
     sender int NOT NULL,
     reciever int NOT NULL,
     first_contact_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (sender, reciever),
+    PRIMARY KEY (id),
     FOREIGN KEY (sender) REFERENCES users(id),
     FOREIGN KEY (reciever) REFERENCES users(id)
 );
@@ -192,19 +192,28 @@ CREATE TABLE channels_config(
 
 
 
-
-
 delimiter #
 create trigger add_channels_to_new_workspace after insert on workspaces for each row
 begin
-  insert into channels(name, type, workspace, public) values ('general', 'room' ,new.id, true);
-  insert into channels(name, type, workspace, public) values ('random', 'room' ,new.id, true);
+    insert into channels(name, type, workspace, public) values ('general', 'room' ,new.id, true);
+    insert into channels(name, type, workspace, public) values ('random', 'room' ,new.id, true);
 end#
 delimiter ;
 
 delimiter #
 create trigger add_self_chat after insert on users for each row
 begin
-  insert into users_users(sender, reciever) values (new.id, ne.id);
+    insert into users_users(sender, reciever) values (new.id, new.id);
 end#
 delimiter ;
+
+
+
+delimiter #
+create trigger add_owner_as_member_to_workspace after insert on workspaces for each row
+begin
+    insert into workspaces_members(workspace, member) values (new.id, new.owner);
+end#
+delimiter ;
+
+

@@ -115,11 +115,11 @@ function Main_container(props) {
                     <div id='main_container_title'>{current_channel.name == null ? JSON.parse(localStorage.getItem('user_data')).username : current_channel.name}</div>
                     <div id='main_container_options'>
                         <div>
-                            <BsPersonSquare  /> 
-                            {props.workspace.members_count}
+                            <BsPersonSquare className='person_icon' /> 
+                            <p>{props.workspace.members_count}</p>
                         </div>
                         <div>
-                            <BsPersonPlus  /> 
+                            <BsPersonPlus className='person_icon' /> 
                         </div>
                     </div>
                 </div>

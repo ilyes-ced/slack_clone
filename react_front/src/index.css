@@ -223,11 +223,25 @@ body {
 
 #workspace_div{
 	display: flex;
+	flex-direction: row;
 	align-items: center;
+	justify-content: space-between;
+	padding: 10px;
 	height: 50px;
 	border-bottom: 1px solid var(--color6);
 	font-weight: 700;
 	font-size: 18px;
+}
+#workspace_div > div:nth-child(2){
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	border-radius: 100%;
+	background-color: white;
+}
+#workspace_div > div:nth-child(2) > * {
+	color: var(--color2);
+	cursor: pointer;
 }
 
 .side_bar_elements{
@@ -250,7 +264,7 @@ body {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-.side_bar_sub_elements:hover{
+.side_bar_sub_elements:not(#channels_title_element):hover{
 	background-color: var(--color8);
 }
 
@@ -258,6 +272,48 @@ body {
 	background-color: var(--color8);
 }
 
+#channels_title_element{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+}
+#channels_title_element > div:first-child > div:first-child, #channels_title_element > div:nth-child(2) > *{
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+	border-radius: 5px;
+	font-size: 18px;
+	padding: 5px;
+}
+#channels_title_element > div:first-child > p{
+	display: flex;
+	align-items: center;
+}
+#channels_title_element > div:first-child > div:first-child:hover, #channels_title_element > div:nth-child(2) > *:hover{
+	background-color: var(--color4);
+}
+#channels_title_element > div{
+	display: flex;
+	flex-direction: row;
+}
+.side_bar_sub_elements{
+	display: flex;
+	flex-direction: row;
+}
+.channels_elements > div:first-child {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	margin-right: 10px;
+	border-radius: 5px;
+	font-size: 18px;
+	padding: 5px;
+}
+.channels_elements > p {
+	display: flex;
+	align-items: center;
+}
 /*********************************************************************************************/
 
 
@@ -291,19 +347,26 @@ body {
 	display: flex;
 	align-items: center;
 	justify-items: center;
+	cursor: pointer;
+}
+#main_container_options > div:first-child > p{
+	padding-left: 10px;
+	padding-right: 5px;
 }
 #main_container_options > div:nth-child(2){
 	border: solid 1px var(--color7);
-	border-left: none;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	padding: 5px;
 	display: flex;
 	align-items: center;
 	justify-items: center;
-
+	cursor: pointer;
 }
-
+.person_icon{
+	width: 25px;
+	height: 25px;
+}
 
 /*********************************************************************************************/
 
@@ -398,9 +461,6 @@ body {
 /*********************************************************************************************/
 
 
-#members_icon{
-	color:red;
-}
 
 
 

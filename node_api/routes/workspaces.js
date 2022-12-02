@@ -22,6 +22,8 @@ router.get('/' ,auth,  (req, res) => {
                 }
                 res.status(200).send({result: 'success', message: {workspace: workspace, channels: result}})
             })
+        }else if(result.length == 0){
+            res.status(200).send({result: 'no_workspaces', message: 'redirect to find workspaces'})
         }
     })
 })

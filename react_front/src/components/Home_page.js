@@ -41,8 +41,9 @@ function Home_page(props) {
                 headers: { 'Content-Type': 'application/json' }
             }).then((response) => response.json())
             .then(data => {
-                if(data.result == 'failed'){
-                    
+                console.log(JSON.stringify(data))
+                if(data.result !== 'success'){
+                    console.log(data)
                 }else if(data.result == 'success'){
                     console.log(data.message.channels)
                     set_workspace(data.message.workspace)
@@ -85,11 +86,7 @@ function Home_page(props) {
             </div>
         </>
     )
-    return <div id='loader_parent'><div className="loader"></div>
-        {show_page ? 'yser' : 'no'}
-        {show_page2 ? 'yser' : 'no'}
-        {show_page3 ? 'yser' : 'no'}
-    </div>
+    return <div id='loader_parent'><div className="loader"></div></div>
 }
 
 

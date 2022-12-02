@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
         res.status(401).send({result: 'failed', message: 'username and password required'})
         return
     }
-    query('select users.id, users.email, users.password, users.profile_image ,tokens.token, tokens.expires_at  from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
+    query('select users.id, users.username, users.email, users.password, users.profile_image ,tokens.token, tokens.expires_at  from users left join tokens on tokens.user=users.id where users.email=? ', [req.body.email], (err, result) => {
         if(err){
             console.log(err)
             return
@@ -86,7 +86,7 @@ router.post('/register', (req, res) => {
 
 
 router.post('/verify_user', (req, res) => {
-    query(`select users.id, users.email, users.profile_image ,tokens.token, tokens.expires_at 
+    query(`select users.id, users.username, users.email, users.profile_image ,tokens.token, tokens.expires_at 
         from users left join tokens on users.id = tokens.user where users.email=?`, [req.body.email], (err, result) => {
         if(err){
             console.log(err)

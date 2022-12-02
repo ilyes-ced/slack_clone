@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { BsFillPencilFill } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 
 function Side_bar(props) {
@@ -35,6 +36,9 @@ function Side_bar(props) {
 
             <div className='side_bar_elements'  id='workspace_div'>
                 {props.workspace.name}
+                <div>
+                    <BsFillPencilFill />
+                </div>
             </div>
 
 
@@ -70,7 +74,7 @@ function Side_bar(props) {
 
             <div id='side_bar_chats' className='side_bar_elements' >
                 <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >options here</div>
-                {props.users_channels.map(element => <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements' id={"chat-element_"+element.id} >{element.name}</div> )}
+                {props.users_channels.map(element => <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements' id={"chat-element_"+element.id} >{element.name == null ? JSON.parse(localStorage.getItem('user_data')).username : element.name }</div> )}
                 
             </div>
         

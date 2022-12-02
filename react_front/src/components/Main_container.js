@@ -1,5 +1,6 @@
 import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
+import { BsPersonSquare, BsPersonPlus } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
 
 
@@ -111,8 +112,16 @@ function Main_container(props) {
 
 
                 <div id='main_container_title_bar'>
-                    <div id='main_container_title'>{current_channel.name}</div>
-                    <div id='main_container_options'>{props.workspace.members_count} {current_channel.id} {current_channel_type}  //active ms later V </div>
+                    <div id='main_container_title'>{current_channel.name == null ? JSON.parse(localStorage.getItem('user_data')).username : current_channel.name}</div>
+                    <div id='main_container_options'>
+                        <div>
+                            <BsPersonSquare  /> 
+                            {props.workspace.members_count}
+                        </div>
+                        <div>
+                            <BsPersonPlus  /> 
+                        </div>
+                    </div>
                 </div>
 
                 <div id='messages_cntainer'>

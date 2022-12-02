@@ -4,12 +4,18 @@ import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
 
 function Side_bar(props) {
+    const [enabled, set_enabled] = useState(false);
     const [rotate, set_rotate] = useState(false);
+    const [rotate2, set_rotate2] = useState(false);
     const [show_channels, set_show_channels] = useState(true);
     const [show_chats, set_show_chats] = useState(true);
     const [show_add_channel, set_show_add_channel] = useState(false)
+    const [show_add_chat, set_show_add_chat] = useState(false)
     const [show_child_icons, set_show_child_icons] = useState(false)
+    const [show_child_icons2, set_show_child_icons2] = useState(false)
     const new_channel = useRef(null)
+    const new_channel_desc = useRef(null)
+    const public_private = useRef(false)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target)
         set_show_add_channel(!show_add_channel)
@@ -23,11 +29,11 @@ function Side_bar(props) {
         }
     }
     const add_channel = () => {
-        console.log(JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value}))
+        console.log(JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private.current.checked}))
         fetch(process.env.REACT_APP_API_URL+"/channel/create", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value})
+            body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private.current.checked})
         }).then((response) => response.json())
         .then(data => {
             alert(JSON.stringify(data))
@@ -59,11 +65,11 @@ function Side_bar(props) {
             <div id='side_bar_channels' className='side_bar_elements' >
                 <div onMouseEnter={() => {set_show_child_icons(true)}} onMouseLeave={() => set_show_child_icons(false )}  className='side_bar_sub_elements' id='channels_title_element'>
                     <div>
-                        <div><BsCaretDownFill style={{ transform: rotate ? "rotate(-90deg)" : "rotate(0)", transition: "all 0.2s linear" }} onClick={() => {set_rotate(!rotate); set_show_channels(!show_channels)}} /></div>
+                        <div onClick={() => {set_rotate(!rotate); set_show_channels(!show_channels)}}><BsCaretDownFill style={{ transform: rotate ? "rotate(-90deg)" : "rotate(0)", transition: "all 0.2s linear" }}  /></div>
                         <p>Channels</p>
                     </div>
-                    <div>
-                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div><BsPlus onClick={() => {set_show_add_channel(!show_add_channel)}}/></div></> : ''}
+                    <div  >
+                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_channel(!show_add_channel)}} ><BsPlus /></div></> : ''}
                     </div>
                 </div>
                 {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
@@ -80,16 +86,17 @@ function Side_bar(props) {
                     <div id="add_channel_modal">
                         <div>
                             <h1>Create a new channel</h1>
-                            <BsX/>
+                            <BsX onClick={() => {set_show_add_channel(!show_add_channel)}}/>
                         </div>
                         <div>
-                            <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+                            <p>Channels are where your team communicates. They're best when organized around a topic — #marketing, for example.</p>
                             <label htmlFor="">name</label>
-                            <input ref={new_channel} placeholder='channel name'  type="text" required/>
+                            <BsLockFill/>
+                            <input ref={new_channel} onChange={() => { new_channel.current.value == "" ? set_enabled(true) : set_enabled(false)}} placeholder='put that icon inside input div'  type="text" required/>
                         </div>
                         <div>
                             <label htmlFor="">description (optional)</label>
-                            <input type="text" />
+                            <input ref={new_channel_desc} type="text" />
                             <span>what this channel is about</span>
                         </div>
                         <div>
@@ -99,30 +106,32 @@ function Side_bar(props) {
                             </p>
                             <div>
                                 <label class="switch">
-                                    <input type="checkbox" />
+                                    <input ref={public_private} type="checkbox" />
                                     <span class="slider round"></span>
                                 </label>
                             </div>
                         </div>
                         <div>
-                            <button disabled>submit</button>
+                            <button onClick={add_channel} disabled={enabled}>submit</button>
                         </div>
-
-                        {/*<input ref={new_channel}  type="text" />
-                        <BsLockFill/>
-                        <button onClick={add_channel}>
-                            submit
-                        </button>*/}
                     </div>
                     
                 </div>
-            : console.log('gg') }
+            : '' }
             
             
 
 
             <div id='side_bar_chats' className='side_bar_elements' >
-                <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >options here</div>
+                <div onMouseEnter={() => {set_show_child_icons2(true)}} onMouseLeave={() => set_show_child_icons2(false )}  className='side_bar_sub_elements' id='users_channels_title_element'>
+                    <div>
+                        <div onClick={() => {set_rotate2(!rotate2); set_show_chats(!show_chats)}}><BsCaretDownFill style={{ transform: rotate2 ? "rotate(-90deg)" : "rotate(0)", transition: "all 0.2s linear" }}  /></div>
+                        <p>Chats</p>
+                    </div>
+                    <div  >
+                        {show_child_icons2 ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_chat(!show_add_chat)}} ><BsPlus /></div></> : ''}
+                    </div>
+                </div>
                 {props.users_channels.map(element => show_chats ? <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements'  id={"chat-element_"+element.id} >
                     <div><BsPersonSquare/></div>
                     <p>{element.name == null ? JSON.parse(localStorage.getItem('user_data')).username : element.name }</p>

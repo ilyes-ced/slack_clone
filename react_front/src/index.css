@@ -298,7 +298,7 @@ body {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-.side_bar_sub_elements:not(#channels_title_element):hover{
+.side_bar_sub_elements:not(#channels_title_element):not(#users_channels_title_element):hover{
 	background-color: var(--color8);
 }
 
@@ -306,13 +306,14 @@ body {
 	background-color: var(--color8);
 }
 
-#channels_title_element{
+#channels_title_element, #users_channels_title_element{
 	display: flex;
 	justify-content: space-between;
 	flex-direction: row;
 	align-items: center;
 }
-#channels_title_element > div:first-child > div:first-child, #channels_title_element > div:nth-child(2) > *{
+#channels_title_element > div:first-child > div:first-child, #channels_title_element > div:nth-child(2) > *,
+#users_channels_title_element > div:first-child > div:first-child, #users_channels_title_element > div:nth-child(2) > *{
 	display: flex;
 	align-items: center;
 	margin-right: 10px;
@@ -320,14 +321,15 @@ body {
 	font-size: 18px;
 	padding: 5px;
 }
-#channels_title_element > div:first-child > p{
+#channels_title_element > div:first-child > p, #users_channels_title_element > div:first-child > p{
 	display: flex;
 	align-items: center;
 }
-#channels_title_element > div:first-child > div:first-child:hover, #channels_title_element > div:nth-child(2) > *:hover{
+#channels_title_element > div:first-child > div:first-child:hover, #channels_title_element > div:nth-child(2) > *:hover,
+#users_channels_title_element > div:first-child > div:first-child:hover, #users_channels_title_element > div:nth-child(2) > *:hover{
 	background-color: var(--color4);
 }
-#channels_title_element > div{
+#channels_title_element > div, #users_channels_title_element > div{
 	display: flex;
 	flex-direction: row;
 }
@@ -335,21 +337,26 @@ body {
 	display: flex;
 	flex-direction: row;
 }
-.side_bar_sub_elements > div:first-child {
+.side_bar_sub_elements > div:first-child > {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
 	margin-right: 10px;
 	border-radius: 5px;
-	font-size: 18px;
 	padding: 5px;
 }
 .side_bar_sub_elements > p {
 	display: flex;
 	align-items: center;
 }
-
-
+.channels_elements > div:first-child > :first-child{
+	font-size: 18px;
+	margin-left: 5px;
+}
+.channels_elements > :nth-child(2){
+	padding-right: 20px;
+	padding-left: 15px;
+}
 /*********************************************************************************************/
 
 
@@ -501,7 +508,7 @@ body {
 	padding: 30px;
 	background-color: var(--color3);
 	border-radius: 10px;
-	width: 30%;
+	width: 500px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #add_channel_modal div{
@@ -528,7 +535,9 @@ body {
 
 
 
-
+#add_channel_modal div:nth-child(2) > :nth-child(3){
+	color :red;position: absolute;
+}
 
 #add_channel_modal div:nth-child(2), #add_channel_modal div:nth-child(3){
 	display: flex;

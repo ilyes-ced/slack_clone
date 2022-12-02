@@ -57,9 +57,9 @@ CREATE TABLE workspaces(
 CREATE TABLE channels(
     id int NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    type VARCHAR(255), /*groupe or 1_1*/
+    description VARCHAR(255) NOT NULL,
     workspace int NOT NULL,
-    public Boolean,
+    public VARCHAR(255),
     invitation_link VARCHAR(255),
     expires_at DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -77,16 +77,16 @@ CREATE TABLE workspaces_members(
     FOREIGN KEY (workspace) REFERENCES workspaces(id),
     FOREIGN KEY (member) REFERENCES users(id)
 );
-/*
-CREATE TABLE channels_members(
+
+CREATE TABLE private_channels_members(
     channel int NOT NULL,
     member int NOT NULL,
-    joined_at DATETIME,
+    joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (channel, member),
     FOREIGN KEY (channel) REFERENCES channels(id),
     FOREIGN KEY (member) REFERENCES users(id)
 );
-*/
+
 CREATE TABLE users_users(
     id int NOT NULL AUTO_INCREMENT,
     sender int NOT NULL,

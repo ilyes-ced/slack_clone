@@ -19,15 +19,31 @@ router.get('/users_channels', auth,(req, res) => {
 })
 
 
-router.post('/create', auth,(req, res) => {
-    console.log(req.body)
-    //query(`select *,( select username from users where id<>? and (id=reciever or id=sender) ) as name from users_users where sender = ? or reciever = ?`, [req.query.id, req.query.id, req.query.id], (err, result) => {
-    //    if(err){
-    //        console.log(err)
-    //        return err
-    //    }
-    //    res.status(200).send({ result: 'success', message: result })
-    //})
+router.post('/create' ,(req, res) => {
+    const user_data = JSON.parse(req.body.user_data)
+    query(`select * from workspaces where id=? and owner=?`, [req.body.workspace_id, user_data.id], (err, result) => {
+        if(err){
+            console.log(err)
+            return err
+        }
+        if(req.body.public_private){
+            query(`insert into channels(name, description, workspace, public) values(?, ?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id, req.body.public_private], (err, result) => {
+                if(err){
+                    console.log(err)
+                    return err
+                }
+                query(`insert into private_channels_members(name, description, workspace, public) values(?, ?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id, req.body.public_private], (err, result) => {
+                    if(err){
+                        console.log(err)
+                        return err
+                    }
+                    //res here
+                }
+            }
+        }else{
+            console.log('it is public')
+        }
+    })
 })
 
 

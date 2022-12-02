@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, createElement, useInsertionEffect } from 'react'
+import {BsTypeBold, BsTypeItalic, BsTypeStrikethrough, BsLink45Deg, BsListUl, BsListOl, BsFillChatLeftQuoteFill, BsBraces, BsCodeSquare, BsChevronDown} from "react-icons/bs";
 
 
 
@@ -86,15 +87,15 @@ function Rich_text_input(props) {
             
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
-                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >bold</button>
-                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' >italic</button>
-                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' >line over</button>
-                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' >link</button>
-                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' >list</button>
-                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' >numbered list</button>
-                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' >quote</button>
-                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' >code</button>
-                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' >code block</button>
+                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' ><BsTypeBold/></button>
+                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' ><BsTypeItalic/></button>
+                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' ><BsTypeStrikethrough/></button>
+                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' ><BsLink45Deg/></button>
+                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' ><BsListUl/></button>
+                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' ><BsListOl/></button>
+                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' ><BsFillChatLeftQuoteFill/></button>
+                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' ><BsBraces/></button>
+                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' ><BsCodeSquare/></button>
                 </div>
 
                 
@@ -108,10 +109,21 @@ function Rich_text_input(props) {
                 */}
                 <div id='rich_text_bottom_icon_bar'>
                     icons here
-                    <div id='submit_text' onClick={submit_text}>
-                        send_icon
+                    <div id='submit_text' >
+                        <div onClick={submit_text}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+                                <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                            </svg>
+                        </div>
+                        <div></div>
+                        <div>
+                            <BsChevronDown/>
+                        </div>
                     </div>
                 </div>
+
+
+                
             </div>
         </div>
     )

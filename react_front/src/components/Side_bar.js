@@ -4,7 +4,9 @@ import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
 
 function Side_bar(props) {
-
+    const [rotate, set_rotate] = useState(false);
+    const [show_channels, set_show_channels] = useState(true);
+    const [show_chats, set_show_chats] = useState(true);
     const [show_add_channel, set_show_add_channel] = useState(false)
     const [show_child_icons, set_show_child_icons] = useState(false)
     const new_channel = useRef(null)
@@ -55,20 +57,19 @@ function Side_bar(props) {
 
 
             <div id='side_bar_channels' className='side_bar_elements' >
-                <div onMouseEnter={() => {set_show_child_icons(true)}} onMouseLeave={() => set_show_child_icons(false )}  onClick={() => {set_show_add_channel(!show_add_channel)}} className='side_bar_sub_elements' id='channels_title_element'>
+                <div onMouseEnter={() => {set_show_child_icons(true)}} onMouseLeave={() => set_show_child_icons(false )}  className='side_bar_sub_elements' id='channels_title_element'>
                     <div>
-                        <div><BsCaretDownFill /></div>
+                        <div><BsCaretDownFill style={{ transform: rotate ? "rotate(-90deg)" : "rotate(0)", transition: "all 0.2s linear" }} onClick={() => {set_rotate(!rotate); set_show_channels(!show_channels)}} /></div>
                         <p>Channels</p>
                     </div>
                     <div>
-                        {show_child_icons ? <><div><BsThreeDotsVertical/></div><div><BsPlus/></div></> : ''}
-                        
+                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div><BsPlus onClick={() => {set_show_add_channel(!show_add_channel)}}/></div></> : ''}
                     </div>
                 </div>
-                {props.channels.map(element => <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
+                {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
                     <div>  <BsHash/>  </div>
                     <p>{element.name}</p>
-                </div> )}
+                </div> : '' )}
             </div>
 
 
@@ -91,10 +92,10 @@ function Side_bar(props) {
 
             <div id='side_bar_chats' className='side_bar_elements' >
                 <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >options here</div>
-                {props.users_channels.map(element => <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements' id={"chat-element_"+element.id} >
+                {props.users_channels.map(element => show_chats ? <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements'  id={"chat-element_"+element.id} >
                     <div><BsPersonSquare/></div>
                     <p>{element.name == null ? JSON.parse(localStorage.getItem('user_data')).username : element.name }</p>
-                </div> )}
+                </div> : '' )}
                 
             </div>
         

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { BsSearch } from "react-icons/bs";
 
 function App_bar() {
     return(
@@ -7,7 +8,8 @@ function App_bar() {
             <Link to={'my_workspaces'}> to workspaces </Link>
 
             <div id="app_bar_div1">
-                <input id="app_bar_search" type="text" placeholder="you can search here"/>
+                <BsSearch/> fix me
+                <input id="app_bar_search" type="text" placeholder="you can search here "/>
             </div>
 
 

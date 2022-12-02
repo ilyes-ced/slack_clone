@@ -175,8 +175,8 @@ body {
 	color: var(--color_text)
 }
 #rich_text_bottom_icon_bar, #rich_text_top_icon_bar{
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
 	padding-top: 10px;
 	display: flex;
 	align-items: center;
@@ -187,10 +187,41 @@ body {
 #rich_text_bottom_icon_bar{
 	justify-content: space-between;
 }
-#submit_text:hover{
-	background-color: red;
-}
 
+#submit_text{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-items: center;
+	background-color: var(--color1);
+	border-radius: 5px;
+}
+#submit_text:hover{
+	background-color: var(--color4);
+}
+#submit_text > div:first-child{
+	padding: 5px;
+	padding-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-items: center;
+}
+#submit_text > div:nth-child(3){
+	padding: 5px;
+	display: flex;
+	align-items: center;
+	justify-items: center;
+}
+#submit_text > div:nth-child(3) > *{
+	height: 16px;
+	width: 16px;
+}
+#submit_text > div:nth-child(2){
+	height: 18px;
+	width: 1px;
+	background-color: green;
+	border-left: white 0.1px solid;
+}
 
 
 #messages_cntainer{
@@ -204,15 +235,23 @@ body {
 	align-items: center;
 	height: 100%;
 	border: none;
-	border-radius: 10px;
+	border-radius: 5px;
 	margin-right: 10px;
-	background-color: #6715eb;
+	background-color: transparent;
 	cursor: pointer;
 }
-.text_icons:hover:enabled{
-	background-color: var(--color7);
+.text_icons:disabled > *{
+	color: rgb(89, 84, 84);
 }
-
+.text_icons:hover:enabled{
+	background-color: var(--color1);
+}
+.text_icons > *{
+	color: white;
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+}
 
 
 /*********************************************************************************************/
@@ -301,7 +340,7 @@ body {
 	display: flex;
 	flex-direction: row;
 }
-.channels_elements > div:first-child {
+.side_bar_sub_elements > div:first-child {
 	display: flex;
 	align-items: center;
 	flex-direction: row;
@@ -310,10 +349,12 @@ body {
 	font-size: 18px;
 	padding: 5px;
 }
-.channels_elements > p {
+.side_bar_sub_elements > p {
 	display: flex;
 	align-items: center;
 }
+
+
 /*********************************************************************************************/
 
 

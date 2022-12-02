@@ -34,12 +34,7 @@
 	align-items: center;
 	justify-content: center;
 }
-.modal_content{
 
-	width: 50%;
-	height: 50%;
-	background-color: rgb(2000,110,30);
-}
 
 
 :root {
@@ -500,6 +495,184 @@ body {
 
 
 /*********************************************************************************************/
+
+
+#add_channel_modal{
+	padding: 30px;
+	background-color: var(--color3);
+	border-radius: 10px;
+	width: 30%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#add_channel_modal div{
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+#add_channel_modal div:first-child{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+#add_channel_modal div:first-child > *:nth-child(2){
+	width: 30px;
+	height: 30px;
+	background-color: transparent;
+	border-radius: 5px;
+}
+#add_channel_modal div:first-child > *:nth-child(2):hover{
+	background-color: var(--color6);
+	cursor: pointer;
+}
+
+
+
+
+
+
+#add_channel_modal div:nth-child(2), #add_channel_modal div:nth-child(3){
+	display: flex;
+	flex-direction: column;
+}
+#add_channel_modal input{
+	width: 100%;
+	height: 40px;
+	background-color: transparent;
+	border-radius: 10px;
+	border: var(--color7) 1px solid;
+	color: white; 
+	font-size: 15px;
+	padding: 10px;
+}
+#add_channel_modal label{
+	font-size: 18px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: 700;
+}
+#add_channel_modal p{
+	font-size: 15px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#add_channel_modal span{
+	padding-top: 10px;
+	color: gray;
+}
+
+
+
+
+#add_channel_modal div:nth-child(4){
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+#add_channel_modal div:nth-child(4) > div{
+	width: fit-content;
+}
+
+#add_channel_modal div:nth-child(5){
+	width: 100%;
+	display: flex;
+	justify-content: right;
+}
+#add_channel_modal div:nth-child(5) > button{
+	border-radius: 5px;
+	background-color: var(--color1);
+	border: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	cursor: pointer;
+}
+
+#add_channel_modal div:nth-child(5) > button:disabled{
+	background-color: var(--color7);
+}
+
+
+
+
+
+
+
+
+
+
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: var(--color1);
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px var(--color1);
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare } from "react-icons/bs";
+import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
 
@@ -77,11 +77,42 @@ function Side_bar(props) {
             {/* created channel modal */}
             { show_add_channel ? 
                 <div className='modal' onClick={hide_show_modal} > 
-                    <div className='modal_content'> 
-                        <input ref={new_channel}  type="text" />
+                    <div id="add_channel_modal">
+                        <div>
+                            <h1>Create a new channel</h1>
+                            <BsX/>
+                        </div>
+                        <div>
+                            <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+                            <label htmlFor="">name</label>
+                            <input ref={new_channel} placeholder='channel name'  type="text" required/>
+                        </div>
+                        <div>
+                            <label htmlFor="">description (optional)</label>
+                            <input type="text" />
+                            <span>what this channel is about</span>
+                        </div>
+                        <div>
+                            <p>
+                                <h3>Make private</h3>
+                                This can't be undone. A private channel cannot be made public later on.
+                            </p>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" />
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <button disabled>submit</button>
+                        </div>
+
+                        {/*<input ref={new_channel}  type="text" />
+                        <BsLockFill/>
                         <button onClick={add_channel}>
                             submit
-                        </button>
+                        </button>*/}
                     </div>
                     
                 </div>

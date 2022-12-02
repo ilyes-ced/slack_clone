@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
-import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash } from "react-icons/bs";
+import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare } from "react-icons/bs";
 import event_bus from "../events/event_bus";
+import ReactTooltip from 'react-tooltip';
 
 function Side_bar(props) {
 
@@ -33,6 +34,7 @@ function Side_bar(props) {
 
     return(
         <div id='side_bar'>
+            <ReactTooltip effect='solid' />
 
 
             <div className='side_bar_elements'  id='workspace_div'>
@@ -40,7 +42,7 @@ function Side_bar(props) {
                     {props.workspace.name}
                 </div>
                 <div>
-                    <BsPencilSquare />
+                    <BsPencilSquare data-tip="hello world" />
                 </div>
             </div>
 
@@ -90,7 +92,7 @@ function Side_bar(props) {
             <div id='side_bar_chats' className='side_bar_elements' >
                 <div className='chats_elements side_bar_sub_elements' onClick={change_chat} >options here</div>
                 {props.users_channels.map(element => <div key={ element.id } onClick={change_chat} className='users_channels_elements side_bar_sub_elements' id={"chat-element_"+element.id} >
-                    <div></div>
+                    <div><BsPersonSquare/></div>
                     <p>{element.name == null ? JSON.parse(localStorage.getItem('user_data')).username : element.name }</p>
                 </div> )}
                 

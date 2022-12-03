@@ -33,18 +33,18 @@ router.post('/login', (req, res) => {
             delete result[0].password
             if(result[0].token){
                 if(result[0].expires_at < new Date().toISOString().slice(0, 19).replace('T', " ")){
-                    query('update tokens set token=?, expires_at=? where user=? ',  [generate_token(), result[0].id, generate_expiration_date()])
                     result[0].token = generate_token()
                     result[0].expires_at = generate_expiration_date()
+                    query('update tokens set token=?, expires_at=? where user=? ',  [result[0].token, result[0].id, result[0].expires_at])
                     res.status(200).send({result: 'success', message: result[0]})
                 }else{
                     res.status(200).send({result: 'success', message: result[0]})
                     return
                 }
             }else{
-                query('insert into tokens(user, token, expires_at) values(?, ?, ?)',  [result[0].id, generate_token(), generate_expiration_date()])
                 result[0].token = generate_token()
                 result[0].expires_at = generate_expiration_date()
+                query('insert into tokens(user, token, expires_at) values(?, ?, ?)',  [result[0].id, result[0].token, result[0].expires_at])
                 res.status(200).send({result: 'success', message: result[0]})
             }
         }else{

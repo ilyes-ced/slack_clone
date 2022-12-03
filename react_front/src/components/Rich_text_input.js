@@ -101,7 +101,7 @@ function Rich_text_input(props) {
                 
                 <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus }  >
                     {text_value.map((element, index, arr) =>
-                        <div className={element.classes}> {element.content} </div>
+                        <div key={index} className={element.classes}> {element.content} </div>
                     )}
                 </div>
                 {/* {onBlur={() => {change_ability(true)} 

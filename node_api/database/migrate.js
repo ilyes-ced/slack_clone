@@ -64,7 +64,7 @@ const tables = [
 		name VARCHAR(255) NOT NULL,
 		description VARCHAR(255) NOT NULL,
 		workspace int NOT NULL,
-		public VARCHAR(255),
+		public VARCHAR(255) DEFAULT('public'),
 		invitation_link VARCHAR(255),
 		expires_at DATETIME,
 		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -155,14 +155,15 @@ const tables = [
 
 	`create trigger add_channels_to_new_workspace after insert on workspaces for each row
 	begin
-	  	insert into channels(name, type, workspace, public) values ('general', 'room' ,new.id, true);
-	  	insert into channels(name, type, workspace, public) values ('random', 'room' ,new.id, true);
+	  	insert into channels(name, description, workspace, public) values ('general', 'room' ,new.id, true);
+	  	insert into channels(name, description, workspace, public) values ('random', 'room' ,new.id, true);
 	end#`,
 	
 	`create trigger add_self_chat after insert on users for each row
 	begin
 	  	insert into users_users(sender, reciever) values (new.id, new.id);
 	end#`,
+
 	`create trigger add_owner_as_member_to_workspace after insert on workspaces for each row
 	begin
 		insert into workspaces_members(workspace, member) values (new.id, new.owner);

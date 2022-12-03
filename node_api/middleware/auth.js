@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
             console.log(err)
             return
         }
-        //console.log(result)
+        console.log(result)
         if(result.length == 0){
             //console.log('not authed ')
             res.status(401).send({result: 'failed', message: 'not authenticated'})

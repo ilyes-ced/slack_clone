@@ -28,6 +28,7 @@ function Home_page(props) {
             body: localStorage.getItem('user_data')
         }).then((response) => response.json())
         .then(data => {
+            console.log(data)
             if(data.result == 'failed'){
                 set_is_auth('redirect')
             }else if(data.result == 'success'){
@@ -86,7 +87,11 @@ function Home_page(props) {
             </div>
         </>
     )
-    return <div id='loader_parent'><div className="loader"></div></div>
+    return <div id='loader_parent'><div className="loader"></div>
+    {show_page ? 'yes' : 'no'}
+    {show_page2 ? 'yes' : 'no'}
+    {show_page3 ? 'yes' : 'no'}
+    </div>
 }
 
 

@@ -59,7 +59,7 @@ CREATE TABLE channels(
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     workspace int NOT NULL,
-    public VARCHAR(255),
+    public_private VARCHAR(255) DEFAULT('public'),
     invitation_link VARCHAR(255),
     expires_at DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

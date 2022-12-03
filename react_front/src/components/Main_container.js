@@ -2,7 +2,7 @@ import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
 import { BsPersonSquare, BsPersonPlus } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
-
+import ReactTooltip from 'react-tooltip';
 
 
 
@@ -102,23 +102,25 @@ function Main_container(props) {
     }, [current_channel])
     useEffect(() => {        
         div_bottom.current?.scrollIntoView({behavior: 'smooth'})
-     }, [current_message_array])
+    }, [current_message_array])
 
 
     if(current_message_array) {
         return(
             <div id='main_container'>
+            <ReactTooltip effect='solid' />
+
 
 
 
                 <div id='main_container_title_bar'>
                     <div id='main_container_title'>{current_channel.name == null ? JSON.parse(localStorage.getItem('user_data')).username : current_channel.name}</div>
                     <div id='main_container_options'>
-                        <div>
+                        <div data-tip="Members of this workspace">
                             <BsPersonSquare className='person_icon' /> 
                             <p>{props.workspace.members_count}</p>
                         </div>
-                        <div>
+                        <div data-tip="Add new members">
                             <BsPersonPlus className='person_icon' /> 
                         </div>
                     </div>
@@ -152,7 +154,7 @@ function Main_container(props) {
                                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                                 <div className='message_data'>
                                     <div className='sender_data'>
-                                        <p className='message_user'> {ele.sender_username} </p>
+                                        <a  href='www.google.com' className='message_user'> {ele.sender_username} </a>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">
@@ -165,11 +167,11 @@ function Main_container(props) {
                                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                                 <div className='message_data'>
                                     <div className='sender_data'>
-                                        <p className='message_user'> {ele.sender_username} </p>
+                                        <a  href='www.google.com' className='message_user'> {ele.sender_username} </a>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">
-                                        { JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> ) }
+                                        { JSON.parse(ele.message).map((ele, ind) => <p key={ind} className={ele.classes}> {ele.content} </p> ) }
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +179,7 @@ function Main_container(props) {
 
                     </div>
                     )}
-                     <div ref={div_bottom} />
+                    <div ref={div_bottom} />
                 </div>
 
                 <Rich_text_input socket={props.socket} current_channel={ current_channel.id } current_channel_type={ current_channel_type } />

@@ -126,6 +126,7 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
 	//console.log(socket.rooms)
 	socket.on('sent_message', (data) => {
+		console.log(data)
 		if(data.channel_type == 'channel'){
 			send_channel_message(socket, data)
 		}else if(data.channel_type == 'chat'){

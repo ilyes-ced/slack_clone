@@ -147,7 +147,7 @@ function Main_container(props) {
                         {/* display the message div */}
                         {arr[index-1] ? ( ele.sender == arr[index-1].sender ? 
                             <div className="message_same_user message_content">
-                                {JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> )}
+                                <div dangerouslySetInnerHTML={{ __html: ele.message }} />
                             </div> 
                             :
                             <div className="message">
@@ -158,7 +158,7 @@ function Main_container(props) {
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">
-                                        {JSON.parse(ele.message).map(ele => <p className={ele.classes}> {ele.content} </p> )}
+                                        <div dangerouslySetInnerHTML={{ __html: ele.message }} />
                                     </div>
                                 </div>
                             </div> )
@@ -171,7 +171,7 @@ function Main_container(props) {
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">
-                                        { JSON.parse(ele.message).map((ele, ind) => <p key={ind} className={ele.classes}> {ele.content} </p> ) }
+                                        <div dangerouslySetInnerHTML={{ __html: ele.message }} />
                                     </div>
                                 </div>
                             </div>

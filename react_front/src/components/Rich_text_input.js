@@ -82,28 +82,22 @@ function Rich_text_input(props) {
         
     }
     const submit_text = () => {
-        console.log('clickeddddddddddddddd')
-        //text_value_tempo = text_value
-        for(let i = 0; i < text_input.current.children.length; i++){
-            console.log(text_input.current.children[i].innerText)
-            text_value_tempo.push({classes : [...text_input.current.children[i].classList] ,content : text_input.current.children[i].innerText})
-        }
-        //console.log(text_value_tempo)
-        props.socket.emit('sent_message', {value: text_value_tempo, channel: props.current_channel, channel_type: props.current_channel_type })
+        console.log(text_input.current.innerHTML)
+        props.socket.emit('sent_message', {value: text_input.current.innerHTML, channel: props.current_channel, channel_type: props.current_channel_type })
     }
     const input_focus = () => {
         change_ability(false)
-        //if(first_focus){
-        //    var tag = document.getElementById("rich_text_field")
-        //    var setpos = document.createRange()
-        //    var set = window.getSelection()
-        //    setpos.setStart(tag.childNodes[0], 0)
-        //    setpos.collapse(true)
-        //    set.removeAllRanges()
-        //    set.addRange(setpos)
-        //    tag.focus()
-        //    set_first_focus(false)
-        //}
+        if(first_focus){
+            var tag = document.getElementById("rich_text_field")
+            var setpos = document.createRange()
+            var set = window.getSelection()
+            setpos.setStart(tag.childNodes[0], 1)
+            setpos.collapse(true)
+            set.removeAllRanges()
+            set.addRange(setpos)
+            tag.focus()
+            set_first_focus(false)
+        }
     }
     return(
         <div id='rich_text_input'>
@@ -123,9 +117,7 @@ function Rich_text_input(props) {
 
                 
                 <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus }  >
-                    {text_value.map((element, index, arr) =>
-                        <div key={index} className={element.classes}> {element.content} </div>
-                    )}
+                    <div></div>
                 </div>
                 {/* {onBlur={() => {change_ability(true)} 
                 <textarea  ref={text_input} onKeyUp={textarea_size} onFocus={() => {change_ability(false)}}  name="" ></textarea>

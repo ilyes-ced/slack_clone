@@ -73,7 +73,7 @@ function Side_bar(props) {
                     </div>
                 </div>
                 {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
-                    <div>  <BsHash/>  </div>
+                    <div> {element.public ==  'public' ? <BsHash/> : <BsLockFill/> }     </div>
                     <p>{element.name}</p>
                 </div> : '' )}
             </div>

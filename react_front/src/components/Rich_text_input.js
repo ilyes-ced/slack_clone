@@ -15,47 +15,70 @@ function Rich_text_input(props) {
 
     useEffect(() => {        
         function handleClickOutside(event) {
-          if (text_input.current && !text_input.current.contains(event.target)) {
-            //alert("You clicked outside of me!")
-          }
+            if (text_input.current && !text_input.current.contains(event.target)) {
+                //alert("You clicked outside of me!")
+            }
         }
         document.addEventListener("mousedown", handleClickOutside)
         return () => {
-          document.removeEventListener("mousedown", handleClickOutside)
+            document.removeEventListener("mousedown", handleClickOutside)
         }
-      }, [/*text_input*/])
+    }, [/*text_input*/])
 
-      //useEffect(() => {
-      //  if(!first_focus){
-      //      var tag = document.getElementById("rich_text_field")
-      //      var setpos = document.createRange()
-      //      var set = window.getSelection()
-      //      tag.innerHTML = tag.innerHTML+'<div class="bold"></div>'
 
-      //      setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
-      //      setpos.collapse(true)
-      //      set.removeAllRanges()
-      //      set.addRange(setpos)
-      //      tag.focus()
-      //  }
-      //}, [text_value])
-      
-    const icon_click = (e) => {
-        //text_input.current.focus()
-        alert(e.target.id)
-        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
-        //change_text_value([...text_value, {classes : e.target.id, content:''}])
-        
-        var tag = document.getElementById("rich_text_field")
+    function setCursor(ele) {
+        var tag = ele
         var setpos = document.createRange()
         var set = window.getSelection()
-        tag.innerHTML = '<div class="'+e.target.id+'"></div>'
-
-        setpos.setStart(tag.childNodes[tag.childNodes.length-1], 0)
+        setpos.setStart(tag.childNodes[tag.childNodes.length-1], tag.childNodes[tag.childNodes.length-1].length)
         setpos.collapse(true)
         set.removeAllRanges()
         set.addRange(setpos)
-        tag.focus()
+        tag.focus();
+    }
+    const icon_click = (e) => {
+        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
+        var sel, range, html
+        alert(e.target.parentElement.id)
+        switch (e.target.parentElement.id) {
+            case 'bold':
+                html = '<strong> </strong>'
+                break;
+            case 'italic':
+                html = '<i> </i>'
+                break;
+            case 'line_over':
+                html = '<s> </s>'
+                break;
+            default:
+                
+        }
+        if (window.getSelection) {
+            sel = window.getSelection()
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0)
+                range.deleteContents()
+                var el = document.createElement("div")
+                el.innerHTML = html
+                var frag = document.createDocumentFragment(), node, lastNode
+                while ( (node = el.firstChild) ) {
+                    lastNode = frag.appendChild(node)
+                }
+                range.insertNode(frag)
+                if (lastNode) {
+                    range = range.cloneRange()
+                    range.setStartAfter(lastNode)
+                    range.collapse(true)
+                    sel.removeAllRanges()
+                    sel.addRange(range)
+                    console.log(lastNode)
+                    setCursor(lastNode)
+                }
+            }
+        } else if (document.selection && document.selection.type != "Control") {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+        }
         
     }
     const submit_text = () => {
@@ -70,32 +93,32 @@ function Rich_text_input(props) {
     }
     const input_focus = () => {
         change_ability(false)
-        if(first_focus){
-            var tag = document.getElementById("rich_text_field")
-            var setpos = document.createRange()
-            var set = window.getSelection()
-            setpos.setStart(tag.childNodes[0], 0)
-            setpos.collapse(true)
-            set.removeAllRanges()
-            set.addRange(setpos)
-            tag.focus()
-            set_first_focus(false)
-        }
+        //if(first_focus){
+        //    var tag = document.getElementById("rich_text_field")
+        //    var setpos = document.createRange()
+        //    var set = window.getSelection()
+        //    setpos.setStart(tag.childNodes[0], 0)
+        //    setpos.collapse(true)
+        //    set.removeAllRanges()
+        //    set.addRange(setpos)
+        //    tag.focus()
+        //    set_first_focus(false)
+        //}
     }
     return(
         <div id='rich_text_input'>
             
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
-                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' ><BsTypeBold/></button>
-                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' ><BsTypeItalic/></button>
-                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' ><BsTypeStrikethrough/></button>
-                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' ><BsLink45Deg/></button>
-                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' ><BsListUl/></button>
-                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' ><BsListOl/></button>
-                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' ><BsFillChatLeftQuoteFill/></button>
-                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' ><BsBraces/></button>
-                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' ><BsCodeSquare/></button>
+                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >           <BsTypeBold/>               </button>
+                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' >         <BsTypeItalic/>             </button>
+                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' >      <BsTypeStrikethrough/>      </button>
+                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' >           <BsLink45Deg/>              </button>
+                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' >           <BsListUl/>                 </button>
+                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' >  <BsListOl/>                 </button>
+                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' >          <BsFillChatLeftQuoteFill/>  </button>
+                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' >           <BsBraces/>                 </button>
+                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' >     <BsCodeSquare/>             </button>
                 </div>
 
                 

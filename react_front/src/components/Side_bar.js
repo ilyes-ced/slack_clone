@@ -13,9 +13,9 @@ function Side_bar(props) {
     const [show_add_chat, set_show_add_chat] = useState(false)
     const [show_child_icons, set_show_child_icons] = useState(false)
     const [show_child_icons2, set_show_child_icons2] = useState(false)
+    const [public_private, set_public_private] = useState(false)
     const new_channel = useRef(null)
     const new_channel_desc = useRef(null)
-    const public_private = useRef(false)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target)
         set_show_add_channel(!show_add_channel)
@@ -90,12 +90,16 @@ function Side_bar(props) {
                         </div>
                         <div>
                             <p>Channels are where your team communicates. They're best when organized around a topic — #marketing, for example.</p>
-                            <label htmlFor="">name</label>
-                            <BsLockFill/>
-                            <input ref={new_channel} onChange={() => { new_channel.current.value == "" ? set_enabled(true) : set_enabled(false)}} placeholder='put that icon inside input div'  type="text" required/>
+                            <label>name</label>
+                            <div>
+                                {public_private ? <BsHash/> : <BsLockFill/> } 
+
+                                <input ref={new_channel} onChange={() => { new_channel.current.value == "" ? set_enabled(true) : set_enabled(false)}} placeholder='put that icon inside input div'  type="text" required/>
+                                <div>2 0</div>
+                            </div>
                         </div>
                         <div>
-                            <label htmlFor="">description (optional)</label>
+                            <label>description (optional)</label>
                             <input ref={new_channel_desc} type="text" />
                             <span>what this channel is about</span>
                         </div>
@@ -106,7 +110,7 @@ function Side_bar(props) {
                             </p>
                             <div>
                                 <label class="switch">
-                                    <input ref={public_private} type="checkbox" />
+                                    <input onChange={() => {set_public_private(!public_private)}} type="checkbox" />
                                     <span class="slider round"></span>
                                 </label>
                             </div>

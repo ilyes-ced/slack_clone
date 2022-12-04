@@ -17,7 +17,7 @@ const workspaces = [
 ]
 
 const messages = [
-    [1, 1, JSON.stringify([{classes: 'bold', content: 'hello dude'}, {classes: 'italic', content: 'im from italy'}])],
+    [1, 1, '<div><strong>hello dude</strong></div>']
 ]
 
 

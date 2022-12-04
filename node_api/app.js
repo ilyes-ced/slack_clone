@@ -16,7 +16,8 @@ app.use((req, res, next) => {
 const query = require('./database/index')
 
 const send_channel_message = (socket, data) => {
-	query(`insert into messages(sender, channel, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
+	console.log(data.channel)
+	query(`insert into messages(sender, channel, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, data.value], (err, result) => {
 		if(err){
 			console.log(err)
 			return
@@ -46,7 +47,7 @@ const send_channel_message = (socket, data) => {
 
 
 const send_private_message = (socket, data) => {
-	query(`insert into private_messages(sender, conversation, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, JSON.stringify(data.value)], (err, result) => {
+	query(`insert into private_messages(sender, conversation, message) values(?, ?, ?)`, [socket.user_data.id, data.channel, data.value], (err, result) => {
 		if(err){
 			console.log(err)
 			return

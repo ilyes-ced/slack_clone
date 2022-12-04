@@ -7,12 +7,13 @@ function Rich_text_input(props) {
     const text_input = useRef(null)
     const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
     const [first_focus, set_first_focus] = useState(true)
-    const [text_value, change_text_value] = useState([{classes: '',content:''}])
-    var text_value_tempo = []
-    //change_text_value([...text_value, {classes: 'test class', content: 'rugerughzpurq'}])
-
-
-
+    const [show_add_link, set_show_add_link] = useState(false)
+    const link_text = useRef(null)
+    const link_url = useRef(null)
+    const hide_show_modal = (e) => {
+        if(e.currentTarget == e.target)
+        set_show_add_link(!show_add_link)
+    }
     useEffect(() => {        
         function handleClickOutside(event) {
             if (text_input.current && !text_input.current.contains(event.target)) {
@@ -39,7 +40,7 @@ function Rich_text_input(props) {
     const icon_click = (e) => {
         e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
         var sel, range, html
-        alert(e.target.parentElement.id)
+        //alert(e.target.parentElement.id)
         switch (e.target.parentElement.id) {
             case 'bold':
                 html = '<strong> </strong>'
@@ -49,6 +50,17 @@ function Rich_text_input(props) {
                 break;
             case 'line_over':
                 html = '<s> </s>'
+                break;
+            case 'list':
+                html = '<ul><li> </li></ul>'
+                break;
+            case 'numbered_list':
+                html = '<ol><li> </li></ol>'
+                break;
+            case 'link':
+                set_show_add_link(true)
+            case 'quote':
+                html = '<div class="quote"> </div>'
                 break;
             default:
                 
@@ -73,6 +85,7 @@ function Rich_text_input(props) {
                     sel.addRange(range)
                     console.log(lastNode)
                     setCursor(lastNode)
+                    var last_cur = lastNode
                 }
             }
         } else if (document.selection && document.selection.type != "Control") {
@@ -99,9 +112,54 @@ function Rich_text_input(props) {
             set_first_focus(false)
         }
     }
+    const create_link = () => {
+        var link = '<a href="'+link_url.current.value+'">'+link_text.currentvalue+'</a>'
+        var sel, range, html
+
+        if (window.getSelection) {
+            sel = window.getSelection()
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0)
+                range.deleteContents()
+                var el = link
+                var frag = document.createDocumentFragment(), node, lastNode
+                while ( (node = el.firstChild) ) {
+                    lastNode = frag.appendChild(node)
+                }
+                range.insertNode(frag)
+                if (lastNode) {
+                    range = range.cloneRange()
+                    range.setStartAfter(lastNode)
+                    range.collapse(true)
+                    sel.removeAllRanges()
+                    sel.addRange(range)
+                    console.log(lastNode)
+                    setCursor(lastNode)
+                }
+            }
+        } else if (document.selection && document.selection.type != "Control") {
+            // IE < 9
+            document.selection.createRange().pasteHTML(html);
+        }
+    }
     return(
         <div id='rich_text_input'>
-            
+            { show_add_link ? 
+                <div className='modal link_modal' onClick={hide_show_modal} > 
+                    <div id="add_link_modal">
+                        <div>
+                            <input ref={link_text} type="text" />
+                        </div>
+                        <div>
+                            <input ref={link_url} type="text" />
+                        </div>
+                        <div>
+                            <button onClick={create_link} >submit</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            : '' }
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
                     <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >           <BsTypeBold/>               </button>
@@ -125,7 +183,7 @@ function Rich_text_input(props) {
                 <div id='rich_text_bottom_icon_bar'>
                     icons here
                     <div id='submit_text' >
-                        <div onClick={submit_text}>
+                        <div onClick={submit_text} >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
                                 <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                             </svg>

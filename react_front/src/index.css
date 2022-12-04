@@ -31,7 +31,9 @@
 	align-items: center;
 	justify-content: center;
 }
-
+.link_modal{
+	background-color: transparent;
+}
 
 
 :root {
@@ -192,6 +194,9 @@ body {
 	justify-content: space-between;
 }
 
+#submit_text:disabled{
+	background-color: red;
+}
 #submit_text{
 	display: flex;
 	flex-direction: row;
@@ -361,8 +366,20 @@ body {
 .channels_elements > div:first-child > :first-child{
 	font-size: 18px;
 	margin-left: 5px;
+	margin-top: 5px;
 }
 .channels_elements > :nth-child(2){
+	padding-right: 20px;
+	padding-left: 15px;
+}
+
+
+.users_channels_elements > div:first-child > :first-child{
+	font-size: 18px;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+.users_channels_elements > :nth-child(2){
 	padding-right: 20px;
 	padding-left: 15px;
 }

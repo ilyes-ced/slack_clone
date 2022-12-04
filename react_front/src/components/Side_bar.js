@@ -29,11 +29,11 @@ function Side_bar(props) {
         }
     }
     const add_channel = () => {
-        console.log(JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private.current.checked}))
+        console.log(JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private}))
         fetch(process.env.REACT_APP_API_URL+"/channel/create", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private.current.checked})
+            body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private})
         }).then((response) => response.json())
         .then(data => {
             alert(JSON.stringify(data))
@@ -73,7 +73,7 @@ function Side_bar(props) {
                     </div>
                 </div>
                 {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
-                    <div> {element.public ==  'public' ? <BsLockFill/> : <BsHash/> }     </div>
+                    <div> {element.public ==  'private' ? <BsLockFill/> : <BsHash/> }     </div>
                     <p>{element.name}</p>
                 </div> : '' )}
             </div>
@@ -92,7 +92,7 @@ function Side_bar(props) {
                             <p>Channels are where your team communicates. They're best when organized around a topic — #marketing, for example.</p>
                             <label>name</label>
                             <div>
-                                {public_private ? <BsHash/> : <BsLockFill/> } 
+                                {public_private ? <BsLockFill/> : <BsHash/> } 
 
                                 <input ref={new_channel} onChange={() => { new_channel.current.value == "" ? set_enabled(true) : set_enabled(false)}} placeholder='put that icon inside input div'  type="text" required/>
                                 <div>2 0</div>

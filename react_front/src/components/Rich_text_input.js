@@ -5,19 +5,41 @@ import {BsTypeBold, BsTypeItalic, BsTypeStrikethrough, BsLink45Deg, BsListUl, Bs
 
 function Rich_text_input(props) {
     const text_input = useRef(null)
-    const [is_disabled, change_ability] = useState([true,true,true,true,true,true,true,true,true])
     const [first_focus, set_first_focus] = useState(true)
     const [show_add_link, set_show_add_link] = useState(false)
     const link_text = useRef(null)
     const link_url = useRef(null)
+    const [editor_bold, set_editor_bold] = useState(true)
+    const [editor_italic, set_editor_italic] = useState(true)
+    const [editor_line, set_editor_line] = useState(true)
+    const [editor_link, set_editor_link] = useState(true)
+    const [editor_list, set_editor_list] = useState(true)
+    const [editor_list_n, set_editor_list_n] = useState(true)
+    const [editor_quote, set_editor_quote] = useState(true)
+    const [editor_code, set_editor_code] = useState(true)
+    const [editor_code_b, set_editor_code_b] = useState(true)
+    const enable_disable_all = (value) => {
+        set_editor_bold(value)
+        set_editor_italic(value)
+        set_editor_line(value)
+        set_editor_link(value)
+        set_editor_list(value)
+        set_editor_list_n(value)
+        set_editor_quote(value)
+        set_editor_code(value)
+        set_editor_code_b(value)
+    }
+
+    var last_cur
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target)
         set_show_add_link(!show_add_link)
     }
     useEffect(() => {        
         function handleClickOutside(event) {
-            if (text_input.current && !text_input.current.contains(event.target)) {
+            if (document.getElementById('rich_text_input_content') && !document.getElementById('rich_text_input_content').contains(event.target)) {
                 //alert("You clicked outside of me!")
+                enable_disable_all(true)
             }
         }
         document.addEventListener("mousedown", handleClickOutside)
@@ -83,9 +105,8 @@ function Rich_text_input(props) {
                     range.collapse(true)
                     sel.removeAllRanges()
                     sel.addRange(range)
-                    console.log(lastNode)
                     setCursor(lastNode)
-                    var last_cur = lastNode
+                    last_cur = lastNode
                 }
             }
         } else if (document.selection && document.selection.type != "Control") {
@@ -99,7 +120,7 @@ function Rich_text_input(props) {
         props.socket.emit('sent_message', {value: text_input.current.innerHTML, channel: props.current_channel, channel_type: props.current_channel_type })
     }
     const input_focus = () => {
-        change_ability(false)
+        enable_disable_all(false)
         if(first_focus){
             var tag = document.getElementById("rich_text_field")
             var setpos = document.createRange()
@@ -123,6 +144,12 @@ function Rich_text_input(props) {
                 range.deleteContents()
                 var el = link
                 var frag = document.createDocumentFragment(), node, lastNode
+                console.log(last_cur)
+                if(last_cur){
+                    setCursor(last_cur)
+                }else{
+                    setCursor(document.getElementById("rich_text_field"))
+                }
                 while ( (node = el.firstChild) ) {
                     lastNode = frag.appendChild(node)
                 }
@@ -134,7 +161,6 @@ function Rich_text_input(props) {
                     sel.removeAllRanges()
                     sel.addRange(range)
                     console.log(lastNode)
-                    setCursor(lastNode)
                 }
             }
         } else if (document.selection && document.selection.type != "Control") {
@@ -162,24 +188,22 @@ function Rich_text_input(props) {
             : '' }
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
-                    <button disabled={is_disabled[0]} onClick={icon_click} className='text_icons' id='bold' >           <BsTypeBold/>               </button>
-                    <button disabled={is_disabled[1]} onClick={icon_click} className='text_icons' id='italic' >         <BsTypeItalic/>             </button>
-                    <button disabled={is_disabled[2]} onClick={icon_click} className='text_icons' id='line_over' >      <BsTypeStrikethrough/>      </button>
-                    <button disabled={is_disabled[3]} onClick={icon_click} className='text_icons' id='link' >           <BsLink45Deg/>              </button>
-                    <button disabled={is_disabled[4]} onClick={icon_click} className='text_icons' id='list' >           <BsListUl/>                 </button>
-                    <button disabled={is_disabled[5]} onClick={icon_click} className='text_icons' id='numbered_list' >  <BsListOl/>                 </button>
-                    <button disabled={is_disabled[6]} onClick={icon_click} className='text_icons' id='quote' >          <BsFillChatLeftQuoteFill/>  </button>
-                    <button disabled={is_disabled[7]} onClick={icon_click} className='text_icons' id='code' >           <BsBraces/>                 </button>
-                    <button disabled={is_disabled[8]} onClick={icon_click} className='text_icons' id='code_block' >     <BsCodeSquare/>             </button>
+                    <button disabled={editor_bold} onClick={icon_click} className='text_icons' id='bold' >              <BsTypeBold/>               </button>
+                    <button disabled={editor_italic} onClick={icon_click} className='text_icons' id='italic' >          <BsTypeItalic/>             </button>
+                    <button disabled={editor_line} onClick={icon_click} className='text_icons' id='line_over' >         <BsTypeStrikethrough/>      </button>
+                    <button disabled={editor_link} onClick={icon_click} className='text_icons' id='link' >              <BsLink45Deg/>              </button>
+                    <button disabled={editor_list} onClick={icon_click} className='text_icons' id='list' >              <BsListUl/>                 </button>
+                    <button disabled={editor_list_n} onClick={icon_click} className='text_icons' id='numbered_list' >   <BsListOl/>                 </button>
+                    <button disabled={editor_quote} onClick={icon_click} className='text_icons' id='quote' >            <BsFillChatLeftQuoteFill/>  </button>
+                    <button disabled={editor_code} onClick={icon_click} className='text_icons' id='code' >              <BsBraces/>                 </button>
+                    <button disabled={editor_code_b} onClick={icon_click} className='text_icons' id='code_block' >      <BsCodeSquare/>             </button>
                 </div>
 
                 
                 <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus }  >
                     <div></div>
                 </div>
-                {/* {onBlur={() => {change_ability(true)} 
-                <textarea  ref={text_input} onKeyUp={textarea_size} onFocus={() => {change_ability(false)}}  name="" ></textarea>
-                */}
+                
                 <div id='rich_text_bottom_icon_bar'>
                     icons here
                     <div id='submit_text' >

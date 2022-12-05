@@ -1,7 +1,8 @@
 import { useState, useRef } from "react";
-import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX } from "react-icons/bs";
+import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX, BsChevronDown } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
+
 
 function Side_bar(props) {
     const [enabled, set_enabled] = useState(false);
@@ -10,6 +11,7 @@ function Side_bar(props) {
     const [show_channels, set_show_channels] = useState(true);
     const [show_chats, set_show_chats] = useState(true);
     const [show_add_channel, set_show_add_channel] = useState(false)
+    const [open_workspace_modal, set_open_workspace_modal] = useState(false)
     const [show_add_chat, set_show_add_chat] = useState(false)
     const [show_child_icons, set_show_child_icons] = useState(false)
     const [show_child_icons2, set_show_child_icons2] = useState(false)
@@ -17,8 +19,10 @@ function Side_bar(props) {
     const new_channel = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
-        if(e.currentTarget == e.target)
-        set_show_add_channel(!show_add_channel)
+        if(e.currentTarget == e.target){
+            set_show_add_channel(false)
+            set_open_workspace_modal(false)
+        }
     }
 
     const change_chat = (e) => {
@@ -45,9 +49,12 @@ function Side_bar(props) {
             <ReactTooltip effect='solid' />
 
 
-            <div className='side_bar_elements'  id='workspace_div'>
+            <div className='side_bar_elements' onClick={() => { set_open_workspace_modal(!open_workspace_modal) }} id='workspace_div'>
                 <div>
                     {props.workspace.name}
+                </div>
+                <div>
+                    <BsChevronDown/>
                 </div>
                 <div>
                     <BsPencilSquare data-tip="hello world" />
@@ -78,7 +85,13 @@ function Side_bar(props) {
                 </div> : '' )}
             </div>
 
-
+            {open_workspace_modal ? 
+                <div className='modal workspace_modal' onClick={hide_show_modal} > 
+                    <div id="workspace_modal">
+                        hello
+                    </div>
+                </div>
+            : "" }
 
             {/* created channel modal */}
             { show_add_channel ? 

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BsSearch, BsSliders } from "react-icons/bs";
+import { BsSearch, BsSliders, BsFillBellFill } from "react-icons/bs";
 
 function App_bar() {
     return(
@@ -16,6 +16,7 @@ function App_bar() {
 
 
             <div id="app_bar_div2">
+                <BsFillBellFill/>
                 <img className='sener_pfp' src="/img.png" alt="unavailable" />
                 {/*<Link to='/login'>login</Link>*/}
             </div>

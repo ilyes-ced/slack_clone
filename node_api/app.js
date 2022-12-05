@@ -98,7 +98,12 @@ io.use((socket, next) => {
 			console.log(err)
 			return
 		}
-		query(`select * from channels where workspace in (select workspace from workspaces_members where member =?)`, [socket.user_data.id], (err, result) => {
+		/*
+		select * from channels where workspace in (select workspace from workspaces_members where member =?)
+		and ((public<>'private') or (public='private' and id in (select channel from private_channels_members where member=?)))
+		*/
+		query(`select * from channels where workspace in (select workspace from workspaces_members where member =?)
+		and ((public<>'private') or (public='private' and id in (select channel from private_channels_members where member=?)))`,[socket.user_data.id, socket.user_data.id, socket.user_data.id], (err, result) => {
 			if(err){
 				console.log(err)
 				return

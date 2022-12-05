@@ -94,7 +94,7 @@ router.post('/verify_user', (req, res) => {
         }
         
         if(result.length > 0){
-            if(result[0].token){
+            if(result[0].token == req.body.token){
                 if(result[0].expires_at > new Date()){
                     res.status(200).send(JSON.stringify({result: 'success', message: result[0]}))
                     return

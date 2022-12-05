@@ -25,36 +25,35 @@ router.post('/create' ,(req, res) => {
             console.log(err)
             return err
         }
-        if(req.body.public_private){
-            query(`insert into channels(name, description, workspace, public) values(?, ?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id, 'private'], (err, result) => {
-                if(err){
-                    console.log(err)
-                    return err
-                }
-                query(`insert into private_channels_members(channel, member) values(?, ?)`, [result.insertId, user_data.id], (err, result) => {
+        
+        if(result.length != 0){
+            if(req.body.public_private){
+                query(`insert into channels(name, description, workspace, public) values(?, ?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id, 'private'], (err, result) => {
                     if(err){
                         console.log(err)
                         return err
                     }
-                    res.status(200).send({ result: 'success', message: result })
-                    console.log('//////////////////////////////////////////////')
+                    query(`insert into private_channels_members(channel, member) values(?, ?)`, [result.insertId, user_data.id], (err, result) => {
+                        if(err){
+                            console.log(err)
+                            return err
+                        }
+                        console.log(result)
+                        res.status(200).send({ result: 'success', message: {id: result.insertId,name: req.body.new_channel, description: req.body.new_channel_desc, public: 'private', workspace_od: req.body.workspace_id} })
+                        console.log('//////////////////////////////////////////////')
+                    })
                 })
-            })
-        }else{
-            query(`insert into channels(name, description, workspace) values(?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id], (err, result) => {
-                if(err){
-                    console.log(err)
-                    return err
-                }
-                query(`insert into channels_members(channel, member) values(?, ?)`, [result.insertId, user_data.id], (err, result) => {
+            }else{
+                query(`insert into channels(name, description, workspace) values(?, ?, ?)`, [req.body.new_channel, req.body.new_channel_desc, req.body.workspace_id], (err, result) => {
                     if(err){
                         console.log(err)
                         return err
                     }
-                    //res here
-                    console.log('//////////////////////////////////////////////')
+                    console.log(result)
+                    res.status(200).send({ result: 'success', message: {id: result.insertId,name: req.body.new_channel, description: req.body.new_channel_desc, public: 'public', workspace_od: req.body.workspace_id} })
+
                 })
-            })
+            }
         }
     })
 })

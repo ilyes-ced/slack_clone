@@ -14,6 +14,10 @@ module.exports = (req, res, next) => {
             res.status(401).send({result: 'failed', message: 'not authenticated'})
             return
         }
+        if(req.query.expires_at > new Date()){
+            res.status(401).send({result: 'failed', message: 'not authenticated'})
+            return
+        }
     })
     next()
 }

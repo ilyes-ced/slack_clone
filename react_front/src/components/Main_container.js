@@ -47,8 +47,11 @@ function Main_container(props) {
         fetch_messages(info).then(ele => set_current_message_array(ele))
 
         event_bus.on("select_chat", (data) =>{
+            console.log(data)
             if(data.type == 'channel'){
                 props.channels.find((ele, index) => {
+                    console.log(ele)
+                    console.log('/////////////////////////////////')
                     if(ele.id == data.id){
                         set_current_channel(props.channels[index])
                         set_current_channel_type('channel')

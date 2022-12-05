@@ -87,7 +87,7 @@ function Home_page(props) {
         <>
             <App_bar/>
             <div id="main_window">
-                <Side_bar workspace={workspace} channels={channels} users_channels={users_channels} all_workspaces={all_workspaces} />
+                <Side_bar workspace={workspace} channels={channels} set_channels={set_channels} users_channels={users_channels} all_workspaces={all_workspaces} />
                 <Main_container socket={props.socket} workspace={workspace} channels={channels} users_channels={users_channels} />
             </div>
         </>

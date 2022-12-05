@@ -29,7 +29,9 @@ function Side_bar(props) {
     }
 
     const change_chat = (e) => {
+        console.log(e.target)
         if(e.target.classList.contains('channels_elements')){
+            console.log(e.target.id)
             event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id.split('_')[1] });
         }else{
             event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id.split('_')[1] });
@@ -44,6 +46,7 @@ function Side_bar(props) {
         }).then((response) => response.json())
         .then(data => {
             alert(JSON.stringify(data))
+            props.set_channels([...props.channels,data.message])
         })
     }
 

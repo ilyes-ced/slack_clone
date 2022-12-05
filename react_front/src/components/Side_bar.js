@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX, BsChevronDown } from "react-icons/bs";
+import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX, BsChevronDown, BsChevronRight } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
 
@@ -16,6 +16,8 @@ function Side_bar(props) {
     const [show_child_icons, set_show_child_icons] = useState(false)
     const [show_child_icons2, set_show_child_icons2] = useState(false)
     const [public_private, set_public_private] = useState(false)
+    const [submenu1, set_submenu1] = useState(false)
+    const [submenu2, set_submenu2] = useState(false)
     const new_channel = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
@@ -88,11 +90,61 @@ function Side_bar(props) {
             {open_workspace_modal ? 
                 <div className='modal workspace_modal' onClick={hide_show_modal} > 
                     <div id="workspace_modal">
-                        hello
+                        <div>
+                            <div>
+                                this workspace name 
+                            </div>
+                            <div>
+                                <div>members</div>
+                                <div>active mmebers</div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div>invite people</div>
+                            <div>create channel</div>
+                        </div>
+
+                        <div>
+                            <div>
+                                custimize appearance
+                            </div>
+                            <div onMouseEnter={() => {set_submenu1(true)}} /*onMouseLeave={() => {set_submenu1(false)}}*/ >
+                                <div>
+                                    settings
+                                </div>
+                                <div>
+                                    <BsChevronRight/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div onMouseEnter={() => {set_submenu2(true)}} /*onMouseLeave={() => {set_submenu2(false)}}*/ >
+                                <div>
+                                    my workspaces c
+                                </div>
+                                <div>
+                                    <BsChevronRight/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div></div>
                     </div>
                 </div>
             : "" }
 
+            <div style={{display: submenu1 ? 'block' : 'none' }} className='submenu' id='first_submenu'>
+                efzefz
+            </div>
+
+            <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu'>
+                <ul id='workspaces_list'>
+                    <li>create nuw space</li>
+                    {props.all_workspaces.map(ele => <li onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</li> )}
+                </ul>
+            </div>
             {/* created channel modal */}
             { show_add_channel ? 
                 <div className='modal' onClick={hide_show_modal} > 

@@ -18,6 +18,7 @@ function Side_bar(props) {
     const [public_private, set_public_private] = useState(false)
     const [submenu1, set_submenu1] = useState(false)
     const [submenu2, set_submenu2] = useState(false)
+    const [add_member_modal, set_add_member_modal] = useState(false)
     const new_channel = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
@@ -140,11 +141,19 @@ function Side_bar(props) {
             </div>
 
             <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu'>
-                <ul id='workspaces_list'>
-                    <li>create nuw space</li>
-                    {props.all_workspaces.map(ele => <li onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</li> )}
-                </ul>
+                <div id='workspaces_list'>
+                    <div>create nuw space</div>
+                    {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
+                </div>
             </div>
+
+
+            {/* invitation link modal and adding members */}
+                {add_member_modal ? 
+                    <div className="modal">
+                        <div id="add_member_modal"></div>
+                    </div>
+                : ""}
             {/* created channel modal */}
             { show_add_channel ? 
                 <div className='modal' onClick={hide_show_modal} > 

@@ -94,7 +94,7 @@ function Home_page(props) {
     )
     return <div id='loader_parent'><div className="loader"></div>
     {show_page ? 'yes' : 'no'}
-    {show_page2 ? 'yes' : 'no workspace redirect to find or create workspace'}
+    {show_page2 ? 'yes' : ' //no workspace redirect to find or create workspace //' }
     {show_page3 ? 'yes' : 'no'}
     </div>
 }

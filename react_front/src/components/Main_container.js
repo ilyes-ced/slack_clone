@@ -75,23 +75,21 @@ function Main_container(props) {
 
 
 
-        const send_new_channel_message = (data) => {
+        props.socket.on('room_message', (data) => {
             if(channel_id.current == data.data.channel && channel_type.current == 'channel'){
                 set_current_message_array(prev => [...prev, data.data])
             }else{
                 document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
             }
-        }
-        const send_new_chat_message = (data) => {
+        })
+
+        props.socket.on('chat_message', (data) => {
             if(channel_id.current == data.data.conversation && channel_type.current == 'chat'){
                 set_current_message_array(prev => [...prev, data.data])
             }else{
                 document.getElementById('chat-element_'+data.data.conversation).style.color = 'red'
             }
-        }
-        props.socket.on('room_message', send_new_channel_message)
-
-        props.socket.on('chat_message', send_new_chat_message)  
+        })  
 
 
     }, [])

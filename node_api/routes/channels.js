@@ -36,7 +36,7 @@ router.post('/create' ,(req, res) => {
                         console.log(err)
                         return err
                     }
-                    //res here
+                    res.status(200).send({ result: 'success', message: result })
                     console.log('//////////////////////////////////////////////')
                 })
             })

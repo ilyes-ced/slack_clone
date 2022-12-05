@@ -1,6 +1,6 @@
 import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
-import { BsPersonSquare, BsPersonPlus } from "react-icons/bs";
+import { BsPersonSquare, BsPersonPlus, BsX } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
 import ReactTooltip from 'react-tooltip';
 
@@ -28,6 +28,8 @@ function Main_container(props) {
     const [current_channel, set_current_channel] = useState(props.channels[0])
     const [current_channel_type, set_current_channel_type] = useState('channel')
     const [current_message_array, set_current_message_array] = useState([])
+    const [add_member_modal, set_add_member_modal] = useState(false)
+    const [active_invitation_method, set_active_invitation_method] = useState([true, false])
     const div_bottom = useRef(null);
     const channel_id = useRef(current_channel.id);
     const channel_type = useRef(current_channel_type);
@@ -113,6 +115,26 @@ function Main_container(props) {
 
 
 
+            {add_member_modal ? 
+                <div className="modal add_member_modal">
+                    <div id="add_member_modal">
+                        <div>
+                            <h1>Create a new channel</h1>
+                            <BsX onClick={() => {set_add_member_modal(!add_member_modal)}}/>
+                        </div>
+                        <div>
+                            <div style={{ borderBottom: active_invitation_method[0] ? '2px red solid' : 'none'}} onClick={() => {set_active_invitation_method([true, false])}} >add member</div>
+                            <div style={{ borderBottom: active_invitation_method[1] ? '2px red solid' : 'none'}} onClick={() => {set_active_invitation_method([false, true])}} >invitaion link</div>
+                        </div>
+
+                        <div>
+                            <div style={{display: active_invitation_method[0] ? 'block' : 'none'}}>here invite by email</div>
+                            <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>here create invite</div>
+                        </div>
+
+                    </div>
+                </div>
+            : ""}
 
                 <div id='main_container_title_bar'>
                     <div id='main_container_title'>{current_channel.name == null ? JSON.parse(localStorage.getItem('user_data')).username : current_channel.name}</div>
@@ -121,7 +143,7 @@ function Main_container(props) {
                             <BsPersonSquare className='person_icon' /> 
                             <p>{props.workspace.members_count}</p>
                         </div>
-                        <div data-tip="Add new members">
+                        <div data-tip="Add new members" onClick={() => {set_add_member_modal(true)}}>
                             <BsPersonPlus className='person_icon' /> 
                         </div>
                     </div>

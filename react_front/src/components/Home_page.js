@@ -86,6 +86,8 @@ function Home_page(props) {
     if(is_auth == 'auth' && show_page && show_page2 && show_page3) return(
         <>
             <App_bar/>
+            {/* invitation link modal and adding members */}
+            
             <div id="main_window">
                 <Side_bar workspace={workspace} channels={channels} set_channels={set_channels} users_channels={users_channels} all_workspaces={all_workspaces} />
                 <Main_container socket={props.socket} workspace={workspace} channels={channels} users_channels={users_channels} />

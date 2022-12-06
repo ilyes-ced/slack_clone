@@ -44,8 +44,10 @@ function Side_bar(props) {
             body: JSON.stringify({user_data: localStorage.getItem('user_data'), workspace_id: props.workspace.id, new_channel: new_channel.current.value, new_channel_desc: new_channel_desc.current.value, public_private: public_private})
         }).then((response) => response.json())
         .then(data => {
-            alert(JSON.stringify(data))
-            props.set_channels([...props.channels,data.message])
+            console.log(JSON.stringify(data))
+            if(data.result == 'success'){
+                props.set_channels([...props.channels,data.message])
+            }
         })
     }
 
@@ -81,7 +83,7 @@ function Side_bar(props) {
                         <p>Channels</p>
                     </div>
                     <div  >
-                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_channel(!show_add_channel)}} ><BsPlus /></div></> : ''}
+                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_channel(!show_add_channel)}} >{props.workspace.owner == JSON.parse(localStorage.getItem('user_data')).id ? <BsPlus /> : "" }</div></> : ''}
                     </div>
                 </div>
                 {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >

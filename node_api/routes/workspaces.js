@@ -33,7 +33,8 @@ router.get('/' ,auth,  (req, res) => {
 
 
 
-router.post('/', (req, res) => {
+router.post('/my_workspaces', (req, res) => {
+    console.log(req.body)
 })
 
 

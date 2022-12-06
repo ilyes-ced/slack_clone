@@ -1,7 +1,7 @@
 import App_bar from './App_bar'
 import Side_bar from './Side_bar'
 import Main_container from './Main_container'
-import { json, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 
 

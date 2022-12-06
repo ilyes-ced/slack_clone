@@ -169,7 +169,6 @@ body {
     margin: 0;
     padding: 0;
     color: var(--text-color);
-	background-color: green;
 	height: 100%;
 	width: 100%;
 }
@@ -928,6 +927,8 @@ input:checked + .slider:before {
 }
 
 #add_member_modal > :nth-child(3) > :first-child > :first-child{
+	max-height: 300px;
+	overflow-y: auto;
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -1210,3 +1211,152 @@ body {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#front_nav{
+	height: 45px;
+}
+
+#front_div1{
+	
+}
+
+
+
+
+
+
+#front_div2{
+
+}

@@ -1,26 +1,52 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { Navigate } from 'react-router-dom';
 
 
 
 function Front_page(props) {
+    const [is_auth, set_is_auth] = useState('none')
+    const [show_page, set_show_page] = useState(false)
+    const [workspaces, set_workspaces] = useState([])
+
+    fetch(process.env.REACT_APP_API_URL+"/users/verify_user", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: localStorage.getItem('user_data')
+    }).then((response) => response.json())
+    .then(data => {
+        console.log(data)
+        if(data.result == 'failed'){
+            set_is_auth('redirect')
+        }else if(data.result == 'success'){
+            set_is_auth('auth')
+            set_show_page(true)
+        }
+    })
+
+
+
+
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL+"/workspace/my_workspaces", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify("info")
+            body: localStorage.getItem('user_data')
         }).then((response) => response.json())
         .then(data => {
             console.log(data)
             if(data.result == 'failed'){
                 console.log(data)
             }else if(data.result == 'success'){
-                console.log(data)
+                set_workspaces(data.message.workspaces)
+                console.log(data.message.workspaces)
             }
         })
     }, [])
 
-
-    return(
+    if(is_auth == 'redirect'){
+        return <Navigate replace to="/login" />
+    }
+    if(is_auth == 'auth' && show_page) return(
         <div id=''>
 
 
@@ -30,7 +56,12 @@ function Front_page(props) {
             </nav>
 
             <div id="front_div1">
-                here list of worskpaces with owner nme, owned workspaces,
+                <div className='front_workspace_div'>
+                    here list of worskpaces with owner nme
+                    {workspaces.map(ele => <div>{ ele.name }////////////////////////</div> )}
+
+                </div>
+                , owned workspaces,
                 join workspace with lnik
                 create new workspce 
             </div>
@@ -43,6 +74,9 @@ function Front_page(props) {
             <div id="front_footer">fotter here</div>
         </div>
     )
+    return <div id='loader_parent'><div className="loader"></div>
+    {show_page ? 'yes' : 'no'}
+    </div>
 }
 
 

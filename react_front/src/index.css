@@ -1,22 +1,16 @@
-.bold{
-	font-weight: bold;
-}
-.italic{
-	font-style: italic;
-}
-.line_over{
-	text-decoration: line-through;
-}
+
 .quote{
 	background-color: green;
 	border-radius: 10px;
 	border-left: 10px solid black;
 }
 .code{
-
+	background-color: var(--color7);
+	border-radius: 10px;
 }
 .code_block{
-	
+	background-color: var(--color7);
+	border-radius: 10px;
 }
 
 
@@ -1344,12 +1338,37 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+	--primary_color: #6715eb ;
+	--secondary_color: #8544ef ;
+}
+
+
+
+
+
 #front_nav{
 	height: 45px;
 }
 
 #front_div1{
-	
+	background-color: var(--primary_color);
+}
+
+#front_div2{
+
 }
 
 
@@ -1357,6 +1376,11 @@ body {
 
 
 
-#front_div2{
 
+
+
+
+
+#front_workspace_div{
+	background-color: red;
 }

@@ -35,6 +35,15 @@ router.get('/' ,auth,  (req, res) => {
 
 router.post('/my_workspaces', (req, res) => {
     console.log(req.body)
+    query(`select *,(select count(*) from workspaces_members where workspace = id) as members_count from workspaces
+    where id in (select workspace from workspaces_members where member=?)`, [req.body.id], (err,result) => {
+        if(err){
+            console.log(err)
+            return err
+        }
+        console.log(result)
+        res.status(200).send({result: 'success', message: {workspaces: result}})
+    })
 })
 
 

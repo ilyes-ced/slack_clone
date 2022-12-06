@@ -670,14 +670,14 @@ body {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-#add_channel_modal div:first-child,
-#add_member_modal div:first-child{
+#add_channel_modal > div:first-child,
+#add_member_modal > div:first-child{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
-#add_channel_modal div:first-child > *:nth-child(2),
-#add_member_modal div:first-child > *:nth-child(2){
+#add_channel_modal > div:first-child > *:nth-child(2),
+#add_member_modal > div:first-child > *:nth-child(2){
 	width: 30px;
 	height: 30px;
 	background-color: transparent;
@@ -685,8 +685,8 @@ body {
 	border-radius: 5px;
 	align-self: center;
 }
-#add_channel_modal div:first-child > *:nth-child(2):hover,
-#add_member_modal div:first-child > *:nth-child(2):hover{
+#add_channel_modal > div:first-child > *:nth-child(2):hover,
+#add_member_modal > div:first-child > *:nth-child(2):hover{
 	background-color: var(--color6);
 }
 
@@ -916,31 +916,69 @@ input:checked + .slider:before {
 	display: flex;
 	justify-content: right;
 }
-#add_member_modal > :nth-child(3) > :first-child > :nth-child(3) > :first-child{
+#add_member_modal > :nth-child(3) > :first-child > :nth-child(3) > :nth-child(2){
 	color: white;
 	border-radius: 10px;
 	border: none;
 	padding: 10px;
 	background-color: var(--color4);
 }
-#add_member_modal > :nth-child(3) > :first-child > :nth-child(3) > :first-child:disabled{
+#add_member_modal > :nth-child(3) > :first-child > :nth-child(3) > :nth-child(2):disabled{
 	background-color: var(--color6);
 }
+
+#add_member_modal > :nth-child(3) > :first-child > :first-child{
+	display: flex;
+	flex-wrap: wrap;
+}
+
 .email_box{
 	padding: 5px;
+	margin: 5px;
 	border-radius: 10px;
 	border: var(--color4) dotted 2px;
 	display: flex;
 	align-items: center;
+	max-width: 50%;
+}
+
+.email_box > :first-child{
+	
+	text-overflow: ellipsis;
+	overflow: hidden; 
+	white-space: nowrap;
 }
 .email_box > :nth-child(2){
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	padding: 2px;
+	margin-left: 5px;
+	border-radius: 4px;
+}
+
+.email_box > :nth-child(2):hover{
+	background-color: var(--color6);
 }
 
 
+#add_member_modal > :nth-child(3) > :first-child >:nth-child(3){
+	height: 100%;
+}
+#add_member_modal > :nth-child(3) > :first-child >:nth-child(3) > :first-child > :first-child{
+	height: 100%;
+	margin-right: 10px;
+	padding: 5px;
+	color: white;
+	background-color: transparent;
+	border: red dotted 2px;
+	border-radius: 10px;
+}
+#add_member_modal > :nth-child(3) > :first-child >:nth-child(3) > :first-child > :first-child:hover{
+	background-color: red;
+	border: var(--color4) dotted 2px;
+
+}
 
 
 

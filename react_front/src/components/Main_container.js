@@ -38,7 +38,11 @@ function Main_container(props) {
 
 
     const inputed_email = (e) => {
-        console.log(e.target)
+        console.log(e.key)
+        if(e.key == " "){
+            set_list_of_emails([...list_of_emails, e.target.innerText])
+            e.target.innerText = ''
+        }
     }
 
  
@@ -135,15 +139,20 @@ function Main_container(props) {
                                 <div>
                                     {list_of_emails.map((ele, ind) => 
                                         <div  className="email_box" >
-                                        <div contentEditable='true' key={ind} > {ele} </div>
-                                        <div><BsX/></div>
+                                            <div contentEditable='true' key={ind} > {ele} </div>
+                                            <div onClick={() => {set_list_of_emails(list_of_emails.filter(element => element != ele ))}} ><BsX/></div>
                                         </div>
                                     )}
                                 </div>
                                 <div contentEditable='true' onKeyDown={inputed_email} ></div>
-                                <div><button disabled>send</button></div>
+                                <div>
+                                    <div>
+                                        { list_of_emails.length == 0 ? "" : <button onClick={() => {set_list_of_emails([])}}>clear all elments</button>}
+                                    </div>
+                                    <button disabled={ list_of_emails.length == 0 ? true : false }>send</button>
+                                </div>
                             </div>
-                            <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>here create invite</div>
+                            <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>here create invite link</div>
                         </div>
 
                     </div>

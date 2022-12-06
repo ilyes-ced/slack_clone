@@ -30,13 +30,16 @@ function Main_container(props) {
     const [current_message_array, set_current_message_array] = useState([])
     const [add_member_modal, set_add_member_modal] = useState(false)
     const [active_invitation_method, set_active_invitation_method] = useState([true, false])
+    const [list_of_emails, set_list_of_emails] = useState([])
     const div_bottom = useRef(null);
     const channel_id = useRef(current_channel.id);
     const channel_type = useRef(current_channel_type);
 
 
 
-
+    const inputed_email = (e) => {
+        console.log(e.target)
+    }
 
  
 
@@ -128,7 +131,18 @@ function Main_container(props) {
                         </div>
 
                         <div>
-                            <div style={{display: active_invitation_method[0] ? 'block' : 'none'}}>here invite by email</div>
+                            <div style={{display: active_invitation_method[0] ? 'block' : 'none'}}>
+                                <div>
+                                    {list_of_emails.map((ele, ind) => 
+                                        <div  className="email_box" >
+                                        <div contentEditable='true' key={ind} > {ele} </div>
+                                        <div><BsX/></div>
+                                        </div>
+                                    )}
+                                </div>
+                                <div contentEditable='true' onKeyDown={inputed_email} ></div>
+                                <div><button disabled>send</button></div>
+                            </div>
                             <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>here create invite</div>
                         </div>
 

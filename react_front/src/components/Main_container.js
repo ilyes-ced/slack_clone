@@ -126,7 +126,7 @@ function Main_container(props) {
                 <div className="modal add_member_modal">
                     <div id="add_member_modal">
                         <div>
-                            <h1>Create a new channel</h1>
+                            <h1>Add new members</h1>
                             <BsX onClick={() => {set_add_member_modal(!add_member_modal)}}/>
                         </div>
                         <div>

@@ -60,34 +60,35 @@ function Rich_text_input(props) {
         tag.focus();
     }
     const icon_click = (e) => {
-        e.target.style.backgroundColor = (e.target.style.backgroundColor  == 'green' ) ? '' : 'green'
+        e.target.parentElement.style.backgroundColor = (e.target.parentElement.style.backgroundColor  == '#8544ef' ) ? '' : '#8544ef'
         var sel, range, html
         //alert(e.target.parentElement.id)
         switch (e.target.parentElement.id) {
             case 'bold':
                 html = '<strong> </strong>'
-                break;
+                break
             case 'italic':
                 html = '<i> </i>'
-                break;
+                break
             case 'line_over':
                 html = '<s> </s>'
-                break;
+                break
             case 'list':
                 html = '<ul><li> </li></ul>'
-                break;
+                break
             case 'numbered_list':
                 html = '<ol><li> </li></ol>'
-                break;
+                break
             case 'link':
                 set_show_add_link(true)
+                break
             case 'quote':
                 html = '<div class="quote"> </div>'
-                break;
+                break
             default:
                 
         }
-        if (window.getSelection) {
+        if (window.getSelection && e.target.parentElement.id != "link") {
             sel = window.getSelection()
             if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0)
@@ -107,6 +108,7 @@ function Rich_text_input(props) {
                     sel.addRange(range)
                     setCursor(lastNode)
                     last_cur = lastNode
+                    console.log(last_cur)
                 }
             }
         } else if (document.selection && document.selection.type != "Control") {
@@ -137,35 +139,11 @@ function Rich_text_input(props) {
         var link = '<a href="'+link_url.current.value+'">'+link_text.currentvalue+'</a>'
         var sel, range, html
 
-        if (window.getSelection) {
-            sel = window.getSelection()
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0)
-                range.deleteContents()
-                var el = link
-                var frag = document.createDocumentFragment(), node, lastNode
-                console.log(last_cur)
-                if(last_cur){
-                    setCursor(last_cur)
-                }else{
-                    setCursor(document.getElementById("rich_text_field"))
-                }
-                while ( (node = el.firstChild) ) {
-                    lastNode = frag.appendChild(node)
-                }
-                range.insertNode(frag)
-                if (lastNode) {
-                    range = range.cloneRange()
-                    range.setStartAfter(lastNode)
-                    range.collapse(true)
-                    sel.removeAllRanges()
-                    sel.addRange(range)
-                    console.log(lastNode)
-                }
-            }
-        } else if (document.selection && document.selection.type != "Control") {
-            // IE < 9
-            document.selection.createRange().pasteHTML(html);
+        if(last_cur){
+            console.log(link_text.current.value, link_url.current.value)
+            last_cur.innerHTML += '<a href="'+link_url.current.value+'">'+link_text.current.value+'</a>'
+        }else{
+            document.getElementById('rich_text_field').firstElementChild.innerHTML += '<a href="'+link_url.current.value+'">'+link_text.current.value+'</a>'
         }
     }
     return(

@@ -58,7 +58,7 @@ function Front_page(props) {
             <div id="front_div1">
                 <div className='front_workspace_div'>
                     here list of worskpaces with owner nme
-                    {workspaces.map(ele => <div>{ ele.name }////////////////////////</div> )}
+                    {workspaces.map(ele => <div>{ ele.name }</div> )}
 
                 </div>
                 , owned workspaces,

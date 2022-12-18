@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX, BsChevronDown, BsChevronRight } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
+import { Link } from 'react-router-dom';
 
 
 function Side_bar(props) {
@@ -24,6 +25,8 @@ function Side_bar(props) {
         if(e.currentTarget == e.target){
             set_show_add_channel(false)
             set_open_workspace_modal(false)
+            set_submenu2(false)
+            set_submenu1(false)
         }
     }
 
@@ -114,7 +117,7 @@ function Side_bar(props) {
                             <div>
                                 custimize appearance
                             </div>
-                            <div onMouseEnter={() => {set_submenu1(true)}} /*onMouseLeave={() => {set_submenu1(false)}}*/ >
+                            <div onMouseEnter={() => {set_submenu1(true); set_submenu2(false)}}  >
                                 <div>
                                     settings
                                 </div>
@@ -125,7 +128,7 @@ function Side_bar(props) {
                         </div>
 
                         <div>
-                            <div onMouseEnter={() => {set_submenu2(true)}} /*onMouseLeave={() => {set_submenu2(false)}}*/ >
+                            <div onMouseEnter={() => {set_submenu2(true); set_submenu1(false)}}  >
                                 <div>
                                     my workspaces c
                                 </div>
@@ -140,13 +143,25 @@ function Side_bar(props) {
                 </div>
             : "" }
 
-            <div style={{display: submenu1 ? 'block' : 'none' }} className='submenu' id='first_submenu'>
-                efzefz
+            <div style={{display: submenu1 ? 'block' : 'none' }} className='submenu' id='first_submenu' onMouseLeave={() => {set_submenu1(false)}}>
+                <div>
+                    <div>
+                        <div>workspace settings</div>
+                        <div>customize appearance</div>
+                        <div></div>
+                    </div>
+                    <div>
+                        <div>manage memebers</div>
+                        <div></div>
+                    </div>
+                </div>
             </div>
 
-            <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu'>
+            <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu' onMouseLeave={() => {set_submenu2(false)}}>
                 <div id='workspaces_list'>
-                    <div>create nuw space</div>
+                    <Link to={'/landing_page'}>create new space</Link>
+                    {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
+                    {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
                     {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
                 </div>
             </div>

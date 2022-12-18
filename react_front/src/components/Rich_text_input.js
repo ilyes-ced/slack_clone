@@ -120,6 +120,7 @@ function Rich_text_input(props) {
     const submit_text = () => {
         console.log(text_input.current.innerHTML)
         props.socket.emit('sent_message', {value: text_input.current.innerHTML, channel: props.current_channel, channel_type: props.current_channel_type })
+        text_input.current.innerHTML = '<div></div>'
     }
     const input_focus = () => {
         enable_disable_all(false)
@@ -144,6 +145,34 @@ function Rich_text_input(props) {
             last_cur.innerHTML += '<a href="'+link_url.current.value+'">'+link_text.current.value+'</a>'
         }else{
             document.getElementById('rich_text_field').firstElementChild.innerHTML += '<a href="'+link_url.current.value+'">'+link_text.current.value+'</a>'
+        }
+    }
+    const inputed = (e) => {
+        if(e.key == 'Enter'){
+            var sel, range
+            e.preventDefault()
+            sel = window.getSelection()
+            if (sel.getRangeAt && sel.rangeCount) {
+                range = sel.getRangeAt(0)
+                range.deleteContents()
+                var el = document.createElement("div")
+                el.innerHTML = "<br/>"
+                var frag = document.createDocumentFragment(), node, lastNode
+                while ( (node = el.firstChild) ) {
+                    lastNode = frag.appendChild(node)
+                }
+                range.insertNode(frag)
+                if (lastNode) {
+                    range = range.cloneRange()
+                    range.setStartAfter(lastNode)
+                    range.collapse(true)
+                    sel.removeAllRanges()
+                    sel.addRange(range)
+                    setCursor(lastNode)
+                    last_cur = lastNode
+                    console.log(last_cur)
+                }
+            }
         }
     }
     return(
@@ -178,7 +207,7 @@ function Rich_text_input(props) {
                 </div>
 
                 
-                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus }  >
+                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus } onKeyDown={inputed}  >
                     <div></div>
                 </div>
                 

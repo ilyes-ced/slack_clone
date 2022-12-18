@@ -3,13 +3,13 @@ const bcrypt = require('bcrypt')
 
 
 const users = [
-    ["ilyes", "ilyes@gmail.com", "password", ],
-    ["ali", "ali@gmail.com", "password", ],
-    ["ahmed", "ahmed@gmail.com", "password", ],
-    ["jamel", "jamel@gmail.com", "password", ],
-    ["kamel", "kamel@gmail.com", "password", ],
-    ["mohamed", "mohamed@gmail.com", "password", ],
-    ["oussama", "oussama@gmail.com", "password", ],
+    ["ilyes", "ilyes@gmail.com", "11062001", ],
+    ["ali", "ali@gmail.com", "11062001", ],
+    ["ahmed", "ahmed@gmail.com", "11062001", ],
+    ["jamel", "jamel@gmail.com", "11062001", ],
+    ["kamel", "kamel@gmail.com", "11062001", ],
+    ["mohamed", "mohamed@gmail.com", "11062001", ],
+    ["oussama", "oussama@gmail.com", "11062001", ],
 ]
 
 const workspaces = [

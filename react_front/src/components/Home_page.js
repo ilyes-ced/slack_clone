@@ -54,7 +54,7 @@ function Home_page(props) {
         })
 
 
-        localStorage.getItem('active_workspace') ? info.active_workspace = localStorage.getItem('active_workspace') : console.log('dont exist')
+        localStorage.getItem('active_workspace') ? info.active_workspace = localStorage.getItem('active_workspace') : console.log('')
         fetch(process.env.REACT_APP_API_URL+"/workspace?data="+JSON.stringify(info), {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
@@ -68,6 +68,7 @@ function Home_page(props) {
                     set_workspace(data.message.workspace)
                     set_channels(data.message.channels)
                     set_all_workspaces(data.message.all_workspaces)
+                    console.log(data.message)
                     set_show_page2(true)
                 }
         })
@@ -78,9 +79,11 @@ function Home_page(props) {
     }, [])
 
 
-
-
-    if(is_auth == 'redirect'){
+    if(!localStorage.getItem('active_workspace')){
+        return <Navigate replace to="/landing_page" />
+    }
+    
+    if(is_auth == 'redirect' || !localStorage.getItem('user_data')){
         return <Navigate replace to="/login" />
     }
     if(is_auth == 'auth' && show_page && show_page2 && show_page3) return(

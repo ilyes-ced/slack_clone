@@ -24,7 +24,7 @@ router.post('/login', (req, res) => {
             console.log(err)
             return
         }
-
+        console.log(result)
         if(result.length == 0){
             res.status(401).send({result: 'failed', message: 'login creddentials wrong'})
             return

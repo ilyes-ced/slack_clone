@@ -94,16 +94,14 @@
 	padding-top: 10px;
 	padding-bottom: 10px;*/
 	z-index: 100;
-	top: 313px;
+	top: 319px;
 }
 .submenu ~ .submenu{
-	top: 363px;
+	top: 369px;
 }
 
 
-.submenu ~ .submenu{
-	
-}
+
 
 
 #workspaces_list > :first-child{

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
 function Front_page(props) {
+    const nav = useNavigate()
     const [is_auth, set_is_auth] = useState('none')
     const [show_page, set_show_page] = useState(false)
     const [workspaces, set_workspaces] = useState([])
@@ -24,7 +25,10 @@ function Front_page(props) {
     })
 
 
-
+    const change_workspace = (element) => {
+        localStorage.setItem('active_workspace', element)
+        nav('/')
+    }
 
     useEffect(() => {
         fetch(process.env.REACT_APP_API_URL+"/workspace/my_workspaces", {
@@ -35,7 +39,7 @@ function Front_page(props) {
         .then(data => {
             console.log(data)
             if(data.result == 'failed'){
-                console.log(data)
+
             }else if(data.result == 'success'){
                 set_workspaces(data.message.workspaces)
                 console.log(data.message.workspaces)
@@ -47,7 +51,7 @@ function Front_page(props) {
         return <Navigate replace to="/login" />
     }
     if(is_auth == 'auth' && show_page) return(
-        <div id=''>
+        <div id='front_page'>
 
 
             <nav id='front_nav'>
@@ -55,16 +59,27 @@ function Front_page(props) {
             </nav>
 
 
-
+            
 
             <div id="front_div1">
-                <div className='front_workspace_div'>
-                    here list of worskpaces with owner nme
-                    {workspaces.map(ele => <div>{ ele.name }</div> )}
-                </div>
-                , owned workspaces,
-                join workspace with lnik
-                create new workspce 
+                {workspaces.map(ele => 
+                    <div className='front_workspace_div'>
+                        <div> 
+                            <div> workspaces of : {ele.owner_email}  </div>
+                            <div> {ele.members_count} members </div> 
+                        </div>
+                        <div> 
+                            <div>
+                                <div>
+                                    <img src='/img.png' />
+                                </div>
+                                {ele.name}
+                            </div>
+                            <div><button onClick={() => {change_workspace(ele.id)}}> launch workspace </button></div>
+                        </div>
+                    </div>
+                )}
+                
             </div>
 
 

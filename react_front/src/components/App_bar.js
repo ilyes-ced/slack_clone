@@ -5,9 +5,11 @@ import { useState } from 'react';
 function App_bar() {
 
     const [show_add_notifications ,set_show_add_notifications] = useState(false)
+    const [show_profile ,set_show_profile] = useState(false)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){
             set_show_add_notifications(false)
+            set_show_profile(false)
 
         }
     }
@@ -30,10 +32,18 @@ function App_bar() {
                 </div>
             : '' } 
 
+            {show_profile ?
+                <div className='modal show_profile' onClick={hide_show_modal} > 
+                    <div id="show_profile">
+                        <div> profile settings </div>
+                    </div>
+                </div>
+            : '' } 
+
             <div id="app_bar_div2">
                 <BsFillBellFill onClick={() => {set_show_add_notifications(true)}} />
                 <div>
-                    <BsPersonSquare/>
+                    <BsPersonSquare onClick={() => {set_show_profile(true)}}  />
                 </div>
                 {/*<Link to='/login'>login</Link>*/}
             </div>

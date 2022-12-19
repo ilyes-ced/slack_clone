@@ -28,12 +28,15 @@ const tables = [
 	
 	`CREATE TABLE notifications(
 		/*id int NOT NULL AUTO_INCREMENT,*/
-		user int NOT NULL,
+		reciever VARCHAR(255) NOT NULL,
 		sender int NOT NULL,
+		content VARCHAR(255) NOT NULL,
+		type VARCHAR(255) NOT NULL,
+		inv_id int NOT NULL,
 	
-		PRIMARY KEY (sender, user),
+		PRIMARY KEY (sender, reciever),
 		FOREIGN KEY (sender) REFERENCES users(id),
-		FOREIGN KEY (user) REFERENCES users(id)
+		FOREIGN KEY (reciever) REFERENCES users(email)
 	);`,
 	
 	`CREATE TABLE tokens(

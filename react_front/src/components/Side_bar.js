@@ -20,6 +20,7 @@ function Side_bar(props) {
     const [submenu2, set_submenu2] = useState(false)
 
     const new_channel = useRef(null)
+    const email_invite = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){
@@ -31,7 +32,23 @@ function Side_bar(props) {
         }
     }
 
-    
+    const send_invite = () => {
+        if(/\S+@\S+\.\S+/.test(email_invite.current.value)){
+            fetch(process.env.REACT_APP_API_URL+"/invitaion/user", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({user_data: localStorage.getItem('user_data'), email: email_invite.current.value})
+            }).then((response) => response.json())
+            .then(data => {
+                if(data.result == 'failed'){
+                    
+                }else if(data.result == 'success'){
+                    console.log(data.message)
+                    return data.message
+                }
+            })
+        }
+    }
     const change_chat = (e) => {
         console.log(e.target)
         if(e.target.classList.contains('channels_elements')){
@@ -222,8 +239,8 @@ function Side_bar(props) {
                             <BsX onClick={() => {set_show_add_chat(!show_add_chat)}}/>
                         </div>
                         <div >
-                            <input type='text' placeholder='email' />
-                            <button>send</button>
+                            <input ref={email_invite} type='text' placeholder='email' />
+                            <button onClick={send_invite} >send</button>
                         </div>
                     </div>
                 </div>

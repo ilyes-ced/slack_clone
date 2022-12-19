@@ -25,9 +25,8 @@ CREATE TABLE notifications(
     /*id int NOT NULL AUTO_INCREMENT,*/
     reciever VARCHAR(255) NOT NULL,
     sender int NOT NULL,
-    content VARCHAR(255) NOT NULL,
-    type VARCHAR(255) NOT NULL,
-    inv_id int NOT NULL,
+    type VARCHAR(255),
+    workspace_id_or_user_id VARCHAR(255),
 
     PRIMARY KEY (sender, reciever),
     FOREIGN KEY (sender) REFERENCES users(id),

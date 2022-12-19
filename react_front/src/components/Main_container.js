@@ -45,8 +45,11 @@ function Main_container(props) {
     const inputed_email = (e) => {
         console.log(e.key)
         if(e.key == " "){
-            set_list_of_emails([...list_of_emails, e.target.innerText])
-            e.target.innerText = ''
+            e.preventDefault()
+            if(/\S+@\S+\.\S+/.test(e.target.innerText)){
+                set_list_of_emails([...list_of_emails, e.target.innerText])
+                e.target.innerText = ''
+            }
         }
     }
 

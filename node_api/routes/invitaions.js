@@ -6,8 +6,8 @@ const router = express.Router()
 
 
 
-router.get('/users_channels', auth,(req, res) => {
-
+router.post('/workspace', (req, res) => {
+    console.log(req.body)
 })
 
 

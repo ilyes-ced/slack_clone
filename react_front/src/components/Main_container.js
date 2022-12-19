@@ -50,7 +50,21 @@ function Main_container(props) {
         }
     }
 
- 
+    const invite_emails = () => {
+        fetch(process.env.REACT_APP_API_URL+"/invitaion/workspace", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({user_data: localStorage.getItem('user_data'), emails: JSON.stringify(list_of_emails), workspace: localStorage.getItem('active_workspace')})
+        }).then((response) => response.json())
+        .then(data => {
+            if(data.result == 'failed'){
+                
+            }else if(data.result == 'success'){
+                console.log(data.message)
+                return data.message
+            }
+        })
+    }
 
 
     //fetch_messages(data)
@@ -154,7 +168,7 @@ function Main_container(props) {
                                     <div>
                                         { list_of_emails.length == 0 ? "" : <button onClick={() => {set_list_of_emails([])}}>clear all elments</button>}
                                     </div>
-                                    <button disabled={ list_of_emails.length == 0 ? true : false }>send</button>
+                                    <button disabled={ list_of_emails.length == 0 ? true : false } onClick={invite_emails} >send</button>
                                 </div>
                             </div>
                             <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>

@@ -151,11 +151,13 @@ const users_route = require('./routes/users')
 const workspaces_route = require('./routes/workspaces')
 const messages_route = require('./routes/messages')
 const channels_route = require('./routes/channels')
+const invitaions_route = require('./routes/invitaions')
 
 app.use('/users', users_route)
 app.use('/workspace', workspaces_route)
 app.use('/message', messages_route)
 app.use('/channel', channels_route)
+app.use('/inivitaion', invitaions_route)
 
 
 

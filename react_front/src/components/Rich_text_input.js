@@ -162,7 +162,10 @@ function Rich_text_input(props) {
                     lastNode = frag.appendChild(node)
                 }
                 range.insertNode(frag)
-                if (lastNode) {
+                console.log(lastNode.parentElement.tagName)
+                if(lastNode.parentElement.tagName == "LI"){
+                    
+                }else if(lastNode){
                     range = range.cloneRange()
                     range.setStartAfter(lastNode)
                     range.collapse(true)

@@ -18,17 +18,20 @@ function Side_bar(props) {
     const [public_private, set_public_private] = useState(false)
     const [submenu1, set_submenu1] = useState(false)
     const [submenu2, set_submenu2] = useState(false)
+
     const new_channel = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){
             set_show_add_channel(false)
+            set_show_add_chat(false)
             set_open_workspace_modal(false)
             set_submenu2(false)
             set_submenu1(false)
         }
     }
 
+    
     const change_chat = (e) => {
         console.log(e.target)
         if(e.target.classList.contains('channels_elements')){
@@ -211,7 +214,20 @@ function Side_bar(props) {
             : '' }
             
             
-
+            {show_add_chat ?
+                <div className='modal' onClick={hide_show_modal} > 
+                    <div id="add_chat_modal">
+                        <div>
+                            <h1>Add a new contact</h1>
+                            <BsX onClick={() => {set_show_add_chat(!show_add_chat)}}/>
+                        </div>
+                        <div >
+                            <input type='text' placeholder='email' />
+                            <button>send</button>
+                        </div>
+                    </div>
+                </div>
+            : '' } 
 
             <div id='side_bar_chats' className='side_bar_elements' >
                 <div onMouseEnter={() => {set_show_child_icons2(true)}} onMouseLeave={() => set_show_child_icons2(false )}  className='side_bar_sub_elements' id='users_channels_title_element'>

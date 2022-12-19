@@ -1,6 +1,6 @@
 import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
-import { BsPersonSquare, BsPersonPlus, BsX } from "react-icons/bs";
+import { BsPersonSquare, BsPersonPlus, BsX, BsFiles } from "react-icons/bs";
 import { useEffect, useState, useRef } from "react";
 import ReactTooltip from 'react-tooltip';
 
@@ -35,7 +35,12 @@ function Main_container(props) {
     const channel_id = useRef(current_channel.id);
     const channel_type = useRef(current_channel_type);
 
+    const hide_show_modal = (e) => {
+        if(e.currentTarget == e.target){
+            set_add_member_modal(false)
 
+        }
+    }
 
     const inputed_email = (e) => {
         console.log(e.key)
@@ -123,7 +128,7 @@ function Main_container(props) {
 
 
             {add_member_modal ? 
-                <div className="modal add_member_modal">
+                <div className="modal " onClick={hide_show_modal}>
                     <div id="add_member_modal">
                         <div>
                             <h1>Add new members</h1>
@@ -152,7 +157,13 @@ function Main_container(props) {
                                     <button disabled={ list_of_emails.length == 0 ? true : false }>send</button>
                                 </div>
                             </div>
-                            <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>here create invite link</div>
+                            <div style={{display: active_invitation_method[1] ? 'block' : 'none'}}>
+                                <div>
+                                    <div> d </div>
+                                    <div><BsFiles/></div>
+                                </div>
+                                <button  >confirm</button>
+                            </div>
                         </div>
 
                     </div>

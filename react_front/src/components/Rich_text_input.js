@@ -148,33 +148,30 @@ function Rich_text_input(props) {
         }
     }
     const inputed = (e) => {
-        if(e.key == 'Enter'){
-            var sel, range
-            e.preventDefault()
-            sel = window.getSelection()
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0)
-                range.deleteContents()
-                var el = document.createElement("div")
-                el.innerHTML = "<br/>"
-                var frag = document.createDocumentFragment(), node, lastNode
-                while ( (node = el.firstChild) ) {
-                    lastNode = frag.appendChild(node)
-                }
-                range.insertNode(frag)
-                console.log(lastNode.parentElement.tagName)
-                if(lastNode.parentElement.tagName == "LI"){
-                    
-                }else if(lastNode){
-                    range = range.cloneRange()
-                    range.setStartAfter(lastNode)
-                    range.collapse(true)
-                    sel.removeAllRanges()
-                    sel.addRange(range)
-                    setCursor(lastNode)
-                    last_cur = lastNode
-                    console.log(last_cur)
-                }
+        e.preventDefault()
+        var sel, range
+        sel = window.getSelection()
+        if (sel.getRangeAt && sel.rangeCount) {
+            range = sel.getRangeAt(0)
+            range.deleteContents()
+            var el = document.createElement("div")
+            el.innerHTML = "<br/>"
+            var frag = document.createDocumentFragment(), node, lastNode
+            while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node)
+            }
+            range.insertNode(frag)
+            console.log(lastNode.parentElement.tagName)
+            if(lastNode.parentElement.tagName == "LI"){
+                //simulate enter click here or rollback on prevent default
+            }else if(lastNode){
+                range = range.cloneRange()
+                range.setStartAfter(lastNode)
+                range.collapse(true)
+                sel.removeAllRanges()
+                sel.addRange(range)
+                setCursor(lastNode)
+                last_cur = lastNode
             }
         }
     }
@@ -210,7 +207,7 @@ function Rich_text_input(props) {
                 </div>
 
                 
-                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus } onKeyDown={inputed}  >
+                <div ref={text_input} contenteditable="true" id='rich_text_field' onFocus={ input_focus } onKeyDown={(e) => { if(e.key == 'Enter') inputed() }}  >
                     <div></div>
                 </div>
                 

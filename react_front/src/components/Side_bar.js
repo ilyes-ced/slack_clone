@@ -4,6 +4,17 @@ import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 
+const colors = [
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+]
+
 
 function Side_bar(props) {
     const [enabled, set_enabled] = useState(false);
@@ -53,9 +64,9 @@ function Side_bar(props) {
         }
     }
     const change_chat = (e) => {
-        console.log(e.target)
         if(e.target.classList.contains('channels_elements')){
-            console.log(e.target.id)
+            //document.getElementsByClassName('avtive_channel')[0].classList.remove('avtive_channel')
+            e.target.classList.add('avtive_channel')
             event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id.split('_')[1] });
         }else{
             event_bus.dispatch("select_chat", { type:'chat' , id: e.target.id.split('_')[1] });
@@ -126,22 +137,24 @@ function Side_bar(props) {
                             <BsX onClick={() => {set_show_add_channel(!show_add_channel)}}/>
                         </div>
                         <div>
-                            <div>
+                            {colors.map(ele =>
                                 <div>
-                                    <div></div>
-                                    <div></div>
+                                    <div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <div>
+                                        <div><div></div></div>
+                                        <div><BsHash/><div></div></div>
+                                        <div><BsHash/><div></div></div>
+                                        <div><div></div><div></div><div></div></div>
+                                    </div>
+                                    <div>
+                                        <input type='radio'/>
+                                        {ele[0]}
+                                    </div>
                                 </div>
-                                <div>
-                                    <div><div></div></div>
-                                    <div><BsHash/><div></div></div>
-                                    <div><BsHash/><div></div></div>
-                                    <div><div></div><div></div><div></div></div>
-                                </div>
-                                <div>
-                                    <input type='radio'/>
-                                    color mode name
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>

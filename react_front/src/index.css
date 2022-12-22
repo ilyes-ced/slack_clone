@@ -374,14 +374,14 @@ ul li, ol li {
 
 :root {
 	--text-color: white;
-	--color1: #6715eb;
-	--color2: #14101a;
-	--color3: #1a1d21;
-	--color4: #8544ef;
-	--color5: #222529;
-	--color6: #313337;
+	--color1: #6715eb; /* #d53c9f */
+	--color2: #14101a; /*  */
+	--color3: #1a1d21; /*  */
+	--color4: #8544ef; /* #ad327f */
+	--color5: #222529; /*  */
+	--color6: #313337; /*  */
 	--color7: rgba(150,150,150,0.7);
-	--color8: #503e6d;
+	--color8: #503e6d; /*  */
 }
 html{
 	height: 100%;

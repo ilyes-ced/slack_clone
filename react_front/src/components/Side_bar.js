@@ -5,14 +5,13 @@ import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 
 const colors = [
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    ['name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    [0, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    [1, 'name here', 'white', '#4a154b', '#14101a', '#1a1d21', '#6d436e', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#3a2d3b'],
+    [2, 'name here', 'white', '#d53c9f', '#14101a', '#1a1d21', '#ad327f', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#6bc9ff'],
+    [3, 'name here', 'white', '#1f57e7', '#14101a', '#1a1d21', '#4c79ec', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#ffc806'],
+    [4, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    [5, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    [6, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
 ]
 
 
@@ -46,6 +45,20 @@ function Side_bar(props) {
         }
     }
 
+    const change_theme = (id) => {
+        console.log(id)
+        const root = document.querySelector(':root')
+        root.style.setProperty('--text-color', colors[id][2]);
+        root.style.setProperty('--color1', colors[id][3]);
+        root.style.setProperty('--color2', colors[id][4]);
+        root.style.setProperty('--color3', colors[id][5]);
+        root.style.setProperty('--color4', colors[id][6]);
+        root.style.setProperty('--color5', colors[id][7]);
+        root.style.setProperty('--color6', colors[id][8]);
+        root.style.setProperty('--color7', colors[id][9]);
+        root.style.setProperty('--color8', colors[id][10]);
+    }
+
     const send_invite = () => {
         if(/\S+@\S+\.\S+/.test(email_invite.current.value)){
             fetch(process.env.REACT_APP_API_URL+"/invitaion/user", {
@@ -65,7 +78,7 @@ function Side_bar(props) {
     }
     const change_chat = (e) => {
         if(e.target.classList.contains('channels_elements')){
-            //document.getElementsByClassName('avtive_channel')[0].classList.remove('avtive_channel')
+            document.getElementsByClassName('avtive_channel')[0].classList.remove('avtive_channel')
             e.target.classList.add('avtive_channel')
             event_bus.dispatch("select_chat", { type:'channel' , id: e.target.id.split('_')[1] });
         }else{
@@ -122,7 +135,7 @@ function Side_bar(props) {
                         {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_channel(!show_add_channel)}} >{props.workspace.owner == JSON.parse(localStorage.getItem('user_data')).id ? <BsPlus /> : "" }</div></> : ''}
                     </div>
                 </div>
-                {props.channels.map(element => show_channels ? <div key={ element.id } onClick={change_chat} className='channels_elements side_bar_sub_elements' id={"channel-element_"+element.id} >
+                {props.channels.map((element, ind) => show_channels ? <div key={ element.id } onClick={change_chat} className={ind == 0 ? 'avtive_channel channels_elements side_bar_sub_elements' :'channels_elements side_bar_sub_elements'} id={"channel-element_"+element.id} >
                     <div> {element.public ==  'private' ? <BsLockFill/> : <BsHash/> }     </div>
                     <p>{element.name}</p>
                 </div> : '' )}
@@ -138,20 +151,20 @@ function Side_bar(props) {
                         </div>
                         <div>
                             {colors.map(ele =>
-                                <div>
-                                    <div>
-                                        <div></div>
-                                        <div></div>
+                                <div key={ele[0]} onClick={() => {change_theme(ele[0])}} >
+                                    <div style={{backgroundColor : ele[3]}}>
+                                        <div style={{backgroundColor : ele[6]}}></div>
+                                        <div style={{backgroundColor : ele[2]}}></div>
                                     </div>
-                                    <div>
-                                        <div><div></div></div>
-                                        <div><BsHash/><div></div></div>
-                                        <div><BsHash/><div></div></div>
-                                        <div><div></div><div></div><div></div></div>
+                                    <div style={{backgroundColor : ele[4]}}>
+                                        <div ><div style={{backgroundColor : ele[9]}}></div></div>
+                                        <div><BsHash/><div style={{backgroundColor : ele[9]}}></div></div>
+                                        <div style={{backgroundColor : ele[6]}}><BsHash/><div style={{backgroundColor : ele[9]}}></div></div>
+                                        <div><div style={{backgroundColor : ele[3]}}></div><div></div><div style={{backgroundColor : ele[10]}}></div></div>
                                     </div>
                                     <div>
                                         <input type='radio'/>
-                                        {ele[0]}
+                                        {ele[1]}
                                     </div>
                                 </div>
                             )}

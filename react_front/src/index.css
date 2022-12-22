@@ -464,13 +464,19 @@ body {
 	height: 60%;
     float: left;
 	position: relative;
+	margin-left: 25px
 }
-#app_bar_div1 > :nth-child(2){
+#app_bar_div1 > :first-child{
+	position: absolute;
+	left: -25px;
+	top: 6px;
+}
+#app_bar_div1 > :nth-child(3){
 	position: absolute;
 	right: 10px;
 	top: 6px;
 }
-#app_bar_div1 > :nth-child(3){
+#app_bar_div1 > :nth-child(4){
 	position: absolute;
 	right: 35px;
 	top: 6px;

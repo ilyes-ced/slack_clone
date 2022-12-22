@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsX } from "react-icons/bs";
+import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsClockHistory } from "react-icons/bs";
 import { useState } from 'react';
 
 function App_bar() {
@@ -16,9 +16,8 @@ function App_bar() {
     return(
         <nav id="nav_bar">
 
-            <Link to={'my_workspaces'}> to workspaces </Link>
-
             <div id="app_bar_div1">
+                <BsClockHistory/>
                 <input id="app_bar_search" type="text" placeholder="doesnt work dont touch"/>
                 <BsSliders/>
                 <BsSearch/>

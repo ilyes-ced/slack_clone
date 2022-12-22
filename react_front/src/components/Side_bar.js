@@ -46,7 +46,6 @@ function Side_bar(props) {
     }
 
     const change_theme = (id) => {
-        console.log(id)
         const root = document.querySelector(':root')
         root.style.setProperty('--text-color', colors[id][2]);
         root.style.setProperty('--color1', colors[id][3]);
@@ -57,6 +56,7 @@ function Side_bar(props) {
         root.style.setProperty('--color6', colors[id][8]);
         root.style.setProperty('--color7', colors[id][9]);
         root.style.setProperty('--color8', colors[id][10]);
+        localStorage.setItem('color_mode', JSON.stringify(colors[id]))
     }
 
     const send_invite = () => {

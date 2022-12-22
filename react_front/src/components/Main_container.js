@@ -71,7 +71,8 @@ function Main_container(props) {
 
 
     //fetch_messages(data)
-    useEffect(() => {   
+    useEffect(() => {  
+         
         //sets current channel messages
         info = JSON.parse(localStorage.getItem('user_data'))
         info.channel_id = props.channels[0].id

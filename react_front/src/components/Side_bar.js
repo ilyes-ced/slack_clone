@@ -121,7 +121,28 @@ function Side_bar(props) {
             {custom_modal ? 
                 <div className='modal custom_modal' onClick={hide_show_modal} > 
                     <div id="custom_modal">
-                        hi dud
+                        <div>
+                            <h1>Customize</h1>
+                            <BsX onClick={() => {set_show_add_channel(!show_add_channel)}}/>
+                        </div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div>
+                                    <div><div></div></div>
+                                    <div><BsHash/><div></div></div>
+                                    <div><BsHash/><div></div></div>
+                                    <div><div></div><div></div><div></div></div>
+                                </div>
+                                <div>
+                                    <input type='radio'/>
+                                    color mode name
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             : ""}
@@ -185,8 +206,8 @@ function Side_bar(props) {
 
             <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu' onMouseLeave={() => {set_submenu2(false)}}>
                 <div id='workspaces_list'>
-                
-                    <Link id='fake_url' to={'/landing_page'}> create new space </Link>
+                    
+                    <div onClick={() => {}}>create new space</div>
                     
                     {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
                 </div>

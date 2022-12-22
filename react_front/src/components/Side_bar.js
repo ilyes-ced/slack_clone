@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { BsPencilSquare, BsCaretDownFill, BsThreeDotsVertical, BsPlus, BsHash, BsPersonSquare, BsLockFill, BsX, BsChevronDown, BsChevronRight } from "react-icons/bs";
 import event_bus from "../events/event_bus";
 import ReactTooltip from 'react-tooltip';
+import { Link } from 'react-router-dom';
 
 
 function Side_bar(props) {
@@ -18,12 +19,14 @@ function Side_bar(props) {
     const [public_private, set_public_private] = useState(false)
     const [submenu1, set_submenu1] = useState(false)
     const [submenu2, set_submenu2] = useState(false)
+    const [custom_modal, set_custom_modal] = useState(false)
 
     const new_channel = useRef(null)
     const email_invite = useRef(null)
     const new_channel_desc = useRef(null)
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){
+            set_custom_modal(false)
             set_show_add_channel(false)
             set_show_add_chat(false)
             set_open_workspace_modal(false)
@@ -113,6 +116,16 @@ function Side_bar(props) {
                     <p>{element.name}</p>
                 </div> : '' )}
             </div>
+            
+
+            {custom_modal ? 
+                <div className='modal custom_modal' onClick={hide_show_modal} > 
+                    <div id="custom_modal">
+                        hi dud
+                    </div>
+                </div>
+            : ""}
+
 
             {open_workspace_modal ? 
                 <div className='modal workspace_modal' onClick={hide_show_modal} > 
@@ -133,7 +146,7 @@ function Side_bar(props) {
                         </div>
 
                         <div>
-                            <div>
+                            <div onClick={() => {set_open_workspace_modal(false); set_submenu1(false); set_submenu2(false); set_custom_modal(true)}}>
                                 custimize appearance
                             </div>
                             <div onMouseEnter={() => {set_submenu1(true); set_submenu2(false)}}  >
@@ -163,24 +176,18 @@ function Side_bar(props) {
             : "" }
 
             <div style={{display: submenu1 ? 'block' : 'none' }} className='submenu' id='first_submenu' onMouseLeave={() => {set_submenu1(false)}}>
-                <div>
-                    <div>
+                <div id='settings_list'>
                         <div>workspace settings</div>
                         <div>customize appearance</div>
-                        <div></div>
-                    </div>
-                    <div>
                         <div>manage memebers</div>
-                        <div></div>
-                    </div>
                 </div>
             </div>
 
             <div style={{display: submenu2 ? 'block' : 'none' }} className='submenu' id='second_submenu' onMouseLeave={() => {set_submenu2(false)}}>
                 <div id='workspaces_list'>
-                    <div>create new space</div>
-                    {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
-                    {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
+                
+                    <Link id='fake_url' to={'/landing_page'}> create new space </Link>
+                    
                     {props.all_workspaces.map(ele => <div onClick={() => {localStorage.setItem('active_workspace', ele.id); window.location.reload(false) }} >{ele.name}</div> )}
                 </div>
             </div>

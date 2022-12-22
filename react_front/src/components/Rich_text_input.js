@@ -36,9 +36,8 @@ function Rich_text_input(props) {
         set_show_add_link(!show_add_link)
     }
     useEffect(() => {        
-        function handleClickOutside(event) {
+        const handleClickOutside = (event) => {
             if (document.getElementById('rich_text_input_content') && !document.getElementById('rich_text_input_content').contains(event.target)) {
-                //alert("You clicked outside of me!")
                 enable_disable_all(true)
             }
         }

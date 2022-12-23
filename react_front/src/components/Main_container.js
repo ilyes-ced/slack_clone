@@ -24,7 +24,25 @@ function Main_container(props) {
                   observer.disconnect()
             }
         }, [ref, observer])
-      
+        if(isIntersecting){
+            info = JSON.parse(localStorage.getItem('user_data'))
+            info.channel_id = current_channel.id
+            info.channel_type = current_channel_type
+            info.messages_stage = messages_stage
+    
+            fetch(process.env.REACT_APP_API_URL+"/message/get_more?data="+JSON.stringify(info), {
+                method: 'get',
+                headers: { 'Content-Type': 'application/json' }
+            }).then((response) => response.json())
+            .then(data => {
+                console.log(data)
+                if(data.result == 'success'){
+                    set_current_message_array([...data.message, ...current_message_array])
+                    console.log(data.message)
+                }
+            })
+
+        }
         return isIntersecting
       }
 
@@ -57,27 +75,6 @@ function Main_container(props) {
     const channel_type = useRef(current_channel_type);
 
     const isInViewport1 = useIsInViewport(div_top);
-    if(isInViewport1){
-        info = JSON.parse(localStorage.getItem('user_data'))
-        info.channel_id = current_channel.id
-        info.channel_type = current_channel_type
-        info.messages_stage = messages_stage
-        console.log(info)
-
-        fetch(process.env.REACT_APP_API_URL+"/message/get_more?data="+JSON.stringify(info), {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        }).then((response) => response.json())
-        .then(data => {
-            if(data.result == 'failed'){
-
-            }else if(data.result == 'success'){
-                console.log(data.message)
-            }
-    })
-    }else{
-
-    }
 
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){

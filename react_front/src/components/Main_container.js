@@ -243,6 +243,7 @@ function Main_container(props) {
                 </div>
 
                 <div id='messages_cntainer'>
+                    
                     <div ref={div_top}>Top div {isInViewport1 && '| in viewport ✅'}</div>
 
                     {current_message_array.map((ele, index, arr) => 

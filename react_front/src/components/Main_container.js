@@ -1,13 +1,32 @@
 import Rich_text_input from "./Rich_text_input";
 import event_bus from "../events/event_bus";
 import { BsPersonSquare, BsPersonPlus, BsX, BsFiles } from "react-icons/bs";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import ReactTooltip from 'react-tooltip';
 
 
 
 function Main_container(props) {
 
+
+
+    function useIsInViewport(ref) {
+        const [isIntersecting, setIsIntersecting] = useState(false);
+      
+        const observer = useMemo(
+            () => new IntersectionObserver(([entry]) => setIsIntersecting(entry.isIntersecting)),
+          []
+        )
+      
+        useEffect(() => {
+            observer.observe(ref.current)
+              return () => {
+                  observer.disconnect()
+            }
+        }, [ref, observer])
+      
+        return isIntersecting
+      }
 
     const fetch_messages = (info, channel_type = 'channel') => {
         return fetch(process.env.REACT_APP_API_URL+"/message/"+channel_type+"?data="+JSON.stringify(info), {
@@ -25,6 +44,7 @@ function Main_container(props) {
     }
 
     var info
+    const [messages_stage, set_messages_stage] = useState(1)
     const [current_channel, set_current_channel] = useState(props.channels[0])
     const [current_channel_type, set_current_channel_type] = useState('channel')
     const [current_message_array, set_current_message_array] = useState([])
@@ -32,8 +52,32 @@ function Main_container(props) {
     const [active_invitation_method, set_active_invitation_method] = useState([true, false])
     const [list_of_emails, set_list_of_emails] = useState([])
     const div_bottom = useRef(null);
+    const div_top = useRef(null);
     const channel_id = useRef(current_channel.id);
     const channel_type = useRef(current_channel_type);
+
+    const isInViewport1 = useIsInViewport(div_top);
+    if(isInViewport1){
+        info = JSON.parse(localStorage.getItem('user_data'))
+        info.channel_id = current_channel.id
+        info.channel_type = current_channel_type
+        info.messages_stage = messages_stage
+        console.log(info)
+
+        fetch(process.env.REACT_APP_API_URL+"/message/get_more?data="+JSON.stringify(info), {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }).then((response) => response.json())
+        .then(data => {
+            if(data.result == 'failed'){
+
+            }else if(data.result == 'success'){
+                console.log(data.message)
+            }
+    })
+    }else{
+
+    }
 
     const hide_show_modal = (e) => {
         if(e.currentTarget == e.target){
@@ -202,6 +246,8 @@ function Main_container(props) {
                 </div>
 
                 <div id='messages_cntainer'>
+                    <div ref={div_top}>Top div {isInViewport1 && '| in viewport ✅'}</div>
+
                     {current_message_array.map((ele, index, arr) => 
                     <div key={ele.id} className=''>
 

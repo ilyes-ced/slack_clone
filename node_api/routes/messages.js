@@ -30,5 +30,17 @@ router.get('/chat', auth,(req, res) => {
     })
 })
 
+router.get('/get_more', auth,(req, res) => {
+    console.log(req.body)
+    console.log(req.query)
+    //query(`select * from (select *,(select username from users where id = sender) as sender_username from private_messages where conversation = ? order by id desc limit 20) as sub order by id asc`, [req.query.channel_id], (err, result) => {
+    //    if(err){
+    //        console.log(err)
+    //        return err
+    //    }
+    //    res.status(200).send({ result: 'success', message: result })
+    //})
+})
+
 
 module.exports = router

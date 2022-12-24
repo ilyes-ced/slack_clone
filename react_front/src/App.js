@@ -16,18 +16,27 @@ function App(){
             const dark_light = JSON.parse(localStorage.getItem('dark_light_mode'))
             const root = document.querySelector(':root')
 
+            console.log(colors)
+            console.log(dark_light)
 
-            root.style.setProperty('--color2', dark_light[0]);
-            root.style.setProperty('--color3', dark_light[1]);
+            root.style.setProperty('--color2', dark_light[1]);
+            root.style.setProperty('--color3', dark_light[2]);
             root.style.setProperty('--color5', dark_light[3]);
-            root.style.setProperty('--color6', dark_light[3]);
-            root.style.setProperty('--color7', dark_light[4]);
+            root.style.setProperty('--color6', dark_light[4]);
+            root.style.setProperty('--color7', dark_light[5]);
+            if(dark_light[0] == "dark"){
+                root.style.setProperty('--text-color', 'white');
+            }else{
+                root.style.setProperty('--text-color', 'dark');
+            }
             
         
-            root.style.setProperty('--text-color', colors[2]);
             root.style.setProperty('--color1', colors[3][1]);
             root.style.setProperty('--color4', colors[3][1]);
             root.style.setProperty('--color8', colors[3][2]);
+        }else{
+            localStorage.setItem('dark_light_mode', JSON.stringify(['dark', '#14101a', '#1a1d21','#222529', '#313337', 'rgba(150,150,150,0.7)']))
+            localStorage.setItem('color_mode', JSON.stringify( [0, 'name here', 'too lazy to change order', ['#6715eb', '#8544ef', '#503e6d']]))
         }
     }, [])
 

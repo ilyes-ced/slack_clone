@@ -7,23 +7,19 @@ import { Link } from 'react-router-dom';
 const colors = [
     //[0, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
     
-    [0, 'name here', 'white', ['#6715eb', '#8544ef', '#503e6d']],
-    [1, 'name here', 'white', ['#4a154b', '#6d436e', '#3a2d3b']],
-    [2, 'name here', 'white', ['#d53c9f', '#ad327f', '#6bc9ff']],
-    [3, 'name here', 'white', ['#1f57e7', '#4c79ec', '#ffc806']],
-
-    [4, 'name here', 'black', ['#6715eb', '#8544ef', '#503e6d']],
-    [5, 'name here', 'black', ['#4a154b', '#6d436e', '#3a2d3b']],
-    [6, 'name here', 'black', ['#d53c9f', '#ad327f', '#6bc9ff']],
-    [7, 'name here', 'black', ['#1f57e7', '#4c79ec', '#ffc806']],
+    [0, 'name here', 'too lazy to change order', ['#6715eb', '#8544ef', '#503e6d']],
+    [1, 'name here', 'too lazy to change order', ['#4a154b', '#6d436e', '#3a2d3b']],
+    [2, 'name here', 'too lazy to change order', ['#d53c9f', '#ad327f', '#6bc9ff']],
+    [3, 'name here', 'too lazy to change order', ['#1f57e7', '#4c79ec', '#ffc806']],
 ]
 const dark_light = [
-    ['dark', '#14101a', '#1a1d21','#222529', '#313337', 'rgba(150,150,150,0.7)']
+    ['dark', '#14101a', '#1a1d21','#222529', '#313337', 'rgba(150,150,150,0.7)'],
     ['light', '#ebefe5', '#e5e2de','#dddad6', '#ceccc8', 'rgba(105,105,105,0.7)']
 ]
 
 function Side_bar(props) {
     const [enabled, set_enabled] = useState(false);
+    const [current_dark_light_mode, set_current_dark_light_mode] = useState(JSON.parse(localStorage.getItem('dark_light_mode')));
     const [rotate, set_rotate] = useState(false);
     const [rotate2, set_rotate2] = useState(false);
     const [show_channels, set_show_channels] = useState(true);
@@ -61,6 +57,8 @@ function Side_bar(props) {
             root.style.setProperty('--color5', dark_light[0][3]);
             root.style.setProperty('--color6', dark_light[0][4]);
             root.style.setProperty('--color7', dark_light[0][5]);
+            localStorage.setItem('dark_light_mode', JSON.stringify(dark_light[0]))
+            set_current_dark_light_mode(dark_light[0])
         }else if (col == 'light'){
             root.style.setProperty('--text-color', "black");
             root.style.setProperty('--color2', dark_light[1][1]);
@@ -68,9 +66,9 @@ function Side_bar(props) {
             root.style.setProperty('--color5', dark_light[1][3]);
             root.style.setProperty('--color6', dark_light[1][4]);
             root.style.setProperty('--color7', dark_light[1][5]);
+            localStorage.setItem('dark_light_mode', JSON.stringify(dark_light[1]))
+            set_current_dark_light_mode(dark_light[1])
         }
-
-        localStorage.setItem('dark_light_mode', JSON.stringify(dark_light))
     }
     const change_color_theme = (id) => {
         const root = document.querySelector(':root')
@@ -180,7 +178,7 @@ function Side_bar(props) {
                                     </div>
                                 </div>
                                 <div></div>
-                                <div> <input type='radio' /> mode name here</div>
+                                <div> <input type='radio' />dark mode</div>
                             </div>
                             <div onClick={() => {change_dark_light_theme("light")}}>
                                 <div>
@@ -191,21 +189,21 @@ function Side_bar(props) {
                                     </div>
                                 </div>
                                 <div></div>
-                                <div> <input type='radio' /> mode name here</div>
+                                <div> <input type='radio' />light mode</div>
                             </div>
                         </div>
                         <div>
                             {colors.map(ele =>
                                 <div key={ele[0]} onClick={() => {change_color_theme(ele[0])}} >
-                                    <div style={{backgroundColor : ele[3]}}>
-                                        <div style={{backgroundColor : ele[6]}}></div>
-                                        <div style={{backgroundColor : ele[2]}}></div>
+                                    <div style={{backgroundColor : ele[3][0]}}>
+                                        <div style={{backgroundColor : ele[3][1]}}></div>
+                                        <div style={{backgroundColor : current_dark_light_mode[0] == 'dark' ? 'white' : 'black'}}></div>
                                     </div>
-                                    <div style={{backgroundColor : ele[4]}}>
-                                        <div ><div style={{backgroundColor : ele[9]}}></div></div>
-                                        <div><BsHash/><div style={{backgroundColor : ele[9]}}></div></div>
-                                        <div style={{backgroundColor : ele[6]}}><BsHash/><div style={{backgroundColor : ele[9]}}></div></div>
-                                        <div><div style={{backgroundColor : ele[3]}}></div><div></div><div style={{backgroundColor : ele[10]}}></div></div>
+                                    <div style={{backgroundColor : current_dark_light_mode[1]}}>
+                                        <div ><div style={{backgroundColor : current_dark_light_mode[5]}}></div></div>
+                                        <div><BsHash/><div style={{backgroundColor : current_dark_light_mode[5]}}></div></div>
+                                        <div style={{backgroundColor : ele[3][1]}}><BsHash/><div style={{backgroundColor : current_dark_light_mode[5]}}></div></div>
+                                        <div><div style={{backgroundColor : ele[3][0]}}></div><div></div><div style={{backgroundColor : ele[3][2]}}></div></div>
                                     </div>
                                     <div>
                                         <input type='radio'/>

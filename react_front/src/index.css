@@ -18,8 +18,12 @@
 }
 #custom_modal > :nth-child(2){
 	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
 }
 #custom_modal > :nth-child(2) > *{
+	width: 35%;
 	cursor: pointer;
 }
 
@@ -58,10 +62,14 @@
 }
 
 
+
+#custom_modal > :nth-child(2) > :first-child  > :first-child {
+	background-color: #1a1d21;
+	color: white;
+}
 #custom_modal > :nth-child(2) > :nth-child(2) > :first-child {
-	background-color: black;
-	-webkit-filter: invert(100%);
-    filter: invert(100%);
+	background-color: white;
+	color: black;
 }
 
 
@@ -75,7 +83,7 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	height: 90%;
+	height: 70%;
 	overflow-y: auto;
 }
 

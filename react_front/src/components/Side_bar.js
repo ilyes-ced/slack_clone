@@ -5,15 +5,22 @@ import ReactTooltip from 'react-tooltip';
 import { Link } from 'react-router-dom';
 
 const colors = [
-    [0, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    [1, 'name here', 'white', '#4a154b', '#14101a', '#1a1d21', '#6d436e', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#3a2d3b'],
-    [2, 'name here', 'white', '#d53c9f', '#14101a', '#1a1d21', '#ad327f', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#6bc9ff'],
-    [3, 'name here', 'white', '#1f57e7', '#14101a', '#1a1d21', '#4c79ec', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#ffc806'],
-    [4, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    [5, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-    [6, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
-]
+    //[0, 'name here', 'white', '#6715eb', '#14101a', '#1a1d21', '#8544ef', '#222529', '#313337', 'rgba(150,150,150,0.7)', '#503e6d'],
+    
+    [0, 'name here', 'white', ['#6715eb', '#8544ef', '#503e6d']],
+    [1, 'name here', 'white', ['#4a154b', '#6d436e', '#3a2d3b']],
+    [2, 'name here', 'white', ['#d53c9f', '#ad327f', '#6bc9ff']],
+    [3, 'name here', 'white', ['#1f57e7', '#4c79ec', '#ffc806']],
 
+    [4, 'name here', 'black', ['#6715eb', '#8544ef', '#503e6d']],
+    [5, 'name here', 'black', ['#4a154b', '#6d436e', '#3a2d3b']],
+    [6, 'name here', 'black', ['#d53c9f', '#ad327f', '#6bc9ff']],
+    [7, 'name here', 'black', ['#1f57e7', '#4c79ec', '#ffc806']],
+]
+const dark_light = [
+    ['dark', '#14101a', '#1a1d21','#222529', '#313337', 'rgba(150,150,150,0.7)']
+    ['light', '#ebefe5', '#e5e2de','#dddad6', '#ceccc8', 'rgba(105,105,105,0.7)']
+]
 
 function Side_bar(props) {
     const [enabled, set_enabled] = useState(false);
@@ -44,18 +51,32 @@ function Side_bar(props) {
             set_submenu1(false)
         }
     }
+    const change_dark_light_theme = (col) => {
 
-    const change_theme = (id) => {
         const root = document.querySelector(':root')
-        root.style.setProperty('--text-color', colors[id][2]);
-        root.style.setProperty('--color1', colors[id][3]);
-        root.style.setProperty('--color2', colors[id][4]);
-        root.style.setProperty('--color3', colors[id][5]);
-        root.style.setProperty('--color4', colors[id][6]);
-        root.style.setProperty('--color5', colors[id][7]);
-        root.style.setProperty('--color6', colors[id][8]);
-        root.style.setProperty('--color7', colors[id][9]);
-        root.style.setProperty('--color8', colors[id][10]);
+        if(col == 'dark'){
+            root.style.setProperty('--text-color', "white");
+            root.style.setProperty('--color2', dark_light[0][1]);
+            root.style.setProperty('--color3', dark_light[0][2]);
+            root.style.setProperty('--color5', dark_light[0][3]);
+            root.style.setProperty('--color6', dark_light[0][4]);
+            root.style.setProperty('--color7', dark_light[0][5]);
+        }else if (col == 'light'){
+            root.style.setProperty('--text-color', "black");
+            root.style.setProperty('--color2', dark_light[1][1]);
+            root.style.setProperty('--color3', dark_light[1][2]);
+            root.style.setProperty('--color5', dark_light[1][3]);
+            root.style.setProperty('--color6', dark_light[1][4]);
+            root.style.setProperty('--color7', dark_light[1][5]);
+        }
+
+        localStorage.setItem('dark_light_mode', JSON.stringify(dark_light))
+    }
+    const change_color_theme = (id) => {
+        const root = document.querySelector(':root')
+        root.style.setProperty('--color1', colors[id][3][1]);
+        root.style.setProperty('--color4', colors[id][3][1]);
+        root.style.setProperty('--color8', colors[id][3][2]);
         localStorage.setItem('color_mode', JSON.stringify(colors[id]))
     }
 
@@ -150,8 +171,32 @@ function Side_bar(props) {
                             <BsX onClick={() => {set_show_add_channel(!show_add_channel)}}/>
                         </div>
                         <div>
+                            <div onClick={() => {change_dark_light_theme("dark")}}>
+                                <div>
+                                    <BsPersonSquare/>
+                                    <div>
+                                        <div> <strong>Alex</strong> 9:23 </div>
+                                        <div> hi, how are you doing </div>
+                                    </div>
+                                </div>
+                                <div></div>
+                                <div> <input type='radio' /> mode name here</div>
+                            </div>
+                            <div onClick={() => {change_dark_light_theme("light")}}>
+                                <div>
+                                    <BsPersonSquare/>
+                                    <div>
+                                        <div> <strong>Alex</strong> 9:23 </div>
+                                        <div> hi, how are you doing </div>
+                                    </div>
+                                </div>
+                                <div></div>
+                                <div> <input type='radio' /> mode name here</div>
+                            </div>
+                        </div>
+                        <div>
                             {colors.map(ele =>
-                                <div key={ele[0]} onClick={() => {change_theme(ele[0])}} >
+                                <div key={ele[0]} onClick={() => {change_color_theme(ele[0])}} >
                                     <div style={{backgroundColor : ele[3]}}>
                                         <div style={{backgroundColor : ele[6]}}></div>
                                         <div style={{backgroundColor : ele[2]}}></div>

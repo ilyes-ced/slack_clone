@@ -32,7 +32,7 @@ router.get('/chat', auth,(req, res) => {
 
 router.get('/get_more', auth,(req, res) => {
     console.log(req.query)
-    query(`select * from (select *,(select username from users where id = sender) as sender_username from messages where channel = ? order by id desc limit 20 offset ?) as sub order by id asc`, [req.query.channel_id, req.query.messages_stage * 20], (err, result) => {
+    query(`select * from (select *,(select username from users where id = sender) as sender_username from messages where channel = ? order by id desc limit 20 offset ? ) as sub order by id asc`, [req.query.channel_id, req.query.messages_stage * 20], (err, result) => {
         if(err){
             console.log(err)
             return err

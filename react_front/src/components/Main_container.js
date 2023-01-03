@@ -39,6 +39,7 @@ function Main_container(props) {
                 if(data.result == 'success'){
                     set_current_message_array([...data.message, ...current_message_array])
                     console.log(data.message)
+                    console.log('(//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////)')
                 }
             })
 

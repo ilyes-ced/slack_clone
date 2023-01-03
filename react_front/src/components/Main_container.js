@@ -24,7 +24,7 @@ function Main_container(props) {
                   observer.disconnect()
             }
         }, [ref, observer])
-        if(isIntersecting){
+        if(isIntersecting && allow_loading_messages){
             info = JSON.parse(localStorage.getItem('user_data'))
             info.channel_id = current_channel.id
             info.channel_type = current_channel_type
@@ -42,7 +42,11 @@ function Main_container(props) {
                     console.log('(//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////)')
                 }
             })
-
+            set_allow_loading_messages(false)
+            set_messages_stage(messages_stage+1)
+            setTimeout(() => {
+                set_allow_loading_messages(true)
+            }, 2000)
         }
         return isIntersecting
       }
@@ -64,6 +68,10 @@ function Main_container(props) {
 
     var info
     const [messages_stage, set_messages_stage] = useState(1)
+    const [allow_loading_messages, set_allow_loading_messages] = useState(false)
+    setTimeout(() => {
+        set_allow_loading_messages(true)
+    }, 2000)
     const [current_channel, set_current_channel] = useState(props.channels[0])
     const [current_channel_type, set_current_channel_type] = useState('channel')
     const [current_message_array, set_current_message_array] = useState([])
@@ -120,6 +128,10 @@ function Main_container(props) {
         info.channel_id = props.channels[0].id
         fetch_messages(info).then(ele => set_current_message_array(ele))
 
+        setTimeout(() => {
+            div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+        }, 100);
+
         event_bus.on("select_chat", (data) =>{
             console.log(data)
             if(data.type == 'channel'){
@@ -132,6 +144,9 @@ function Main_container(props) {
                         info = JSON.parse(localStorage.getItem('user_data'))
                         info.channel_id = data.id
                         fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                        setTimeout(() => {
+                            div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+                        }, 100);
                         return
                     }
                 })
@@ -143,6 +158,9 @@ function Main_container(props) {
                         info = JSON.parse(localStorage.getItem('user_data'))
                         info.channel_id = data.id
                         fetch_messages(info, data.type).then(ele => set_current_message_array(ele))
+                        setTimeout(() => {
+                            div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+                        }, 100);
                         return
                     }
                 })
@@ -155,6 +173,10 @@ function Main_container(props) {
         props.socket.on('room_message', (data) => {
             if(channel_id.current == data.data.channel && channel_type.current == 'channel'){
                 set_current_message_array(prev => [...prev, data.data])
+                //timeout because setstate is async
+                setTimeout(() => {
+                    div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+                }, 100);
             }else{
                 document.getElementById('channel-element_'+data.data.channel).style.color = 'red'
             }
@@ -163,6 +185,9 @@ function Main_container(props) {
         props.socket.on('chat_message', (data) => {
             if(channel_id.current == data.data.conversation && channel_type.current == 'chat'){
                 set_current_message_array(prev => [...prev, data.data])
+                setTimeout(() => {
+                    div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+                }, 100);
             }else{
                 document.getElementById('chat-element_'+data.data.conversation).style.color = 'red'
             }
@@ -176,7 +201,7 @@ function Main_container(props) {
         channel_type.current = current_channel_type
     }, [current_channel])
     useEffect(() => {        
-        div_bottom.current?.scrollIntoView({behavior: 'smooth'})
+        //div_bottom.current?.scrollIntoView({behavior: 'smooth'})
     }, [current_message_array])
 
 

@@ -148,7 +148,7 @@ function Rich_text_input(props) {
     }
     const inputed = (e) => {
         if(e.key == 'Enter' && !e.ctrlKey){
-            e.preventDefault()
+            //e.preventDefault()
             var sel, range
             sel = window.getSelection()
             if (sel.getRangeAt && sel.rangeCount) {
@@ -164,6 +164,7 @@ function Rich_text_input(props) {
                 console.log(lastNode.parentElement.tagName)
                 if(lastNode.parentElement.tagName == "LI"){
                     //simulate enter click here or rollback on prevent default
+                    return
                 }else if(lastNode){
                     range = range.cloneRange()
                     range.setStartAfter(lastNode)

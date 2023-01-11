@@ -75,10 +75,10 @@ function Front_page(props) {
 
 
             
-            <div id='front_title1' >
-                Launch a workspace
-            </div>
             <div id="front_div1">
+                <div id='front_title1' >
+                    Launch a workspace
+                </div>
                 {workspaces.map(ele => 
                     <div className='front_workspace_div'>
                         <div> 
@@ -96,9 +96,28 @@ function Front_page(props) {
                         </div>
                     </div>
                 )}
+                <div id='front_title2' >
+                    Launch a workspace
+                </div>
+                <div>
+                    <div className='front_workspace_div'>
+                         <div> 
+                             <div> workspaces of :   </div>
+                             <div>  members </div> 
+                         </div>
+                         <div> 
+                             <div>
+                                 <div>
+                                     <img src='/img.png' />
+                                 </div>
+                                 ff
+                             </div>
+                             <div><button > launch workspace </button></div>
+                         </div>
+                    </div>
+                </div>
                 
             </div>
-
 
             {/*
             <div id="front_div2"> buncha useless garbage here </div>

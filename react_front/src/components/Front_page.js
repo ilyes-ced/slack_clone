@@ -69,13 +69,15 @@ function Front_page(props) {
                         <BsSearch onClick={() => { set_show_input(!show_input) }} />
                     </div>
                     <div>Create workspace</div>
-                    <div>Information</div>
+                    <div>Join workspace</div>
                 </div>
             </nav>
 
 
             
-
+            <div id='front_title1' >
+                Launch a workspace
+            </div>
             <div id="front_div1">
                 {workspaces.map(ele => 
                     <div className='front_workspace_div'>

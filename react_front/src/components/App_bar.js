@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsClockHistory } from "react-icons/bs";
+import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsClockHistory, BsBoxArrowLeft } from "react-icons/bs";
 import { useState } from 'react';
 
 function App_bar() {
@@ -36,7 +36,7 @@ function App_bar() {
                     <div id="show_profile">
                         <div> profile settings </div>
                         <div className='divider'></div>
-                        <div> logout </div>
+                        <div onClick={() => {}} > <BsBoxArrowLeft/> logout </div>
                     </div>
                 </div>
             : '' } 

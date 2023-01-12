@@ -1,7 +1,6 @@
 .avtive_channel{
 	background-color: var(--color4);
 }
-
 #custom_modal{
 	background-color: var(--color3);
 	height: 600px;
@@ -9,7 +8,6 @@
 	border-radius: 10px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	padding: 30px;
-
 }
 #custom_modal > :first-child{
 	display: flex;
@@ -289,6 +287,8 @@ ul li, ol li {
 }
 #show_add_notifications > *,
 #show_profile > *:not(.divider){
+	display: flex;
+	align-items: center;
 	padding: 10px;
 	cursor: pointer;
 }
@@ -297,7 +297,9 @@ ul li, ol li {
 	background-color: var(--color1);
 }
 
-
+#show_profile > * > :first-child{
+	margin-right: 10px;
+}
 
 
 

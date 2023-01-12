@@ -37,9 +37,6 @@ function Main_container(props) {
             .then(data => {
                 console.log(data)
                 if(data.result == 'success'){
-                    set_current_message_array([...data.message, ...current_message_array])
-                    console.log(data.message)
-                    console.log('(//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////)')
                 }
             })
             set_allow_loading_messages(false)
@@ -60,7 +57,6 @@ function Main_container(props) {
             if(data.result == 'failed'){
                 
             }else if(data.result == 'success'){
-                console.log(data.message)
                 return data.message
             }
         })

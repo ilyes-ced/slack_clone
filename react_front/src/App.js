@@ -31,7 +31,7 @@ function App(){
             }
             
         
-            root.style.setProperty('--color1', colors[3][1]);
+            root.style.setProperty('--color1', colors[3][0]);
             root.style.setProperty('--color4', colors[3][1]);
             root.style.setProperty('--color8', colors[3][2]);
         }else{

@@ -35,6 +35,8 @@ function App_bar() {
                 <div className='modal show_profile' onClick={hide_show_modal} > 
                     <div id="show_profile">
                         <div> profile settings </div>
+                        <div className='divider'></div>
+                        <div> logout </div>
                     </div>
                 </div>
             : '' } 

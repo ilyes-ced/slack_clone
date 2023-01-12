@@ -148,7 +148,6 @@ function Rich_text_input(props) {
     }
     const inputed = (e) => {
         if(e.key == 'Enter' && !e.ctrlKey){
-            //e.preventDefault()
             var sel, range
             sel = window.getSelection()
             if (sel.getRangeAt && sel.rangeCount) {
@@ -163,9 +162,9 @@ function Rich_text_input(props) {
                 range.insertNode(frag)
                 console.log(lastNode.parentElement.tagName)
                 if(lastNode.parentElement.tagName == "LI"){
-                    //simulate enter click here or rollback on prevent default
-                    return
+
                 }else if(lastNode){
+                    e.preventDefault()
                     range = range.cloneRange()
                     range.setStartAfter(lastNode)
                     range.collapse(true)
@@ -200,15 +199,15 @@ function Rich_text_input(props) {
             : '' }
             <div id='rich_text_input_content'>
                 <div id='rich_text_top_icon_bar'>
-                    <button disabled={editor_bold} onClick={icon_click} className='text_icons' id='bold' >              <BsTypeBold/>               </button>
-                    <button disabled={editor_italic} onClick={icon_click} className='text_icons' id='italic' >          <BsTypeItalic/>             </button>
-                    <button disabled={editor_line} onClick={icon_click} className='text_icons' id='line_over' >         <BsTypeStrikethrough/>      </button>
-                    <button disabled={editor_link} onClick={icon_click} className='text_icons' id='link' >              <BsLink45Deg/>              </button>
-                    <button disabled={editor_list} onClick={icon_click} className='text_icons' id='list' >              <BsListUl/>                 </button>
-                    <button disabled={editor_list_n} onClick={icon_click} className='text_icons' id='numbered_list' >   <BsListOl/>                 </button>
-                    <button disabled={editor_quote} onClick={icon_click} className='text_icons' id='quote' >            <BsFillChatLeftQuoteFill/>  </button>
-                    <button disabled={editor_code} onClick={icon_click} className='text_icons' id='code' >              <BsBraces/>                 </button>
-                    <button disabled={editor_code_b} onClick={icon_click} className='text_icons' id='code_block' >      <BsCodeSquare/>             </button>
+                    <button disabled={editor_bold} onClick={icon_click} className='text_icons' id='bold' >              <BsTypeBold className='icons' />               </button>
+                    <button disabled={editor_italic} onClick={icon_click} className='text_icons' id='italic' >          <BsTypeItalic className='icons' />             </button>
+                    <button disabled={editor_line} onClick={icon_click} className='text_icons' id='line_over' >         <BsTypeStrikethrough className='icons' />      </button>
+                    <button disabled={editor_link} onClick={icon_click} className='text_icons' id='link' >              <BsLink45Deg className='icons' />              </button>
+                    <button disabled={editor_list} onClick={icon_click} className='text_icons' id='list' >              <BsListUl className='icons' />                 </button>
+                    <button disabled={editor_list_n} onClick={icon_click} className='text_icons' id='numbered_list' >   <BsListOl className='icons' />                 </button>
+                    <button disabled={editor_quote} onClick={icon_click} className='text_icons' id='quote' >            <BsFillChatLeftQuoteFill className='icons' />  </button>
+                    <button disabled={editor_code} onClick={icon_click} className='text_icons' id='code' >              <BsBraces className='icons' />                 </button>
+                    <button disabled={editor_code_b} onClick={icon_click} className='text_icons' id='code_block' >      <BsCodeSquare className='icons' />             </button>
                 </div>
 
                 
@@ -217,7 +216,7 @@ function Rich_text_input(props) {
                 </div>
                 
                 <div id='rich_text_bottom_icon_bar'>
-                    icons here
+                    <div></div>
                     <div id='submit_text' >
                         <div onClick={submit_text} >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">

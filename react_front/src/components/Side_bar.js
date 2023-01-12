@@ -72,7 +72,7 @@ function Side_bar(props) {
     }
     const change_color_theme = (id) => {
         const root = document.querySelector(':root')
-        root.style.setProperty('--color1', colors[id][3][1]);
+        root.style.setProperty('--color1', colors[id][3][0]);
         root.style.setProperty('--color4', colors[id][3][1]);
         root.style.setProperty('--color8', colors[id][3][2]);
         localStorage.setItem('color_mode', JSON.stringify(colors[id]))

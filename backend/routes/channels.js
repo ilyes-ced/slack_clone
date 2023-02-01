@@ -69,8 +69,9 @@ router.post('/create' ,(req, res) => {
                     })
                 }
             }
+        }else{
+            res.status(401).send({result: 'failed', message: 'not authed'})
         }
-        res.status(401).send({result: 'failed', message: 'not authed'})
     })
 
 })

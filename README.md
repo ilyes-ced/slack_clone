@@ -1,5 +1,7 @@
 # slack.com lite clone React, Nodejs, MySql, Socket.io
 
+some unfinished features and bugs
+
 ## features
 - authentication
 - create workspaces

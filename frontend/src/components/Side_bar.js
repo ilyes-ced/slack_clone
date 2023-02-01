@@ -115,6 +115,7 @@ function Side_bar(props) {
             console.log(JSON.stringify(data))
             if(data.result == 'success'){
                 props.set_channels([...props.channels,data.message])
+                set_show_add_channel(false)
             }
         })
     }
@@ -138,9 +139,9 @@ function Side_bar(props) {
 
 
             <div id='side_bar_options' className='side_bar_elements' >
-                <div className='options_elements side_bar_sub_elements'>setting1</div>
-                <div className='options_elements side_bar_sub_elements'>s 2</div>
-                <div className='options_elements side_bar_sub_elements'> s3</div>
+                <div className='options_elements side_bar_sub_elements'>settings</div>
+                <div className='options_elements side_bar_sub_elements'>New messages</div>
+                <div className='options_elements side_bar_sub_elements'>Drafts</div>
             </div>
 
 

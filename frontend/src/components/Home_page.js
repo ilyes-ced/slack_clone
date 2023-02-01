@@ -97,10 +97,18 @@ function Home_page(props) {
             </div>
         </>
     )
-    return <div id='loader_parent'><div className="loader"></div>
+    return  <div class="wrapper">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="shadow"></div>
+    <div class="shadow"></div>
+    <div class="shadow"></div>
+    <span>Loading</span>
+    
     {show_page ? 'yes' : 'no'}
     {show_page2 ? 'yes' : ' //no workspace redirect to find or create workspace //' }
-    {show_page3 ? 'yes' : 'no'}
+    {show_page3 ? 'yes' : is_auth}
     </div>
 }
 

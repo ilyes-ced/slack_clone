@@ -10,7 +10,7 @@ some unfinished features and bugs
 - add other people as chat contacts
 - change color theme and dark, light mode
 - instant chat with a rich text editor
-- 
+
 
 ## Screenshots
 ![image info](./images/server.png)

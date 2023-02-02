@@ -36,7 +36,7 @@ function App_bar() {
                     <div id="show_profile">
                         <div> profile settings </div>
                         <div className='divider'></div>
-                        <div onClick={() => {}} > <BsBoxArrowLeft/> logout </div>
+                        <div onClick={() => { localStorage.removeItem('user_data');  window.location.reload() }} > <BsBoxArrowLeft/> logout </div>
                     </div>
                 </div>
             : '' } 

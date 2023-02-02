@@ -13,10 +13,7 @@ some unfinished features and bugs
 
 
 ## Screenshots
-![image info](./images/server.png)
-![image info](./images/server.png)
-![image info](./images/server.png)
-![image info](./images/server.png)
+![image info](./images/main.png)
 
 
 ## Installation

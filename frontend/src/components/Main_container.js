@@ -292,10 +292,11 @@ function Main_container(props) {
                             </div> 
                             :
                             <div className="message">
-                                <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                                {ele.pfp ? <img className='sener_pfp' src={"images/"+ele.pfp} alt="err1" /> : <img className='sener_pfp' src="images/default_user.jpg" alt="err2" />}
+                                
                                 <div className='message_data'>
                                     <div className='sender_data'>
-                                        <a  href='www.google.com' className='message_user'> {ele.sender_username} </a>
+                                        <a  href='' style={{textDecoration: "none", color: 'white'}} className='message_user'> {ele.sender_username} </a>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">
@@ -305,10 +306,10 @@ function Main_container(props) {
                             </div> )
                             : 
                             <div className="message">
-                                <img className='sener_pfp' src="/img.png" alt="unavailable" />
+                                <img className='sener_pfp' src="/1.png" alt="unavailable" />
                                 <div className='message_data'>
                                     <div className='sender_data'>
-                                        <a  href='www.google.com' className='message_user'> {ele.sender_username} </a>
+                                        <a  href='' style={{textDecoration: "none", color: 'white'}} className='message_user'> {ele.sender_username} </a>
                                         <p className='message_time'> {ele.created_at.substring(11, 16)} </p>
                                     </div>
                                     <div className="message_content">

@@ -116,6 +116,7 @@
 	background-color: var(--color4);
 }
 #custom_modal{
+	overflow-y: auto;
 	background-color: var(--color3);
 	height: 600px;
 	width: 900px;
@@ -133,9 +134,11 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+
 }
 #custom_modal > :nth-child(2) > *{
-	width: 35%;
+	width: 100%;
+	padding: 10px;
 	cursor: pointer;
 }
 
@@ -196,7 +199,6 @@
 	justify-content: center;
 	flex-wrap: wrap;
 	height: 70%;
-	overflow-y: auto;
 }
 
 #custom_modal > :first-child > *:nth-child(2){

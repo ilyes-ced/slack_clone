@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsClockHistory, BsBoxArrowLeft } from "react-icons/bs";
+import { BsSearch, BsSliders, BsFillBellFill, BsPersonSquare, BsClockHistory, BsBoxArrowLeft, BsChevronDown } from "react-icons/bs";
 import { useState } from 'react';
 
 function App_bar() {
@@ -44,7 +44,11 @@ function App_bar() {
             <div id="app_bar_div2">
                 <BsFillBellFill onClick={() => {set_show_add_notifications(true)}} />
                 <div>
-                    <BsPersonSquare onClick={() => {set_show_profile(true)}}  />
+                    <img style={{borderRadius: '5px'}} src={JSON.parse(localStorage.getItem('user_data')).profile_image ? 'images/'+JSON.parse(localStorage.getItem('user_data')).profile_image : 'images/default_user.jpg' } alt="" />
+                </div>
+                <div style={{ paddingRight: '10px', paddingLeft: '10px', cursor: 'pointer', display: 'flex', alignItems:'center' }}  onClick={() => {set_show_profile(true)}} >
+                    {JSON.parse(localStorage.getItem('user_data')).username}
+                    <BsChevronDown style={{ marginLeft: '10px' }} />
                 </div>
                 {/*<Link to='/login'>login</Link>*/}
             </div>

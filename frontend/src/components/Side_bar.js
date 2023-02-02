@@ -151,8 +151,14 @@ function Side_bar(props) {
                         <div onClick={() => {set_rotate(!rotate); set_show_channels(!show_channels)}}><BsCaretDownFill style={{ transform: rotate ? "rotate(-90deg)" : "rotate(0)", transition: "all 0.2s linear" }}  /></div>
                         <p>Channels</p>
                     </div>
-                    <div  >
-                        {show_child_icons ? <><div><BsThreeDotsVertical  /></div><div onClick={() => {set_show_add_channel(!show_add_channel)}} >{props.workspace.owner == JSON.parse(localStorage.getItem('user_data')).id ? <BsPlus /> : "" }</div></> : ''}
+                    <div>
+                        {show_child_icons ? <>
+                            <div>
+                                <BsThreeDotsVertical  />
+                            </div>
+                            {props.workspace.owner == JSON.parse(localStorage.getItem('user_data')).id ? <div onClick={() => {set_show_add_channel(!show_add_channel)}} ><BsPlus /> </div>: "" }
+                            
+                        </> : ''}
                     </div>
                 </div>
                 {props.channels.map((element, ind) => show_channels ? <div key={ element.id } onClick={change_chat} className={ind == 0 ? 'avtive_channel channels_elements side_bar_sub_elements' :'channels_elements side_bar_sub_elements'} id={"channel-element_"+element.id} >
